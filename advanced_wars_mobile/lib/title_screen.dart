@@ -7,8 +7,7 @@ String titleImage = "https://cdn02.nintendo-europe.com/media/images/10_share_ima
 Widget build(BuildContext context) {
   return Scaffold(body: 
     Container(width: 400, height: 800, child:
-      FloatingActionButton(
-        backgroundColor: Colors.white,
+      FlatButton(
         child: (Image.network(titleImage)),
         onPressed: () {Navigator.pushNamed(context, '/main_menu');},
       )
