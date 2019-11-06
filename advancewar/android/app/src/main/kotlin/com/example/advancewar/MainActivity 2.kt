@@ -1,4 +1,4 @@
-package com.example.advanced_wars_mobile
+package com.example.advancewar
 
 import android.os.Bundle
 

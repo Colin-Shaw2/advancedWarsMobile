@@ -1,4 +1,4 @@
-# advanced_wars_mobile
+# advancewar
 
 A new Flutter project.
 

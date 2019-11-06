@@ -1,4 +1,4 @@
-name: advanced_wars_mobile
+name: advancewar
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -17,9 +17,9 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  flutter_swiper: 
   flutter:
     sdk: flutter
-  flutter_swiper :
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
