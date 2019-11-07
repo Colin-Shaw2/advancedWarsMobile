@@ -15,45 +15,12 @@ class MyApp extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new ExampleHorizontal()
+      home: new HomeScreen()
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => new _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(widget.title),
-      ),
-    body: new Swiper(
-  itemBuilder: (BuildContext context, int index) {
-    return new Image.network(
-      "http://via.placeholder.com/288x188",
-      fit: BoxFit.fill,
-    );
-  },
-  itemCount: 10,
-  viewportFraction: 0.8,
-  scale: 0.9,
-)
-,
-    );
-  }
-}
-
-class ExampleHorizontal extends StatelessWidget {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
