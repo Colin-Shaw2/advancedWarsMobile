@@ -21,7 +21,7 @@ abstract class WarMap {
 
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(terrainMap[i].terrainType.imagePath),
+                image: AssetImage(terrainMap[i].getImagePath()),
                 fit: BoxFit.fill
               )
             )

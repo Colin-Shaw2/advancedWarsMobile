@@ -17,4 +17,12 @@ class Tile{
     unit = u;
     hasUnit = true;
   }
+
+
+  String getImagePath(){
+    if (hasUnit){
+      return unit.imagePath;
+    }
+    return terrainType.imagePath;
+  }
 }
