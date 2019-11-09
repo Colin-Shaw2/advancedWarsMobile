@@ -1,3 +1,5 @@
+import 'package:flutter_swiper/flutter_swiper.dart';
+import 'notification/notification.dart' as notifications;
 import 'package:advancewars/classes/StarterMap.dart';
 import 'package:advancewars/classes/WarMap.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +42,6 @@ class MyHomePage extends StatefulWidget {
   // always marked "final".
 
   final String title;
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -64,7 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  var scheduleNotification = notifications.Notification();
   Widget build(BuildContext context) {
+    scheduleNotification.init();
+    scheduleNotification.sendNotificationWeekly();
+    scheduleNotification.sendAbsentNotification('payload');
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
