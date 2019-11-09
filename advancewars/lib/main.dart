@@ -33,6 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     scheduleNotification.init();
+    scheduleNotification.sendNotificationWeekly();
     scheduleNotification.sendAbsentNotification('payload');
     return new Scaffold(
       appBar: new AppBar(

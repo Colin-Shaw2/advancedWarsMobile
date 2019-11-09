@@ -11,10 +11,9 @@ class Notification {
 
   var _flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
   NotificationDetails _platformChannelInfo;
-  var notificationId = 1;
 
   void init() {
-    var initializationSettingsAndroid = new AndroidInitializationSettings('resources/logo.png');
+    var initializationSettingsAndroid = new AndroidInitializationSettings('logo');
     var initializationSettingsIOS = new IOSInitializationSettings(
       onDidReceiveLocalNotification: (int id, String title, String body, String payload) { return null; }
     );
@@ -51,28 +50,25 @@ class Notification {
     // ... redirect to some part of the app, using payload to view correct data item ...
   }
 
-  Future<void> sendNotificationWeekly(String title, String body, String payload) async {
-    var time = new Time(9, 0, 0);
+  Future<void> sendNotificationWeekly() async {
     await _flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
-    notificationId++,
+    0,
     'Start the week off right!',
     'Kick the week off with an action packed battle of Advance Wars!',
     Day.Sunday,
-    time,
+    new Time(9, 0, 0),
     _platformChannelInfo);
   }
 
   Future<void> sendAbsentNotification(String payload) async {
-    await _flutterLocalNotificationsPlugin.cancel(0);
     _flutterLocalNotificationsPlugin.schedule(
-      0, 
+      1, 
       'Get back to the battle!',
       "You haven't played in a few days, your troops need you to lead them to victory in Advance Wars!",
       DateTime.now().add(Duration(days: 3)),
       _platformChannelInfo,
       payload: payload
     );
-    print(getPendingNotificationRequests());
   }
 
   Future<List<PendingNotificationRequest>> getPendingNotificationRequests() async {
