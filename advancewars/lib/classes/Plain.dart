@@ -1,5 +1,4 @@
 import 'package:advancewars/classes/Terrain.dart';
-import 'package:flutter/cupertino.dart';
 
 class Plain extends Terrain{
   Plain():super(){
@@ -12,7 +11,7 @@ class Plain extends Terrain{
   landerCost = -1;
   boatCost = -1;
   defenceBonus = 1;
-  image = Image.asset("resources/classes/plain.png");
+  imagePath ="resources/terrain/plain.png";
   }
-  
+
 }
