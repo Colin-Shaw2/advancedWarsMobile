@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _incrementCounter() {
     StarterMap myMap = new StarterMap(16,9);
     for (var i = 0; i < myMap.xDim*myMap.yDim; i++) {
-      print(myMap.terrainMap[i]);
+      print(myMap.terrainMap[i].terrainType);
     }
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -97,6 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Image.asset("resources/terrain/plain.png"),
             Text(
               'You have pushed the button this many times:',
             ),

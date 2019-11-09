@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 abstract class Terrain{
   TerrainName name;
@@ -9,6 +10,7 @@ abstract class Terrain{
   int landerCost;
   int boatCost;
   int defenceBonus;
+  Image image;
 
   Terrain();
 

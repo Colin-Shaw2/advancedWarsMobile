@@ -1,4 +1,6 @@
 
+import 'package:flutter/material.dart';
+
 abstract class Unit{
   int movement;
   MovementType movementType;
@@ -6,7 +8,8 @@ abstract class Unit{
   num attack;
   num defence;
   int cost;
-
+  Image image;
+  
 }
 
 enum MovementType{
