@@ -1,0 +1,9 @@
+{
+  "ads": [
+    {
+      "id": 1,
+      "imageLink": "hello",
+      "companyName": "hello"
+    }
+  ],
+}
