@@ -1,7 +1,9 @@
 
+import 'package:advancewars/notification/notification.dart' as prefix0;
 import 'package:flutter/material.dart';
 
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'notification/notification.dart' as notifications;
 
 void main() => runApp(new MyApp());
 
@@ -22,15 +24,16 @@ class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
-
   @override
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
+  var scheduleNotification = notifications.Notification();
   @override
   Widget build(BuildContext context) {
+    scheduleNotification.init();
+    scheduleNotification.sendAbsentNotification('payload');
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(widget.title),
