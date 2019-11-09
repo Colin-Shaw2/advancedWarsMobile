@@ -8,7 +8,7 @@ abstract class Unit{
   num attack;
   num defence;
   int cost;
-  Image image;
+  String imagePath;
   
 }
 

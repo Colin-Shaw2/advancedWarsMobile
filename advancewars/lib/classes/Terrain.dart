@@ -10,7 +10,7 @@ abstract class Terrain{
   int landerCost;
   int boatCost;
   int defenceBonus;
-  Image image;
+  String imagePath;
 
   Terrain();
 
