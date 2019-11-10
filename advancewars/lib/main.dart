@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
       // audio.play('music/music.mp3');
       // Flame.audio.clear('music/music.mp3');
 
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIOverlays([]);
 
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
