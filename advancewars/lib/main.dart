@@ -42,9 +42,12 @@ class HomeScreen extends StatelessWidget {
     return new Scaffold(
         body: 
         new Swiper.children(
-          scrollDirection: Axis.vertical,
-          pagination: new SwiperPagination(alignment: Alignment.centerLeft),
-          control: new SwiperControl(),
+          // scrollDirection: Axis.vertical,
+          // pagination: new SwiperPagination(alignment: Alignment.centerLeft),
+          // control: new SwiperControl(),
+          scrollDirection: Axis.horizontal,
+          viewportFraction: 0.75,
+          scale: 0.9,
             children: <Widget>[
               GestureDetector(
               child: new Image.asset(
