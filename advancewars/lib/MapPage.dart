@@ -14,14 +14,53 @@ class MapPage extends StatefulWidget {
 StarterMap currentMap = new StarterMap(16, 9);
 
 class _MapPageState extends State<MapPage> {
-
   @override
   Widget build(BuildContext context) {
-
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
-    return currentMap.display();
+    return GestureDetector(
+        onLongPress: () {
+          print("longPress");
+          setState(() {
+            _menu(context);
+          });
+        },
+        child: currentMap.display());
   }
+}
+
+Future<void> _menu(BuildContext context) async {
+  print("longPress2r");
+  var choice = await showDialog<String>(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return SimpleDialog(
+        title: Text('Menu'),
+        children: <Widget>[
+          SimpleDialogOption(
+            child: Text('Give Up'),
+            onPressed: () {
+              Navigator.pop(context, 'give up');
+            },
+          ),
+          SimpleDialogOption(
+            child: Text('Save'),
+            onPressed: () {
+              Navigator.pop(context, 'save');
+            },
+          ),
+          SimpleDialogOption(
+            child: Text('End'),
+            onPressed: () {
+              Navigator.pop(context, 'end');
+            },
+          ),
+        ],
+      );
+    },
+  );
+  print('Matt feel free to change this to work with your code: $choice');
 }
