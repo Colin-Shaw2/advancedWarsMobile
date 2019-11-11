@@ -1,3 +1,4 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -39,15 +40,15 @@ class HomeScreen extends StatelessWidget {
     SystemChrome.setEnabledSystemUIOverlays([]);
 
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
     ]);
     return new Scaffold(
       body: new Swiper.children(
         // scrollDirection: Axis.vertical,
         // pagination: new SwiperPagination(alignment: Alignment.centerLeft),
         // control: new SwiperControl(),
-        scrollDirection: Axis.horizontal,
+        scrollDirection: Axis.vertical,
         viewportFraction: 0.75,
         scale: 0.9,
         children: <Widget>[
@@ -76,7 +77,7 @@ class HomeScreen extends StatelessWidget {
               "images/bg2.jpeg",
               fit: BoxFit.fill,
             ),
-            onTap: () => _popupDialog(context),
+            onTap: () => showInfoFlushbar(context)
           ),
         ],
       ),
@@ -85,21 +86,23 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-void _popupDialog(BuildContext context) {
-  showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('UNAVAILABLE'),
-          content: Text('Avaliable in a future update'),
-          actions: <Widget>[
-            FlatButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text('OK')),
-          ],
-        );
-      });
-}
+  void showInfoFlushbar(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    Flushbar(
+      title: 'UNAVALIABLE',
+      message: 'Avaliable at a future update',
+      icon: Icon(
+        Icons.info_outline,
+        size: 28,
+        color: Colors.blue.shade300,
+      ),
+      leftBarIndicatorColor: Colors.blue.shade300,
+      duration: Duration(seconds: 4),
+    )..show(context);
+  }
 
 class SecondRoute extends StatelessWidget {
   @override
