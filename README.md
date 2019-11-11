@@ -2,18 +2,18 @@
 
 CheckList
 
-X Multiplepages/Navigation
+X Multiplepages/Navigation (Done)
 
-X Dialogues/Pickers
+X Dialogues/Pickers (Done)
 
 X SnackBars
 
-X Notifications
+X Notifications (Done)
 
 X Local Storage
 
 X Cloud Storage
 
-X Http request
+X Http request (Done)
 
 X GameLogic

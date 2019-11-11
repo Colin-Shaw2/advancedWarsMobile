@@ -17,9 +17,13 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:  
+  flame: ^0.16.1
   flutter_swiper: 
   flutter:
     sdk: flutter
+  flutter_local_notifications:  
+  carousel_slider:
+  http:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -40,11 +44,16 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+  assets:
+    - images/bg0.jpeg
+    - images/bg1.jpeg
+    - images/bg2.jpeg
+    - music/music.mp3
   # To add assets to your application, add an assets section, like this:
   assets:
     - resources/units/
     - resources/terrain/
+    - resources/terrainUnits/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
