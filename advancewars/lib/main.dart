@@ -30,7 +30,8 @@ class HomeScreen extends StatelessWidget {
       // Bgm audio = Bgm();
       // audio.play('music/music.mp3');
       // Flame.audio.clear('music/music.mp3');
-        scheduleNotification.init();
+    var scheduleNotification = notifications.Notification();
+    scheduleNotification.init();
     scheduleNotification.sendNotificationWeekly();
     scheduleNotification.sendAbsentNotification('payload');
 
@@ -101,7 +102,6 @@ class HomeScreen extends StatelessWidget {
 
 class SecondRoute extends StatelessWidget {
   @override
-  var scheduleNotification = notifications.Notification();
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
