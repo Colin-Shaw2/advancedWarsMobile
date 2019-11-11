@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
 
 class HomeScreen extends StatelessWidget {
   var scheduleNotification = notifications.Notification();
-  
+
   @override
   Widget build(BuildContext context) {
     //Code for music not working currently
@@ -59,9 +59,7 @@ class HomeScreen extends StatelessWidget {
             onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => MapPage(
-                          title: "Map Page",
-                        ))),
+                    builder: (context) => SecondRoute())),
           ),
           GestureDetector(
             child: new Image.asset(
@@ -106,16 +104,7 @@ void _popupDialog(BuildContext context) {
 class SecondRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Continue Page Go back!'),
-        ),
-      ),
-    );
+    return MapPage();
   }
 }
 
