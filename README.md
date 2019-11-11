@@ -16,4 +16,10 @@ X Cloud Storage
 
 X Http request (Done)
 
-X GameLogic
+X GameLogic (In progress)
+  X classes (done)
+  X map (done)
+  X movement (In progress)
+  X menu (done)
+  X attacking
+  X capturing
