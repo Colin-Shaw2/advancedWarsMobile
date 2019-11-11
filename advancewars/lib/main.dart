@@ -28,10 +28,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Code for music not working currently
-      // Flame.bgm.initialize();
-      // Bgm audio = Bgm();
-      // audio.play('music/music.mp3');
-      // Flame.audio.clear('music/music.mp3');
+    // Flame.bgm.initialize();
+    // Bgm audio = Bgm();
+    // audio.play('music/music.mp3');
+    // Flame.audio.clear('music/music.mp3');
     var scheduleNotification = notifications.Notification();
     scheduleNotification.init();
     scheduleNotification.sendNotificationWeekly();
@@ -45,9 +45,6 @@ class HomeScreen extends StatelessWidget {
     ]);
     return new Scaffold(
       body: new Swiper.children(
-        // scrollDirection: Axis.vertical,
-        // pagination: new SwiperPagination(alignment: Alignment.centerLeft),
-        // control: new SwiperControl(),
         scrollDirection: Axis.vertical,
         viewportFraction: 0.75,
         scale: 0.9,
@@ -57,10 +54,8 @@ class HomeScreen extends StatelessWidget {
               "images/bg0.jpeg",
               fit: BoxFit.fill,
             ),
-            onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => SecondRoute())),
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SecondRoute())),
           ),
           GestureDetector(
             child: new Image.asset(
@@ -73,12 +68,11 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            child: new Image.asset(
-              "images/bg2.jpeg",
-              fit: BoxFit.fill,
-            ),
-            onTap: () => showInfoFlushbar(context)
-          ),
+              child: new Image.asset(
+                "images/bg2.jpeg",
+                fit: BoxFit.fill,
+              ),
+              onTap: () => showInfoFlushbar(context)),
         ],
       ),
       // },
@@ -86,23 +80,23 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-  void showInfoFlushbar(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-    Flushbar(
-      title: 'UNAVALIABLE',
-      message: 'Avaliable at a future update',
-      icon: Icon(
-        Icons.info_outline,
-        size: 28,
-        color: Colors.blue.shade300,
-      ),
-      leftBarIndicatorColor: Colors.blue.shade300,
-      duration: Duration(seconds: 4),
-    )..show(context);
-  }
+void showInfoFlushbar(BuildContext context) {
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight,
+  ]);
+  Flushbar(
+    title: 'UNAVALIABLE',
+    message: 'Avaliable at a future update',
+    icon: Icon(
+      Icons.info_outline,
+      size: 28,
+      color: Colors.blue.shade300,
+    ),
+    leftBarIndicatorColor: Colors.blue.shade300,
+    duration: Duration(seconds: 4),
+  )..show(context);
+}
 
 class SecondRoute extends StatelessWidget {
   @override
