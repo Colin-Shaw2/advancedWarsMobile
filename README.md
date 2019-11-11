@@ -2,9 +2,9 @@
 
 CheckList
 
-X Multiplepages/Navigation
+X Multiplepages/Navigation (Done)
 
-X Dialogues/Pickers
+X Dialogues/Pickers (Done)
 
 X SnackBars
 
