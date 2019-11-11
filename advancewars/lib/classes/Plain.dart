@@ -3,7 +3,6 @@ import 'package:advancewars/classes/Terrain.dart';
 class Plain extends Terrain{
   Plain():super(){
     
-  name = TerrainName.plain;
   wheelsCost = 2;
   walkCost = 1;
   treadCost= 1;
@@ -11,7 +10,8 @@ class Plain extends Terrain{
   landerCost = -1;
   boatCost = -1;
   defenceBonus = 1;
-  imagePath ="resources/terrain/plain.png";
+  imagePath ="resources/terrain/Plain.png";
+  name = "Plain";
   }
 
 }

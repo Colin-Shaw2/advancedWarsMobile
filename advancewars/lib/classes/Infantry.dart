@@ -9,5 +9,6 @@ class Infantry extends Unit{
   defence = 0.5;
   cost = 1000;
   imagePath = "resources/units/Infantry.png";
+  name = "Infantry";
   }
 }

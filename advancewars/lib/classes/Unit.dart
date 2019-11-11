@@ -9,6 +9,7 @@ abstract class Unit{
   num defence;
   int cost;
   String imagePath;
+  String name;
   
 }
 

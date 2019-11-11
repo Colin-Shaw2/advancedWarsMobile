@@ -1,27 +1,25 @@
 import 'package:advancewars/classes/Terrain.dart';
-import 'package:flutter/widgets.dart';
 
 import 'Unit.dart';
 
-class Tile{
+class Tile {
   bool hasUnit = false;
   Terrain terrainType;
   Unit unit;
 
-  Tile(Terrain t){
+  Tile(Terrain t) {
     terrainType = t;
   }
-  
-  Tile.unit(Terrain t, Unit u){
+
+  Tile.unit(Terrain t, Unit u) {
     terrainType = t;
     unit = u;
     hasUnit = true;
   }
 
-
-  String getImagePath(){
-    if (hasUnit){
-      return unit.imagePath;
+  String getImagePath() {
+    if (hasUnit) {
+      return "resources/terrainUnits/" + terrainType.name + unit.name + ".png";
     }
     return terrainType.imagePath;
   }
