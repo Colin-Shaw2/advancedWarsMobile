@@ -13,24 +13,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Advance Wars',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: new HomeScreen()
-    );
+        title: 'Advance Wars',
+        theme: new ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: new HomeScreen());
   }
 }
 
 class HomeScreen extends StatelessWidget {
+  var scheduleNotification = notifications.Notification();
+  
   @override
   Widget build(BuildContext context) {
     //Code for music not working currently
-      // Flame.bgm.initialize();
-      // Bgm audio = Bgm();
-      // audio.play('music/music.mp3');
-      // Flame.audio.clear('music/music.mp3');
-        scheduleNotification.init();
+    // Flame.bgm.initialize();
+    // Bgm audio = Bgm();
+    // audio.play('music/music.mp3');
+    // Flame.audio.clear('music/music.mp3');
+    scheduleNotification.init();
     scheduleNotification.sendNotificationWeekly();
     scheduleNotification.sendAbsentNotification('payload');
 
@@ -41,62 +42,64 @@ class HomeScreen extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return new Scaffold(
-        body: 
-        new Swiper.children(
-          // scrollDirection: Axis.vertical,
-          // pagination: new SwiperPagination(alignment: Alignment.centerLeft),
-          // control: new SwiperControl(),
-          scrollDirection: Axis.horizontal,
-          viewportFraction: 0.75,
-          scale: 0.9,
-            children: <Widget>[
-              GestureDetector(
-              child: new Image.asset(
-                "images/bg0.jpeg",
-                fit: BoxFit.fill,
-              ),
-              onTap: () =>
-                 Navigator.push(context, MaterialPageRoute(builder: (context) => MapPage(title: "Map Page",)));
-              ),
-              GestureDetector(
-                child: new Image.asset(
-                  "images/bg1.jpeg",
-                  fit: BoxFit.fill,
-                ),
-              onTap: () =>
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ThirdRoute()),
-                ),
-              ),
-              GestureDetector(
-                child: new Image.asset(
-                  "images/bg2.jpeg", 
-                  fit: BoxFit.fill,
-                  ),
-                  onTap: () => _popupDialog(context),
-                ),
-            ],),
-          // },   
+      body: new Swiper.children(
+        // scrollDirection: Axis.vertical,
+        // pagination: new SwiperPagination(alignment: Alignment.centerLeft),
+        // control: new SwiperControl(),
+        scrollDirection: Axis.horizontal,
+        viewportFraction: 0.75,
+        scale: 0.9,
+        children: <Widget>[
+          GestureDetector(
+            child: new Image.asset(
+              "images/bg0.jpeg",
+              fit: BoxFit.fill,
+            ),
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MapPage(
+                          title: "Map Page",
+                        ))),
+          ),
+          GestureDetector(
+            child: new Image.asset(
+              "images/bg1.jpeg",
+              fit: BoxFit.fill,
+            ),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ThirdRoute()),
+            ),
+          ),
+          GestureDetector(
+            child: new Image.asset(
+              "images/bg2.jpeg",
+              fit: BoxFit.fill,
+            ),
+            onTap: () => _popupDialog(context),
+          ),
+        ],
+      ),
+      // },
     );
-    
   }
 }
 
- void _popupDialog(BuildContext context) {
+void _popupDialog(BuildContext context) {
   showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: Text('UNAVAILABLE'),
-        content: Text('Avaliable in a future update'),
-        actions: <Widget>[
-          FlatButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text('OK')),
-        ],
-      );
-  });
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('UNAVAILABLE'),
+          content: Text('Avaliable in a future update'),
+          actions: <Widget>[
+            FlatButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text('OK')),
+          ],
+        );
+      });
 }
 
 class SecondRoute extends StatelessWidget {
@@ -115,8 +118,6 @@ class SecondRoute extends StatelessWidget {
     );
   }
 }
-
-
 
 class ThirdRoute extends StatelessWidget {
   @override

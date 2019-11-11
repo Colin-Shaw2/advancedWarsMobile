@@ -49,8 +49,6 @@ flutter:
     - images/bg1.jpeg
     - images/bg2.jpeg
     - music/music.mp3
-  # To add assets to your application, add an assets section, like this:
-  assets:
     - resources/units/
     - resources/terrain/
     - resources/terrainUnits/
