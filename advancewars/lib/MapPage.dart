@@ -32,8 +32,7 @@ class _MapPageState extends State<MapPage> {
 }
 
 Future<void> _menu(BuildContext context) async {
-  print("longPress2r");
-  var choice = await showDialog<String>(
+  var choice = await showDialog<MenuChoice>(
     context: context,
     barrierDismissible: true,
     builder: (BuildContext context) {
@@ -43,19 +42,19 @@ Future<void> _menu(BuildContext context) async {
           SimpleDialogOption(
             child: Text('Give Up'),
             onPressed: () {
-              Navigator.pop(context, 'give up');
+              Navigator.pop(context, MenuChoice.giveUp);
             },
           ),
           SimpleDialogOption(
             child: Text('Save'),
             onPressed: () {
-              Navigator.pop(context, 'save');
+              Navigator.pop(context, MenuChoice.save);
             },
           ),
           SimpleDialogOption(
             child: Text('End'),
             onPressed: () {
-              Navigator.pop(context, 'end');
+              Navigator.pop(context, MenuChoice.end);
             },
           ),
         ],
@@ -63,4 +62,10 @@ Future<void> _menu(BuildContext context) async {
     },
   );
   print('Matt feel free to change this to work with your code: $choice');
+}
+
+enum MenuChoice{
+  giveUp,
+  save,
+  end
 }

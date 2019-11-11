@@ -7,8 +7,8 @@ import 'WarMap.dart';
 class StarterMap extends WarMap {
   StarterMap(x, y) : super(x, y) {
     //terrain
-    for (var i = 0; i < yDim; i++) {
-      for (var j = 0; j < xDim; j++) {
+    for (var i = 0; i < xDim; i++) {
+      for (var j = 0; j < yDim; j++) {
         terrainMap[i][j] = new Tile(Plain());
       }
     }

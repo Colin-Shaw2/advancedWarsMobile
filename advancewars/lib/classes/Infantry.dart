@@ -5,8 +5,8 @@ class Infantry extends Unit{
   movement = 3;
   movementType = MovementType.walk;
   unitType = UnitType.land;
-  attack = 1.5;
-  defence = 0.5;
+  attackPower = 1.5;
+  defencePower = 0.5;
   cost = 1000;
   imagePath = "resources/units/Infantry.png";
   name = "Infantry";

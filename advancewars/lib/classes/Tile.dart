@@ -11,9 +11,9 @@ class Tile {
     terrainType = t;
   }
 
-  Tile.unit(Terrain t, Unit u) {
-    terrainType = t;
-    unit = u;
+  Tile.unit(Terrain terrain, Unit unit) {
+    terrainType = terrain;
+    this.unit = unit;
     hasUnit = true;
   }
 
