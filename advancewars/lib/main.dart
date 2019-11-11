@@ -1,7 +1,7 @@
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'notification/notification.dart' as notifications;
 import 'package:advancewars/classes/StarterMap.dart';
-import 'package:advancewars/classes/WarMap.dart';
+import 'MapPage.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -50,10 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    StarterMap myMap = new StarterMap(16,9);
-    for (var i = 0; i < myMap.xDim*myMap.yDim; i++) {
-      print(myMap.terrainMap[i].terrainType);
-    }
+    Navigator.push(context, MaterialPageRoute(builder: (context) => MapPage(title: "Map Page",)));
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below

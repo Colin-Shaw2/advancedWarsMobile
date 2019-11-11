@@ -5,11 +5,18 @@ abstract class Unit{
   int movement;
   MovementType movementType;
   UnitType unitType;
-  num attack;
-  num defence;
+  num attackPower;
+  num defencePower;
   int cost;
-  Image image;
-  
+  String imagePath;
+  String name;
+
+
+  void select(){
+
+  }
+
+
 }
 
 enum MovementType{

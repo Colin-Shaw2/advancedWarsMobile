@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 abstract class Terrain{
-  TerrainName name;
+  String name;
   int wheelsCost;
   int walkCost;
   int treadCost;
@@ -10,20 +10,20 @@ abstract class Terrain{
   int landerCost;
   int boatCost;
   int defenceBonus;
-  Image image;
+  String imagePath;
 
   Terrain();
 
 }
 
-enum TerrainName{
-  plain,
-  river,
-  road,
-  bridge,
-  forest,
-  mountain,
-  sea,
-  reef,
-  shoal,
-}
+// enum TerrainName{
+//   plain,
+//   river,
+//   road,
+//   bridge,
+//   forest,
+//   mountain,
+//   sea,
+//   reef,
+//   shoal,
+// }
