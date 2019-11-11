@@ -1,0 +1,19 @@
+{
+  "ads": [
+    {
+      "id": 1,
+      "imageLink": "https://www.androidpolice.com/wp-content/uploads/2019/07/plants-vs-zombies.png",
+      "companyName": "PopCap"
+    },
+    {
+      "id": 2,
+      "imageLink": "https://fontmeme.com/images/Angry-Birds-Logo.jpg",
+      "companyName": "Rovio"
+    },
+    {
+      "id": 3,
+      "imageLink": "https://d1faqhhhry2dun.cloudfront.net/wp-content/uploads/2015/12/coc_logo_2013-b05c7267a3e801ef057e1ee5b18da599-1002x460.jpg",
+      "companyName": "SuperCell"
+    }
+  ]
+}

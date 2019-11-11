@@ -1,17 +1,15 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+import 'notification/notification.dart' as notifications;
+import 'package:advancewars/classes/StarterMap.dart';
+import 'MapPage.dart';
+import 'package:flutter/material.dart';
 
-//for background music
-import 'package:flame/flame_audio.dart';
-import 'package:flame/bgm.dart';
-import 'package:flame/flame.dart';
-
-
-void main() => runApp(new MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -32,6 +30,9 @@ class HomeScreen extends StatelessWidget {
       // Bgm audio = Bgm();
       // audio.play('music/music.mp3');
       // Flame.audio.clear('music/music.mp3');
+        scheduleNotification.init();
+    scheduleNotification.sendNotificationWeekly();
+    scheduleNotification.sendAbsentNotification('payload');
 
     SystemChrome.setEnabledSystemUIOverlays([]);
 
@@ -55,10 +56,7 @@ class HomeScreen extends StatelessWidget {
                 fit: BoxFit.fill,
               ),
               onTap: () =>
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SecondRoute()),
-                ),
+                 Navigator.push(context, MaterialPageRoute(builder: (context) => MapPage(title: "Map Page",)));
               ),
               GestureDetector(
                 child: new Image.asset(
@@ -103,6 +101,7 @@ class HomeScreen extends StatelessWidget {
 
 class SecondRoute extends StatelessWidget {
   @override
+  var scheduleNotification = notifications.Notification();
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -116,6 +115,8 @@ class SecondRoute extends StatelessWidget {
     );
   }
 }
+
+
 
 class ThirdRoute extends StatelessWidget {
   @override
