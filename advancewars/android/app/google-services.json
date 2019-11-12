@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "636470753483",
+    "firebase_url": "https://advancewarsmobile.firebaseio.com",
+    "project_id": "advancewarsmobile",
+    "storage_bucket": "advancewarsmobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636470753483:android:08a8ea52d6d11d38f2034e",
+        "android_client_info": {
+          "package_name": "com.example.advancewars"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636470753483-bb0njmcjmb4hm1jm000fogd5uf9aaah2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWoi8AkUqWi8zqVKZixvkAUKO_EvzoU6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636470753483-bb0njmcjmb4hm1jm000fogd5uf9aaah2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

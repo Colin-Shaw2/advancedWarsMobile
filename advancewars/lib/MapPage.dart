@@ -1,6 +1,7 @@
 import 'package:advancewars/classes/StarterMap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'databases/saving.dart';
 
 class MapPage extends StatefulWidget {
   MapPage({Key key, this.title}) : super(key: key);
@@ -48,6 +49,7 @@ Future<void> _menu(BuildContext context) async {
           SimpleDialogOption(
             child: Text('Save'),
             onPressed: () {
+              Saving().saveMap(currentMap);
               Navigator.pop(context, MenuChoice.save);
             },
           ),
