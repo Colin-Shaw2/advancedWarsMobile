@@ -11,7 +11,6 @@ abstract class Unit{
   num defencePower;
   int cost;
   String imagePath;
-  String name;
 
 
   void select(){
