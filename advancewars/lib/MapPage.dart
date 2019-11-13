@@ -63,7 +63,6 @@ Future<void> _menu(BuildContext context) async {
       );
     },
   );
-  print('Matt feel free to change this to work with your code: $choice');
 }
 
 enum MenuChoice{

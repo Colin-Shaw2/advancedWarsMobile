@@ -9,13 +9,13 @@ import 'package:advancewars/classes/Tile.dart';
 
 class Saving {
 
-  Map tileToMap(Tile tile, int xIndex, int yIndex) {
+  Map<String, dynamic> tileToMap(Tile tile, int xIndex, int yIndex) {
     return {
       "x_index": xIndex,
       "y_index": yIndex,
       "terrain": tile.terrainType.name,
-      "unit_name": tile.unit.name,
-      "unit_health": tile.unit.health
+      "unit_name": tile.unit != null ? tile.unit.name : null,
+      "unit_health": tile.unit != null ? tile.unit.health : null
     };
   }
 
@@ -40,10 +40,8 @@ class Saving {
   }
 
   //Firestore backup
-  Future<DocumentReference> saveTileToCloud(Map tileData) async {
-    CollectionReference tiles 
-               = Firestore.instance.collection('tiles');
-    return await tiles.add(tileData);
-
+  Future<void> saveTileToCloud(Map tileData) async {
+    Firestore.instance.collection('tiles').document()
+  .setData(tileData);
   }
 }
