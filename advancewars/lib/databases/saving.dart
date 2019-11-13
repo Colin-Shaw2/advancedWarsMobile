@@ -41,6 +41,7 @@ class Saving {
 
   //Firestore backup
   Future<void> saveTileToCloud(Map tileData) async {
+    print("**********************************************************");
     Firestore.instance.collection('tiles').document()
   .setData(tileData);
   }
