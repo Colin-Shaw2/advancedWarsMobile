@@ -17,7 +17,6 @@ abstract class Unit{
 
   }
 
-
 }
 
 enum MovementType{

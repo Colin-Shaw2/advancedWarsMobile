@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-abstract class Terrain{
+class Terrain{
   String name;
   int wheelsCost;
   int walkCost;
@@ -13,6 +13,10 @@ abstract class Terrain{
   String imagePath;
 
   Terrain();
+
+  Terrain.fromName(String name) {
+    this.name = name;
+  }
 
 }
 
