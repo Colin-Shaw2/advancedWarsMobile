@@ -1,6 +1,8 @@
 import 'package:advancewars/classes/StarterMap.dart';
+import 'package:advancewars/classes/WarMap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'databases/saving.dart';
 
 class MapPage extends StatefulWidget {
   MapPage({Key key, this.title}) : super(key: key);
@@ -16,6 +18,9 @@ StarterMap currentMap = new StarterMap(16, 9);
 class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
+    if(Saving().getLocalSavedMap() == null) {
+      getSavedMap();
+    };
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
@@ -28,6 +33,14 @@ class _MapPageState extends State<MapPage> {
           });
         },
         child: currentMap.display());
+  }
+
+  Future<void> getSavedMap() async {
+    WarMap map = await Saving().getLocalSavedMap();
+    print("Hello");
+    setState(() {
+      currentMap = map; 
+    });
   }
 }
 
@@ -48,6 +61,7 @@ Future<void> _menu(BuildContext context) async {
           SimpleDialogOption(
             child: Text('Save'),
             onPressed: () {
+              Saving().saveMap(currentMap);
               Navigator.pop(context, MenuChoice.save);
             },
           ),
@@ -61,8 +75,8 @@ Future<void> _menu(BuildContext context) async {
       );
     },
   );
-  print('Matt feel free to change this to work with your code: $choice');
 }
+
 
 enum MenuChoice{
   giveUp,

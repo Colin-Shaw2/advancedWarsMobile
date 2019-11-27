@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 
 abstract class Unit{
+  String name;
+  int health;
   int movement;
   MovementType movementType;
   UnitType unitType;
@@ -9,13 +11,11 @@ abstract class Unit{
   num defencePower;
   int cost;
   String imagePath;
-  String name;
 
 
   void select(){
 
   }
-
 
 }
 
