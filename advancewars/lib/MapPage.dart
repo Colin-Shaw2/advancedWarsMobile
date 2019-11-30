@@ -27,6 +27,20 @@ class _MapPageState extends State<MapPage> {
             _menu(context);
           });
         },
+        onTapDown: (TapDownDetails details){
+          double x =details.localPosition.dx;
+          double y =details.localPosition.dy;
+
+          double xBucket = MediaQuery.of(context).size.width / currentMap.xDim;
+          double yBucket = MediaQuery.of(context).size.height / currentMap.yDim;
+
+          // int g = tx ~/ xBucke;
+          // int h = y ~/ yBucket;
+          // print("changed $g + $h");
+          
+          currentMap.tileSelect(x ~/ xBucket, y ~/ yBucket,);
+          setState(() {});
+        },
         child: currentMap.display());
   }
 }

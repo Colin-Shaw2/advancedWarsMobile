@@ -9,11 +9,11 @@ class StarterMap extends WarMap {
     //terrain
     for (var i = 0; i < xDim; i++) {
       for (var j = 0; j < yDim; j++) {
-        terrainMap[i][j] = new Tile(Plain());
+        tileMap[i][j] = new Tile(Plain());
       }
     }
 
     //units
-    terrainMap[0][3] = new Tile.unit(Plain(), Infantry());
+    tileMap[0][3] = new Tile.unit(Plain(), Infantry());
   }
 }
