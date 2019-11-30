@@ -41,7 +41,7 @@ class _MapPageState extends State<MapPage> {
 
           // int g = tx ~/ xBucke;
           // int h = y ~/ yBucket;
-          // print("changed $g + $h");
+          //print("changed $xBucket + $yBucket");
           
           currentMap.tileSelect(x ~/ xBucket, y ~/ yBucket,);
           setState(() {});

@@ -23,7 +23,7 @@ class Saving {
   }
 
   Future<int> saveMap(WarMap warMap) async {
-    var tiles = warMap.terrainMap;
+    var tiles = warMap.tileMap;
     deleteLocalTiles();
     deleteCloudTiles();
     for(var x = 0; x < warMap.xDim; x+=1) {
@@ -73,7 +73,7 @@ class Saving {
         Unit unit = Infantry();
         unit.health = tiles[i]['unit_health'];
         Tile tile = Tile.fromMap(unit, terrain);
-        warmap.terrainMap[tiles[i]['x_index']][tiles[i]['y_index']] = tile;
+        warmap.tileMap[tiles[i]['x_index']][tiles[i]['y_index']] = tile;
       }
       return warmap;
     }

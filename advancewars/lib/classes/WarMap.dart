@@ -1,5 +1,6 @@
 import 'package:advancewars/classes/Tile.dart';
 import 'package:flutter/widgets.dart';
+import 'Unit.dart';
 
 class WarMap {
   int xDim;
