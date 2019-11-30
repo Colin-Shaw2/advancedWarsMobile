@@ -6,6 +6,7 @@ class Tile {
   bool hasUnit = false;
   Terrain terrainType;
   Unit unit;
+  bool canMoveHere = false;
 
   Tile(Terrain t) {
     terrainType = t;
@@ -17,10 +18,25 @@ class Tile {
     hasUnit = true;
   }
 
+  Tile.fromMap(Unit unit, Terrain terrain) {
+    this.unit = unit;
+    this.terrainType = terrain;
+  }
+
   String getImagePath() {
     if (hasUnit) {
       return "resources/terrainUnits/" + terrainType.name + unit.name + ".png";
     }
     return terrainType.imagePath;
+  }
+
+  setUnit(Unit unit) {
+    this.unit = unit;
+    hasUnit = true;
+  }
+
+  clearUnit(){
+    this.unit = null;
+    hasUnit = false;
   }
 }
