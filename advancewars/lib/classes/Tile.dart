@@ -18,6 +18,11 @@ class Tile {
     hasUnit = true;
   }
 
+  Tile.fromMap(Unit unit, Terrain terrain) {
+    this.unit = unit;
+    this.terrainType = terrain;
+  }
+
   String getImagePath() {
     if (hasUnit) {
       return "resources/terrainUnits/" + terrainType.name + unit.name + ".png";

@@ -1,9 +1,7 @@
 import 'package:advancewars/classes/Tile.dart';
 import 'package:flutter/widgets.dart';
 
-import 'Unit.dart';
-
-abstract class WarMap {
+class WarMap {
   int xDim;
   int yDim;
   List<List<Tile>> tileMap; // array of tiles
