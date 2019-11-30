@@ -6,6 +6,7 @@ class Tile {
   bool hasUnit = false;
   Terrain terrainType;
   Unit unit;
+  bool canMoveHere = false;
 
   Tile(Terrain t) {
     terrainType = t;
@@ -27,5 +28,15 @@ class Tile {
       return "resources/terrainUnits/" + terrainType.name + unit.name + ".png";
     }
     return terrainType.imagePath;
+  }
+
+  setUnit(Unit unit) {
+    this.unit = unit;
+    hasUnit = true;
+  }
+
+  clearUnit(){
+    this.unit = null;
+    hasUnit = false;
   }
 }
