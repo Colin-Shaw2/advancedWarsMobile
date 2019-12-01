@@ -37,7 +37,6 @@ class _MapPageState extends State<MapPage> {
 
   Future<void> getSavedMap() async {
     WarMap map = await Saving().getLocalSavedMap();
-    print("Hello");
     setState(() {
       currentMap = map; 
     });
