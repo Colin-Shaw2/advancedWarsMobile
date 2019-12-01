@@ -19,7 +19,7 @@ class Infantry extends Unit {
     attackPower = 1.5;
     defencePower = 0.5;
     cost = 1000;
-    imagePath = "resources/units/"+teamColor+"/Infantry.png";
+    imagePath = "resources/units/"+teamColor+"Infantry.png";
     name = "Infantry";
   }
   Infantry.blue() {
@@ -30,7 +30,7 @@ class Infantry extends Unit {
     attackPower = 1.5;
     defencePower = 0.5;
     cost = 1000;
-    imagePath = "resources/units/"+teamColor+"/Infantry.png";
+    imagePath = "resources/units/"+teamColor+"Infantry.png";
     name = "Infantry";
   }
   Infantry.yellow() {
@@ -41,7 +41,7 @@ class Infantry extends Unit {
     attackPower = 1.5;
     defencePower = 0.5;
     cost = 1000;
-    imagePath = "resources/units/"+teamColor+"/Infantry.png";
+    imagePath = "resources/units/"+teamColor+"Infantry.png";
     name = "Infantry";
   }
   Infantry.green() {
@@ -52,7 +52,7 @@ class Infantry extends Unit {
     attackPower = 1.5;
     defencePower = 0.5;
     cost = 1000;
-    imagePath = "resources/units/"+teamColor+"/Infantry.png";
+    imagePath = "resources/units/"+teamColor+"Infantry.png";
     name = "Infantry";
   }
   Infantry.black() {
@@ -63,7 +63,7 @@ class Infantry extends Unit {
     attackPower = 1.5;
     defencePower = 0.5;
     cost = 1000;
-    imagePath = "resources/units/"+teamColor+"/Infantry.png";
+    imagePath = "resources/units/"+teamColor+"Infantry.png";
     name = "Infantry";
   }
 

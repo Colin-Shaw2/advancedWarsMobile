@@ -57,11 +57,7 @@ flutter:
     - music/music.mp3
     - resources/units/
     - resources/terrain/
-    - resources/terrainUnits/orange/
-    - resources/terrainUnits/blue/
-    - resources/terrainUnits/yellow/
-    - resources/terrainUnits/green/
-    - resources/terrainUnits/black/
+    - resources/terrainUnits/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
