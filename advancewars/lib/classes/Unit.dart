@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 abstract class Unit{
-  TeamColor teamColor;
+  String teamColor;
   String name;
   int health;
   int movement;
@@ -33,10 +33,3 @@ enum UnitType{
   air
 }
 
-enum TeamColor{
-  orange,
-  yellow,
-  blue,
-  green,
-  black
-}

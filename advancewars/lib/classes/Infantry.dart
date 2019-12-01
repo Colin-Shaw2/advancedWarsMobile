@@ -12,58 +12,58 @@ class Infantry extends Unit {
     name = "Infantry";
   }
   Infantry.orange() {
-    teamColor = TeamColor.orange;
+    teamColor = "orange";
     movement = 3;
     movementType = MovementType.walk;
     unitType = UnitType.land;
     attackPower = 1.5;
     defencePower = 0.5;
     cost = 1000;
-    imagePath = "resources/units/Infantry.png";
+    imagePath = "resources/units/"+teamColor+"/Infantry.png";
     name = "Infantry";
   }
   Infantry.blue() {
-    teamColor = TeamColor.blue;
+    teamColor = "blue";
     movement = 3;
     movementType = MovementType.walk;
     unitType = UnitType.land;
     attackPower = 1.5;
     defencePower = 0.5;
     cost = 1000;
-    imagePath = "resources/units/Infantry.png";
+    imagePath = "resources/units/"+teamColor+"/Infantry.png";
     name = "Infantry";
   }
   Infantry.yellow() {
-    teamColor = TeamColor.yellow;
+    teamColor = "yellow";
     movement = 3;
     movementType = MovementType.walk;
     unitType = UnitType.land;
     attackPower = 1.5;
     defencePower = 0.5;
     cost = 1000;
-    imagePath = "resources/units/Infantry.png";
+    imagePath = "resources/units/"+teamColor+"/Infantry.png";
     name = "Infantry";
   }
   Infantry.green() {
-    teamColor = TeamColor.green;
+    teamColor = "green";
     movement = 3;
     movementType = MovementType.walk;
     unitType = UnitType.land;
     attackPower = 1.5;
     defencePower = 0.5;
     cost = 1000;
-    imagePath = "resources/units/Infantry.png";
+    imagePath = "resources/units/"+teamColor+"/Infantry.png";
     name = "Infantry";
   }
   Infantry.black() {
-    teamColor = TeamColor.black;
+    teamColor = "black";
     movement = 3;
     movementType = MovementType.walk;
     unitType = UnitType.land;
     attackPower = 1.5;
     defencePower = 0.5;
     cost = 1000;
-    imagePath = "resources/units/Infantry.png";
+    imagePath = "resources/units/"+teamColor+"/Infantry.png";
     name = "Infantry";
   }
 
