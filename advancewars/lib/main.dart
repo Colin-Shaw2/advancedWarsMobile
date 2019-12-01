@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-        title: FlutterI18n.translate(context, 'title'),
+        title: 'title',
         theme: new ThemeData(
           primarySwatch: Colors.blue,
         ),
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         localizationsDelegates: [
         FlutterI18nDelegate(
           useCountryCode: false,
-          fallbackFile: 'en',
+          fallbackFile: 'fr',
           path: 'assets',
         ),
         GlobalMaterialLocalizations.delegate,
