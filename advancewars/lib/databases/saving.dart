@@ -5,13 +5,32 @@ import 'package:advancewars/classes/Terrain.dart';
 import 'package:advancewars/classes/Unit.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:latlong/latlong.dart';
 import 'db_utils.dart';
 import 'package:advancewars/classes/WarMap.dart';
 import 'package:advancewars/classes/Tile.dart';
 
 class Saving {
 
+  //Saving location in options
+  Future<int> saveLocation(String address, LatLng point) async {
+    final db = await DBUtils.init();
+    return await db.insert(
+      'locations',
+      locationToMap(address, point),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Map<String, dynamic> locationToMap(String address, LatLng point) {
+    return {
+      "address": address,
+      "latitude": point.latitude,
+      "longitude": point.longitude
+    };
+  }
+
+  //Saving game
   Map<String, dynamic> tileToMap(Tile tile, int xIndex, int yIndex) {
     return {
       "x_index": xIndex,
