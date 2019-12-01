@@ -41,27 +41,43 @@ class WarMap {
     );
   }
 
+  //select and move a unit
   void tileSelect(int x, int y) {
+    //have a selected unit already
+    if (hasSelectedUnit) {
+      //selecting your self
+      if (x == xSelection && y == ySelection) {
+        hasSelectedUnit = false;
+        _clearMovableTiles();
+      }
+      //moving unit to new tile
+      else if (tileMap[x][y].canMoveHere) {
+        tileMap[xSelection][ySelection].clearUnit();
+        tileMap[x][y].setUnit(selectedUnit);
 
-    //reselect unit to deselect it
-    if (hasSelectedUnit && (x == xSelection && y == ySelection)) {
-      hasSelectedUnit = false;
-      _clearMovableTiles();
+        //attack
+        List<Unit> adjUnit = _getAdjacentUnits(x, y);
+
+
+        //TO DO make popup
+        for (Unit unit in adjUnit) {
+          
+        }
+
+        hasSelectedUnit = false;
+        _clearMovableTiles();
+      }
     } 
-    //moving unit to new tile
-    else if (hasSelectedUnit && tileMap[x][y].canMoveHere) {
-      tileMap[xSelection][ySelection].clearUnit();
-      tileMap[x][y].setUnit(selectedUnit);
-      hasSelectedUnit = false;
-      _clearMovableTiles();
-    }
-    //selecting a unit
-    else if (tileMap[x][y].hasUnit) {
-      xSelection = x;
-      ySelection = y;
-      selectedUnit = tileMap[x][y].unit;
-      hasSelectedUnit = true;
-      _findMovableTiles(x, y);
+    //no unit selected
+    else {
+      //selecting a unit
+      if (tileMap[x][y].hasUnit) {
+        xSelection = x;
+        ySelection = y;
+        selectedUnit = tileMap[x][y].unit;
+        hasSelectedUnit = true;
+        _findMovableTiles(x, y);
+      }
     }
   }
 
@@ -70,44 +86,58 @@ class WarMap {
     //owntile
     //tileMap[xOrigin][yOrigin].canMoveHere = true;
 
-    for (var j = 0; j < movementRange; j++)       
-    {
+    for (var j = 0; j < movementRange; j++) {
       //straightDown
-      tileMap[xOrigin][_bindIndexY(yOrigin + j +1)].canMoveHere = true;
+      tileMap[xOrigin][_bindIndexY(yOrigin + j + 1)].canMoveHere =
+          !tileMap[xOrigin][_bindIndexY(yOrigin + j + 1)].hasUnit;
       //straightUp
-      tileMap[xOrigin][_bindIndexY(yOrigin - j - 1)].canMoveHere = true;
+      tileMap[xOrigin][_bindIndexY(yOrigin - j - 1)].canMoveHere =
+          !tileMap[xOrigin][_bindIndexY(yOrigin - j - 1)].hasUnit;
       //right
-      for (var i = 1; i <= movementRange-j; i++) {
+      for (var i = 1; i <= movementRange - j; i++) {
         //down right
-        tileMap[_bindIndexX(xOrigin + i)][_bindIndexY(yOrigin + j)].canMoveHere = true;
+        tileMap[_bindIndexX(xOrigin + i)][_bindIndexY(yOrigin + j)]
+            .canMoveHere = !tileMap[_bindIndexX(xOrigin + i)]
+                [_bindIndexY(yOrigin + j)]
+            .hasUnit;
         //up right
-        tileMap[_bindIndexX(xOrigin + i)][_bindIndexY(yOrigin - j)].canMoveHere = true;
+        tileMap[_bindIndexX(xOrigin + i)][_bindIndexY(yOrigin - j)]
+            .canMoveHere = !tileMap[_bindIndexX(xOrigin + i)]
+                [_bindIndexY(yOrigin - j)]
+            .hasUnit;
 
         //down left
-        tileMap[_bindIndexX(xOrigin - i)][_bindIndexY(yOrigin + j)].canMoveHere = true;
+        tileMap[_bindIndexX(xOrigin - i)][_bindIndexY(yOrigin + j)]
+            .canMoveHere = !tileMap[_bindIndexX(xOrigin - i)]
+                [_bindIndexY(yOrigin + j)]
+            .hasUnit;
         //up left
-        tileMap[_bindIndexX(xOrigin - i)][_bindIndexY(yOrigin - j)].canMoveHere = true;
+        tileMap[_bindIndexX(xOrigin - i)][_bindIndexY(yOrigin - j)]
+            .canMoveHere = !tileMap[_bindIndexX(xOrigin - i)]
+                [_bindIndexY(yOrigin - j)]
+            .hasUnit;
       }
     }
   }
 
-  int _bindIndexX(index){
-        if (index < 0) {
-          index = 0;
-        }
-        if (index >= xDim) {
-          index = xDim - 1;
-        }
-      return index;
+  int _bindIndexX(index) {
+    if (index < 0) {
+      index = 0;
+    }
+    if (index >= xDim) {
+      index = xDim - 1;
+    }
+    return index;
   }
-  int _bindIndexY(index){
-        if (index < 0) {
-          index = 0;
-        }
-        if (index >= yDim) {
-          index = yDim - 1;
-        }
-      return index;
+
+  int _bindIndexY(index) {
+    if (index < 0) {
+      index = 0;
+    }
+    if (index >= yDim) {
+      index = yDim - 1;
+    }
+    return index;
   }
 
   void _clearMovableTiles() {
@@ -116,5 +146,22 @@ class WarMap {
         tile.canMoveHere = false;
       }
     }
+  }
+
+  List<Unit> _getAdjacentUnits(int x, int y) {
+    List<Unit> adjUnits = List<Unit>();
+    if (tileMap[_bindIndexX(x + 1)][_bindIndexY(y)].hasUnit) {
+      adjUnits.add(tileMap[_bindIndexX(x + 1)][_bindIndexY(y)].unit);
+    }
+    if (tileMap[_bindIndexX(x - 1)][_bindIndexY(y)].hasUnit) {
+      adjUnits.add(tileMap[_bindIndexX(x - 1)][_bindIndexY(y)].unit);
+    }
+    if (tileMap[_bindIndexX(x)][_bindIndexY(y + 1)].hasUnit) {
+      adjUnits.add(tileMap[_bindIndexX(x)][_bindIndexY(y + 1)].unit);
+    }
+    if (tileMap[_bindIndexX(x)][_bindIndexY(y - 1)].hasUnit) {
+      adjUnits.add(tileMap[_bindIndexX(x)][_bindIndexY(y - 1)].unit);
+    }
+    return adjUnits;
   }
 }
