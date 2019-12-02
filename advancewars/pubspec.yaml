@@ -72,6 +72,9 @@ flutter:
     - resources/terrainUnits/
     - resources/menu/
     - resources/numbers/
+    - assets/en.json
+    - assets/fr.json
+    
   fonts:
     - family: VT323
       fonts:
