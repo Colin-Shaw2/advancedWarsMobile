@@ -1,13 +1,19 @@
 // CSCI 4100U - 10a Maps
 
 import 'package:advancewars/ads/ad_carousel.dart';
+import 'package:advancewars/databases/location_chart.dart';
 import 'package:advancewars/databases/saving.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong/latlong.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_i18n/flutter_i18n_delegate.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 
 class OptionsPage extends StatefulWidget {
   OptionsPage({Key key, this.title}) : super(key: key);
@@ -16,6 +22,13 @@ class OptionsPage extends StatefulWidget {
 
   @override
   _OptionsPageState createState() => _OptionsPageState();
+}
+
+class ChartRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FrequencyChart(title: 'Play Locations Chart');
+  }
 }
 
 class _OptionsPageState extends State<OptionsPage> {
@@ -53,6 +66,15 @@ class _OptionsPageState extends State<OptionsPage> {
 
   @override
   Widget build(BuildContext context) {
+    localizationsDelegates: [
+      FlutterI18nDelegate(
+        useCountryCode: false,
+        fallbackFile: 'en',
+        path: 'assets',
+      ),
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+    ];
     print(centre);
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
@@ -63,6 +85,31 @@ class _OptionsPageState extends State<OptionsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+          actions: <Widget>[
+          IconButton(icon: Icon(Icons.assessment), 
+            onPressed: (() {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ChartRoute()));})),
+          FlatButton(
+            child: Text('EN'),
+            onPressed: () {
+              Locale newLocale = Locale('en');
+              setState(() {
+                FlutterI18n.refresh(context, newLocale);
+              });
+              showInfoFlushbar(context);
+            },
+          ),
+          FlatButton(
+            child: Text('FR'),
+            onPressed: () {
+              Locale newLocale = Locale('fr');
+              setState(() {
+                FlutterI18n.refresh(context, newLocale);
+              });
+              showInfoFlushbar(context);
+            },
+          ),
+        ],
       ),
       body: Row( 
       children: <Widget>[
@@ -118,7 +165,7 @@ class _OptionsPageState extends State<OptionsPage> {
           child:
           FlatButton(
             color: Colors.blue,
-            child: Text("Save Location"),
+            child: Text(FlutterI18n.translate(context, 'optionLoc')),
             onPressed: (() {
               Saving().saveLocation(controller.text, centre);
             }),
@@ -139,3 +186,16 @@ class _OptionsPageState extends State<OptionsPage> {
   }
   }
 }
+
+void showInfoFlushbar(BuildContext context) {
+    Flushbar(
+      message: FlutterI18n.translate(context, 'flushTitle'),
+      icon: Icon(
+        Icons.info_outline,
+        size: 28,
+        color: Colors.blue.shade300,
+      ),
+      leftBarIndicatorColor: Colors.blue.shade300,
+      duration: Duration(seconds: 2),
+    )..show(context);
+  }
