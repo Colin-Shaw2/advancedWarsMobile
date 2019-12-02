@@ -31,6 +31,15 @@ class Saving {
     };
   }
 
+  Future<List<LatLng>> loadLocations() async {
+    final db = await DBUtils.init();
+    List<Map<String, dynamic>> locations = await db.query('locations');
+    return locations.map((location) =>
+      LatLng(location['latitude'], location['longitude'])
+    ).toList();
+
+  }
+
   //Saving game
   Map<String, dynamic> tileToMap(Tile tile, int xIndex, int yIndex) {
     return {
