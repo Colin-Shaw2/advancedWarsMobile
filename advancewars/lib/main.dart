@@ -1,3 +1,4 @@
+import 'package:advancewars/options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -101,6 +102,30 @@ class _HomeScreen extends State<HomeScreen> {
   }
 }
 
+void _popupDialog(BuildContext context) {
+
+  Navigator.push(context, MaterialPageRoute(builder: (context) => FirstRoute()));
+  // showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return AlertDialog(
+  //         title: Text('UNAVAILABLE'),
+  //         content: Text('Avaliable in a future update'),
+  //         actions: <Widget>[
+  //           FlatButton(
+  //               onPressed: () => Navigator.of(context).pop(),
+  //               child: Text('OK')),
+  //         ],
+  //       );
+  //     });
+}
+
+class FirstRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return OptionsPage(title: 'Options');
+  }
+}
 
 class SecondRoute extends StatelessWidget {
   @override

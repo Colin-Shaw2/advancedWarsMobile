@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 abstract class Unit{
+  TeamColor teamColor;
   String name;
   int health;
   int movement;
@@ -13,9 +14,7 @@ abstract class Unit{
   String imagePath;
 
 
-  void select(){
-
-  }
+  void attack();
 
 }
 
@@ -32,4 +31,12 @@ enum UnitType{
   land,
   sea,
   air
+}
+
+enum TeamColor{
+  orange,
+  yellow,
+  blue,
+  green,
+  black
 }

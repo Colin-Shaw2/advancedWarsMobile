@@ -13,6 +13,8 @@ class DBUtils {
         }
         db.execute(
           'CREATE TABLE tiles(id INTEGER PRIMARY KEY, y_index INTEGER, x_index INTEGER, terrain TEXT, unit_name TEXT, unit_health INT)');
+        db.execute(
+          'CREATE TABLE locations(id INTEGER PRIMARY KEY, latitude REAL, longitude, REAL, address TEXT)');
       },
       version: 1,
     );

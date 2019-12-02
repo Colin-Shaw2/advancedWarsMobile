@@ -34,7 +34,10 @@ dependencies:
   firebase_auth: ^0.14.0+5
   cloud_firestore: ^0.12.9+5
   firebase_core: ^0.4.0+9
-  flushbar: ^1.5.0
+  location:
+  geolocator: '5.1.1'
+  flutter_map:
+  latlong:
   flutter_i18n:
 
 
