@@ -91,7 +91,9 @@ class WarMap {
                 margin: EdgeInsets.only(left:24, top:24),
                 width: 24,
                 height: 24,
-                decoration: (tileMap[i][j].getHealthImagePath() != null)?
+                decoration: 
+                //if no damage on this unit it does not display a number
+                (tileMap[i][j].getHealthImagePath() != null)?
                 BoxDecoration(
                   image: DecorationImage(
                     alignment: Alignment.bottomRight,
