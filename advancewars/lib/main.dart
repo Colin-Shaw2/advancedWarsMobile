@@ -58,12 +58,12 @@ class _HomeScreen extends State<HomeScreen> {
 
     SystemChrome.setEnabledSystemUIOverlays([]);
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
     ]);
     return new Scaffold(
       body: new Swiper.children(
-        scrollDirection: Axis.horizontal,
+        scrollDirection: Axis.vertical,
         viewportFraction: 0.75,
         scale: 0.9,
         children: <Widget>[
@@ -114,8 +114,8 @@ class ThirdRoute extends StatelessWidget {
   Widget build(BuildContext context) {
         SystemChrome.setEnabledSystemUIOverlays([]);
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
     ]);
     return Scaffold(
       body: Center(
