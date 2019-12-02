@@ -22,7 +22,7 @@ class OptionsPage extends StatefulWidget {
 class ChartRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FrequencyChart(title: 'Charts');
+    return FrequencyChart(title: 'Play Locations Chart');
   }
 }
 
