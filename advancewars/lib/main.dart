@@ -69,31 +69,70 @@ class _HomeScreen extends State<HomeScreen> {
         scale: 0.9,
         children: <Widget>[
           GestureDetector(
-            child: new Image.asset(
-              "images/bg0.jpeg",
-              fit: BoxFit.fill,
+            child: Stack(
+            children: <Widget> [
+              Container(             
+                child: Image.asset(
+                "images/bg0.jpeg",width: MediaQuery.of(context).size.width,
+                fit: BoxFit.fill,),
             ),
+            Container(
+              child: Center(
+                child: new Text(
+                  FlutterI18n.translate(context, 'continue'),
+                  textScaleFactor: 5.0,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontFamily: 'VT323'),
+                  ),
+            ))]
+            ), 
             onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => SecondRoute())),
           ),
           GestureDetector(
-            child: new Image.asset(
-              "images/bg1.jpeg",
-              fit: BoxFit.fill,
+            child: Stack(
+            children: <Widget> [
+              Container(             
+                child: Image.asset(
+                "images/bg1.jpeg",width: MediaQuery.of(context).size.width,
+                fit: BoxFit.fill,),
             ),
+            Container(
+              child: Center(
+                child: new Text(
+                  FlutterI18n.translate(context, 'new'),
+                  textScaleFactor: 5.0,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontFamily: 'VT323'),
+                  ),
+            ))]
+            ), 
             onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ThirdRoute()),
-            ),
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ThirdRoute())),
           ),
           GestureDetector(
-            child: new Image.asset(
-              "images/bg2.jpeg",
-              fit: BoxFit.fill,
+            child: Stack(
+            children: <Widget> [
+              Container(             
+                child: Image.asset(
+                "images/bg2.jpeg",width: MediaQuery.of(context).size.width,
+                fit: BoxFit.fill,),
             ),
-            onTap: () => _options(context),
+            Container(
+              child: Center(
+                child: new Text(
+                  FlutterI18n.translate(context, 'options'),
+                  textScaleFactor: 5.0,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontFamily: 'VT323'),
+                  ),
+            ))]
+            ), 
+            onTap: () => _popupDialog(context),
           ),
         ],
       ),
@@ -103,21 +142,7 @@ class _HomeScreen extends State<HomeScreen> {
 }
 
 void _popupDialog(BuildContext context) {
-
   Navigator.push(context, MaterialPageRoute(builder: (context) => FirstRoute()));
-  // showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return AlertDialog(
-  //         title: Text('UNAVAILABLE'),
-  //         content: Text('Avaliable in a future update'),
-  //         actions: <Widget>[
-  //           FlatButton(
-  //               onPressed: () => Navigator.of(context).pop(),
-  //               child: Text('OK')),
-  //         ],
-  //       );
-  //     });
 }
 
 class FirstRoute extends StatelessWidget {
@@ -155,35 +180,35 @@ class ThirdRoute extends StatelessWidget {
   }
 }
 
-Future<void> _options(BuildContext context) async {
-  showDialog<MenuChoice>(
-    context: context,
-    builder: (BuildContext context) {
-      return SimpleDialog(
-        title: Text(FlutterI18n.translate(context, 'optioTitle')),
-          children: <Widget>[
-            SimpleDialogOption(
-              child: Text(
-                FlutterI18n.translate(context, 'lanOne'),
-              ),
-              onPressed: () {
-                Locale newLocale = Locale('en');
-                FlutterI18n.refresh(context, newLocale);
-                Navigator.pop(context);
-              },
-            ),
-            SimpleDialogOption(
-              child: Text(
-                FlutterI18n.translate(context, 'lanTwo'),
-              ),
-              onPressed: () {
-                Locale newLocale = Locale('fr');
-                FlutterI18n.refresh(context, newLocale);
-                Navigator.pop(context);
-              },
-            ),
-          ],
-      );
-    },
-  );
-}
+// Future<void> _options(BuildContext context) async {
+//   showDialog<MenuChoice>(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return SimpleDialog(
+//         title: Text(FlutterI18n.translate(context, 'optioTitle')),
+//           children: <Widget>[
+//             SimpleDialogOption(
+//               child: Text(
+//                 FlutterI18n.translate(context, 'lanOne'),
+//               ),
+//               onPressed: () {
+//                 Locale newLocale = Locale('en');
+//                 FlutterI18n.refresh(context, newLocale);
+//                 Navigator.pop(context);
+//               },
+//             ),
+//             SimpleDialogOption(
+//               child: Text(
+//                 FlutterI18n.translate(context, 'lanTwo'),
+//               ),
+//               onPressed: () {
+//                 Locale newLocale = Locale('fr');
+//                 FlutterI18n.refresh(context, newLocale);
+//                 Navigator.pop(context);
+//               },
+//             ),
+//           ],
+//       );
+//     },
+//   );
+// }

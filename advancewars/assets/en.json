@@ -1,11 +1,14 @@
 {
     "title": "Advance Wars",
     "optioTitle": "Options",
-    "lanOne" : "English",
-    "lanTwo" : "French",
+    "continue": "CONTINUE",
+    "new": "NEW",
+    "options": "OPTIONS",
     "newPage": "New Page Go back!",
     "menu": "Menu",
     "giveUp": "Give Up",
     "save": "Save",
-    "end": "End"
+    "end": "End",
+    "optionLoc": "Save Location",
+    "flushTitle": "La langue est réglée sur le français"
   }
