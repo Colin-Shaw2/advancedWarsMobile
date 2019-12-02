@@ -6,6 +6,7 @@ class GameDriver{
   int numPlayers;
   int activePlayer;//p1 =0 p2 =1...
 
+
   GameDriver.twoPlayers(WarMap map){
     activeMap = map;
     numPlayers = 2;
@@ -21,4 +22,5 @@ class GameDriver{
   endTurn(){
     activePlayer = (activePlayer + 1)%numPlayers;
   }
+
 }

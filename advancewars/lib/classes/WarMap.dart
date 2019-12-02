@@ -12,6 +12,7 @@ class WarMap {
   Unit selectedUnit;
   bool hasSelectedUnit = false;
   bool inUnconfirmedMoveState = false;
+  int newX, newY;
 
   WarMap(int x, int y) {
     xDim = x;
@@ -37,6 +38,14 @@ class WarMap {
             onTapDown: (tapDownDetails) {
               if (tapDownDetails.localPosition.dy < 65) {
                 print("fire");
+              }
+              //cancel
+              else if (tapDownDetails.localPosition.dy < 115) {
+                tileMap[newX][newY].clearUnit();
+                tileMap[xSelection][ySelection].setUnit(selectedUnit);
+                hasSelectedUnit = false;
+                inUnconfirmedMoveState = false;
+                _clearMovableTiles();
               } else {
                 hasSelectedUnit = false;
                 inUnconfirmedMoveState = false;
@@ -44,7 +53,7 @@ class WarMap {
                 print("wait");
               }
             },
-            child: Image.asset("resources/menu/firewait.png"),
+            child: Image.asset("resources/menu/firecancelwait.png"),
           ),
         ),
       ],
@@ -77,7 +86,9 @@ class WarMap {
   //select and move a unit
   void tileSelect(int x, int y) async {
     //have a selected unit already
-    if (hasSelectedUnit) {
+    if (inUnconfirmedMoveState) {
+    }
+    else if (hasSelectedUnit) {
       //selecting your self
       if (x == xSelection && y == ySelection) {
         hasSelectedUnit = false;
@@ -85,9 +96,10 @@ class WarMap {
       }
       //moving unit to new tile
       else if (tileMap[x][y].canMoveHere) {
+        newX = x;
+        newY = y;
         tileMap[xSelection][ySelection].clearUnit();
         tileMap[x][y].setUnit(selectedUnit);
-
         //attack
         List<Unit> adjUnit = _getAdjacentUnits(x, y);
 
@@ -95,10 +107,8 @@ class WarMap {
         for (Unit unit in adjUnit) {}
 
         inUnconfirmedMoveState = true;
-
       }
-    } else if (inUnconfirmedMoveState) {
-    }
+    } 
     //no unit selected
     else {
       //selecting a unit

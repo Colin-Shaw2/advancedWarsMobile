@@ -1,21 +1,26 @@
+import 'package:advancewars/classes/GameDriver.dart';
 import 'package:advancewars/classes/StarterMap.dart';
 import 'package:advancewars/classes/WarMap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'databases/saving.dart';
 
+
+StarterMap currentMap = new StarterMap(16, 9);
+
 class MapPage extends StatefulWidget {
   MapPage({Key key, this.title}) : super(key: key);
 
   final String title;
-
   @override
   _MapPageState createState() => _MapPageState();
 }
 
-StarterMap currentMap = new StarterMap(16, 9);
 
 class _MapPageState extends State<MapPage> {
+  
+  GameDriver driver = GameDriver.twoPlayers(currentMap);
+  
   @override
   Widget build(BuildContext context) {
     if (Saving().getLocalSavedMap() == null) {
