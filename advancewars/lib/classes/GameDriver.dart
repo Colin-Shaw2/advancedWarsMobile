@@ -1,5 +1,4 @@
 import 'package:advancewars/classes/WarMap.dart';
-import 'package:flame/game.dart';
 
 class GameDriver{
   WarMap activeMap;
@@ -19,8 +18,13 @@ class GameDriver{
     this.activePlayer = this.activePlayer;
   }
 
+  handleDownPress(int x, int y){
+    activeMap.tileSelect(x, y, activePlayer);
+  }
+
   endTurn(){
     activePlayer = (activePlayer + 1)%numPlayers;
   }
+
 
 }

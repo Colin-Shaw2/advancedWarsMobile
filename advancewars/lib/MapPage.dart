@@ -17,9 +17,9 @@ class MapPage extends StatefulWidget {
 }
 
 
+GameDriver driver = GameDriver.twoPlayers(currentMap);
 class _MapPageState extends State<MapPage> {
   
-  GameDriver driver = GameDriver.twoPlayers(currentMap);
   
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class _MapPageState extends State<MapPage> {
           // int h = y ~/ yBucket;
           //print("changed $xBucket + $yBucket");
 
-          currentMap.tileSelect(
+          driver.handleDownPress(
             x ~/ xBucket,
             y ~/ yBucket,
           );
@@ -95,6 +95,7 @@ Future<void> _menu(BuildContext context) async {
           SimpleDialogOption(
             child: Text('End'),
             onPressed: () {
+              driver.endTurn();
               Navigator.pop(context, MenuChoice.end);
             },
           ),

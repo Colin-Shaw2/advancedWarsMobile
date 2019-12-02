@@ -84,7 +84,7 @@ class WarMap {
   }
 
   //select and move a unit
-  void tileSelect(int x, int y) async {
+  void tileSelect(int x, int y, int activePlayer) {
     //have a selected unit already
     if (inUnconfirmedMoveState) {
     }
@@ -96,6 +96,29 @@ class WarMap {
       }
       //moving unit to new tile
       else if (tileMap[x][y].canMoveHere) {
+        _moveUnit(x, y);
+      }
+    } 
+    //no unit selected
+    else {
+      //selecting a unit
+      if (tileMap[x][y].hasUnit ) {
+      if(tileMap[x][y].unit.teamId == activePlayer)//is it your own unit
+        _selectUnit(x, y);
+      }
+    }
+  }
+
+  void _selectUnit(int x, int y){
+        xSelection = x;
+        ySelection = y;
+        selectedUnit = tileMap[x][y].unit;
+        hasSelectedUnit = true;
+        _findMovableTiles(x, y);
+    
+  }
+
+  void _moveUnit(int x, int y){
         newX = x;
         newY = y;
         tileMap[xSelection][ySelection].clearUnit();
@@ -107,20 +130,9 @@ class WarMap {
         for (Unit unit in adjUnit) {}
 
         inUnconfirmedMoveState = true;
-      }
-    } 
-    //no unit selected
-    else {
-      //selecting a unit
-      if (tileMap[x][y].hasUnit) {
-        xSelection = x;
-        ySelection = y;
-        selectedUnit = tileMap[x][y].unit;
-        hasSelectedUnit = true;
-        _findMovableTiles(x, y);
-      }
-    }
+    
   }
+
 
   void _findMovableTiles(int xOrigin, int yOrigin) {
     int movementRange = selectedUnit.movement;

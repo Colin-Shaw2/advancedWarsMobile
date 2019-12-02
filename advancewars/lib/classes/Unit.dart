@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 abstract class Unit{
   String teamColor;
+  int teamId;// 0 orange 1 blue 2 yellow 3 green 4 black
   String name;
   int health;
   int movement;
