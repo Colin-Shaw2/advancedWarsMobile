@@ -11,7 +11,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget{
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  HomeScreen({Key key, this.title}) : super(key: key);
+
+  final String title;
+  @override
+  _HomeScreen createState() => _HomeScreen();
+}
+
+class _HomeScreen extends State<HomeScreen> {
   var scheduleNotification = notifications.Notification();
 
   @override
@@ -49,16 +57,12 @@ class HomeScreen extends StatelessWidget {
     scheduleNotification.sendAbsentNotification('payload');
 
     SystemChrome.setEnabledSystemUIOverlays([]);
-
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
     return new Scaffold(
       body: new Swiper.children(
-        // scrollDirection: Axis.vertical,
-        // pagination: new SwiperPagination(alignment: Alignment.centerLeft),
-        // control: new SwiperControl(),
         scrollDirection: Axis.horizontal,
         viewportFraction: 0.75,
         scale: 0.9,
@@ -108,13 +112,18 @@ class SecondRoute extends StatelessWidget {
 class ThirdRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+        SystemChrome.setEnabledSystemUIOverlays([]);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Scaffold(
       body: Center(
         child: RaisedButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          child: Text('New Page Go back!'),
+          child: Text(FlutterI18n.translate(context, 'newPage')),
         ),
       ),
     );
@@ -122,23 +131,19 @@ class ThirdRoute extends StatelessWidget {
 }
 
 Future<void> _options(BuildContext context) async {
-  var choice = await showDialog<MenuChoice>(
+  showDialog<MenuChoice>(
     context: context,
-    barrierDismissible: true,
     builder: (BuildContext context) {
       return SimpleDialog(
-        title: Text(FlutterI18n.translate(context, 'optionTitle')),
+        title: Text(FlutterI18n.translate(context, 'optioTitle')),
           children: <Widget>[
             SimpleDialogOption(
               child: Text(
                 FlutterI18n.translate(context, 'lanOne'),
               ),
               onPressed: () {
-                //This setstate is giving me an error and im not sure why
-                // Locale newLocale = Locale('en');
-                // setState(() {
-                //   FlutterI18n.refresh(context, newLocale);
-                // });
+                Locale newLocale = Locale('en');
+                FlutterI18n.refresh(context, newLocale);
                 Navigator.pop(context);
               },
             ),
@@ -147,11 +152,8 @@ Future<void> _options(BuildContext context) async {
                 FlutterI18n.translate(context, 'lanTwo'),
               ),
               onPressed: () {
-                //This setstate is giving me an error and im not sure why
-                // Locale newLocale = Locale('fr');
-                // setState(() {
-                //   FlutterI18n.refresh(context, newLocale);
-                // });
+                Locale newLocale = Locale('fr');
+                FlutterI18n.refresh(context, newLocale);
                 Navigator.pop(context);
               },
             ),
