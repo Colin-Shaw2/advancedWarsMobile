@@ -41,6 +41,8 @@ class _AdCarouselState extends State<AdCarousel> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 200,
+      height: 80,
       padding: EdgeInsets.all(10),
       child: Align(alignment: Alignment.bottomCenter, child:
       CarouselSlider(
@@ -56,8 +58,8 @@ class _AdCarouselState extends State<AdCarousel> {
           return Builder(
             builder: (BuildContext context) {
               return Container(
-                width: 500,
-                height: 50,
+                width: 200,
+                height: 80,
                 child: Image.network(ad.imageLink));
           });
         }).toList()

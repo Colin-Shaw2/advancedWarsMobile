@@ -1,5 +1,6 @@
 // CSCI 4100U - 10a Maps
 
+import 'package:advancewars/ads/ad_carousel.dart';
 import 'package:advancewars/databases/saving.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -63,8 +64,9 @@ class _OptionsPageState extends State<OptionsPage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Row(mainAxisAlignment: MainAxisAlignment.center, 
-      children: <Widget>[Container(padding: EdgeInsets.all(10), width: 300, height: 300, child: FlutterMap(
+      body: Row( 
+      children: <Widget>[
+        Container(padding: EdgeInsets.all(10), width: 300, height: 300, child: FlutterMap(
         options: MapOptions(
           minZoom: 14.0,
           center: centre,
@@ -121,7 +123,10 @@ class _OptionsPageState extends State<OptionsPage> {
               Saving().saveLocation(controller.text, centre);
             }),
       
-      )) ])      
+      )),
+      AdCarousel(title: 'ads'),
+      
+       ])      
       ],)
     );
   }
