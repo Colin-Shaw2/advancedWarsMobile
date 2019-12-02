@@ -3,5 +3,9 @@
     "optioTitle": "Le Choix",
     "lanOne" : "Anglais",
     "lanTwo" : "Français",
-    "newPage": "Nouvelle Page, Retour"
+    "newPage": "Nouvelle Page, Retour",
+    "menu": "La Carte",
+    "giveUp": "Abandonner",
+    "save": "Sauver",
+    "end": "Fin"
 }
