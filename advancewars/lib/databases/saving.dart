@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:advancewars/classes/Infantry.dart';
+import 'package:advancewars/classes/Plain.dart';
 import 'package:advancewars/classes/Terrain.dart';
 import 'package:advancewars/classes/Unit.dart';
 import 'package:sqflite/sqflite.dart';
@@ -43,8 +44,8 @@ class Saving {
 
   Future<int> saveMap(WarMap warMap) async {
     var tiles = warMap.tileMap;
-    deleteLocalTiles();
-    deleteCloudTiles();
+    await deleteLocalTiles();
+    await deleteCloudTiles();
     for(var x = 0; x < warMap.xDim; x+=1) {
       for(var y = 0; y < warMap.yDim; y+=1) {
         // Wipe previous saved data we only save 1 map at a time
@@ -62,7 +63,9 @@ class Saving {
   Future<int> deleteCloudTiles() async {
     return await Firestore.instance.collection('tiles').getDocuments().then((snapshot) {
       for (DocumentSnapshot ds in snapshot.documents){
-        ds.reference.delete();
+        if(!ds.data.containsKey('DEFAULT')) {
+          ds.reference.delete();
+        }
       }});
   }
 
@@ -85,13 +88,19 @@ class Saving {
   Future<WarMap> getLocalSavedMap() async {
     final db = await DBUtils.init();
     List<Map<String, dynamic>> tiles = await db.query('tiles');
+    Tile tile;
     if (tiles.length > 0) {
       WarMap warmap = WarMap(tiles.last['x_index']+1, tiles.last['y_index']+1);
-      for (int i = 0; i < tiles.length; i++) {
-        Terrain terrain = Terrain.fromName(tiles[i]['terrain']);
-        Unit unit = Infantry();
-        unit.health = tiles[i]['unit_health'];
-        Tile tile = Tile.fromMap(unit, terrain);
+      for (int i = 0; i < tiles.length; i += 1) {
+        Terrain terrain = Plain();
+        // Need to implement other teams and unit types
+        Unit unit;
+        if(tiles[i]['unit_name'] != null)
+        {
+          unit = Infantry.orange();
+          unit.health = tiles[i]['unit_health'];
+        }
+        tile = Tile.fromMap(terrain, unit);
         warmap.tileMap[tiles[i]['x_index']][tiles[i]['y_index']] = tile;
       }
       return warmap;

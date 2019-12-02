@@ -13,14 +13,17 @@ class MapPage extends StatefulWidget {
   _MapPageState createState() => _MapPageState();
 }
 
-StarterMap currentMap = new StarterMap(16, 9);
+WarMap currentMap = new StarterMap(16, 9);
+bool savedMapExists = false;
+bool loaded = false;
 
 class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
-    if(Saving().getLocalSavedMap() == null) {
+    savedMap();
+    if(savedMapExists && !loaded) {
       getSavedMap();
-    };
+    }
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
@@ -52,8 +55,17 @@ class _MapPageState extends State<MapPage> {
   Future<void> getSavedMap() async {
     WarMap map = await Saving().getLocalSavedMap();
     setState(() {
-      currentMap = map; 
+      currentMap = map;
+      loaded = true; 
     });
+  }
+  Future<void> savedMap() async {
+    WarMap map = await Saving().getLocalSavedMap();
+    if (map != null) {
+      setState(() {
+        savedMapExists = true;
+      });
+    }
   }
 }
 

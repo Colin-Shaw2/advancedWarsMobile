@@ -18,8 +18,11 @@ class Tile {
     hasUnit = true;
   }
 
-  Tile.fromMap(Unit unit, Terrain terrain) {
+  Tile.fromMap(Terrain terrain, [Unit unit]) {
     this.unit = unit;
+    if(unit != null) {
+      this.hasUnit = true;
+    }
     this.terrainType = terrain;
   }
 
