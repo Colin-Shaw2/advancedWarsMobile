@@ -16,14 +16,20 @@ class MapPage extends StatefulWidget {
 }
 
 GameDriver driver = GameDriver.twoPlayers(currentMap);
+bool savedMapExists = false;
+bool loaded = false;
 
 class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
-    if (Saving().getLocalSavedMap() == null) {
+//     if (Saving().getLocalSavedMap() == null) {
+//       getSavedMap();
+//     }
+//     ;
+    savedMap();
+    if(savedMapExists && !loaded) {
       getSavedMap();
     }
-    ;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
@@ -68,10 +74,18 @@ class _MapPageState extends State<MapPage> {
 
   Future<void> getSavedMap() async {
     WarMap map = await Saving().getLocalSavedMap();
-    print("Hello");
     setState(() {
       driver.activeMap = map;
+      loaded = true; 
     });
+  }
+  Future<void> savedMap() async {
+    WarMap map = await Saving().getLocalSavedMap();
+    if (map != null) {
+      setState(() {
+        savedMapExists = true;
+      });
+    }
   }
 }
 
