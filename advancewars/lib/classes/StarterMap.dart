@@ -15,6 +15,6 @@ class StarterMap extends WarMap {
 
     //units
     tileMap[0][3] = new Tile.unit(Plain(), Infantry.orange());
-    tileMap[3][3] = new Tile.unit(Plain(), Infantry.orange());
+    tileMap[3][3] = new Tile.unit(Plain(), Infantry.blue());
   }
 }

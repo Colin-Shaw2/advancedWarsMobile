@@ -22,6 +22,10 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_local_notifications:  
+  flutter_localizations:
+    sdk: flutter
+  provider: ^3.1.0
+  shared_preferences: ^0.5.3+4
   carousel_slider:
   http:
   sqflite:
@@ -35,6 +39,9 @@ dependencies:
   geolocator: '5.1.1'
   flutter_map:
   latlong:
+  flutter_i18n:
+  flushbar: ^1.5.0
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -64,7 +71,12 @@ flutter:
     - resources/units/
     - resources/terrain/
     - resources/terrainUnits/
-
+    - resources/menu/
+    - resources/numbers/
+  fonts:
+    - family: VT323
+      fonts:
+        - asset: fonts/VT323-Regular.ttf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

@@ -12,64 +12,70 @@ class Infantry extends Unit {
     name = "Infantry";
   }
   Infantry.orange() {
-    teamColor = TeamColor.orange;
+    teamId = 0;
+    teamColor = "orange";
     movement = 3;
     movementType = MovementType.walk;
     unitType = UnitType.land;
     attackPower = 1.5;
     defencePower = 0.5;
     cost = 1000;
-    imagePath = "resources/units/Infantry.png";
+    imagePath = "resources/units/"+teamColor+"Infantry.png";
     name = "Infantry";
   }
   Infantry.blue() {
-    teamColor = TeamColor.blue;
+    teamId = 1;
+    teamColor = "blue";
     movement = 3;
     movementType = MovementType.walk;
     unitType = UnitType.land;
     attackPower = 1.5;
     defencePower = 0.5;
     cost = 1000;
-    imagePath = "resources/units/Infantry.png";
+    imagePath = "resources/units/"+teamColor+"Infantry.png";
     name = "Infantry";
   }
   Infantry.yellow() {
-    teamColor = TeamColor.yellow;
+    teamId = 2;
+    teamColor = "yellow";
     movement = 3;
     movementType = MovementType.walk;
     unitType = UnitType.land;
     attackPower = 1.5;
     defencePower = 0.5;
     cost = 1000;
-    imagePath = "resources/units/Infantry.png";
+    imagePath = "resources/units/"+teamColor+"Infantry.png";
     name = "Infantry";
   }
   Infantry.green() {
-    teamColor = TeamColor.green;
+    teamId = 3;
+    teamColor = "green";
     movement = 3;
     movementType = MovementType.walk;
     unitType = UnitType.land;
     attackPower = 1.5;
     defencePower = 0.5;
     cost = 1000;
-    imagePath = "resources/units/Infantry.png";
+    imagePath = "resources/units/"+teamColor+"Infantry.png";
     name = "Infantry";
   }
   Infantry.black() {
-    teamColor = TeamColor.black;
+    teamId = 4;
+    teamColor = "black";
     movement = 3;
     movementType = MovementType.walk;
     unitType = UnitType.land;
     attackPower = 1.5;
     defencePower = 0.5;
     cost = 1000;
-    imagePath = "resources/units/Infantry.png";
+    imagePath = "resources/units/"+teamColor+"Infantry.png";
     name = "Infantry";
   }
 
   @override
-  void attack() {
-    // TODO: implement attack
+  void attack( Unit defender) {
+    defender.health -= 50;
+    health -= 20;
   }
 
   
