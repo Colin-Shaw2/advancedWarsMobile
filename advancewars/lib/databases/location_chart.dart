@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/rendering.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:latlong/latlong.dart';
 
 class FrequencyChart extends StatefulWidget {
@@ -32,7 +33,7 @@ class _FrequencyChartState extends State<FrequencyChart> {
     {
       return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(FlutterI18n.translate(context, 'locationChart')),
         ),
         body: Container(
           padding: EdgeInsets.all(10.0),

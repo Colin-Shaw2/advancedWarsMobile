@@ -10,5 +10,9 @@
     "save": "Save",
     "end": "End",
     "optionLoc": "Save Location",
-    "flushTitle": "La langue est réglée sur le français"
+    "flushTitle": "La langue est réglée sur le français",
+    "locationChart": "Location Chart",
+    "fire": "Fire",
+    "cancel": "Cancel",
+    "wait": "Wait"
   }

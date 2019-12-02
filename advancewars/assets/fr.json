@@ -10,5 +10,9 @@
     "save": "Sauver",
     "end": "Fin",
     "optionLoc": "Enregistrer Le Lieu",
-    "flushTitle": "Language is set to english"
+    "flushTitle": "Language is set to english",
+    "locationChart": "Carte De Localisation",
+    "fire": "Feu",
+    "cancel": "Annuler",
+    "wait": "Attendez"
 }
