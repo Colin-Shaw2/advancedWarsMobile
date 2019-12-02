@@ -88,7 +88,7 @@ class _OptionsPageState extends State<OptionsPage> {
           actions: <Widget>[
           IconButton(icon: Icon(Icons.assessment), 
             onPressed: (() {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ChartRoute()));}))
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ChartRoute()));})),
           FlatButton(
             child: Text('EN'),
             onPressed: () {
