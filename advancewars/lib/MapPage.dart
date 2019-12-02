@@ -18,23 +18,26 @@ StarterMap currentMap = new StarterMap(16, 9);
 class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
-    if(Saving().getLocalSavedMap() == null) {
+    if (Saving().getLocalSavedMap() == null) {
       getSavedMap();
-    };
+    }
+    ;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
     return GestureDetector(
-        onLongPress: () {
-          print("longPress");
-          setState(() {
-            _menu(context);
-          });
-        },
-        onTapDown: (TapDownDetails details){
-          double x =details.localPosition.dx;
-          double y =details.localPosition.dy;
+      onLongPress: () {
+        print("longPress");
+        setState(() {
+          _menu(context);
+        });
+      },
+      onTapDown: (TapDownDetails details) {
+        // do nothing if waiting for other gesture dector
+        if (!currentMap.inUnconfirmedMoveState) {
+          double x = details.localPosition.dx;
+          double y = details.localPosition.dy;
 
           double xBucket = MediaQuery.of(context).size.width / currentMap.xDim;
           double yBucket = MediaQuery.of(context).size.height / currentMap.yDim;
@@ -42,18 +45,23 @@ class _MapPageState extends State<MapPage> {
           // int g = tx ~/ xBucke;
           // int h = y ~/ yBucket;
           //print("changed $xBucket + $yBucket");
-          
-          currentMap.tileSelect(x ~/ xBucket, y ~/ yBucket,);
+
+          currentMap.tileSelect(
+            x ~/ xBucket,
+            y ~/ yBucket,
+          );
           setState(() {});
-        },
-        child: currentMap.display());
+        }
+      },
+      child: currentMap.display(),
+    );
   }
 
   Future<void> getSavedMap() async {
     WarMap map = await Saving().getLocalSavedMap();
     print("Hello");
     setState(() {
-      currentMap = map; 
+      currentMap = map;
     });
   }
 }
@@ -91,9 +99,4 @@ Future<void> _menu(BuildContext context) async {
   );
 }
 
-
-enum MenuChoice{
-  giveUp,
-  save,
-  end
-}
+enum MenuChoice { giveUp, save, end }

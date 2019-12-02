@@ -1,4 +1,5 @@
 import 'package:advancewars/classes/Tile.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'Unit.dart';
 
@@ -10,6 +11,7 @@ class WarMap {
   int ySelection;
   Unit selectedUnit;
   bool hasSelectedUnit = false;
+  bool inUnconfirmedMoveState = false;
 
   WarMap(int x, int y) {
     xDim = x;
@@ -18,7 +20,38 @@ class WarMap {
   }
 
   //returns a gridview with all the terain images.
-  GridView display() {
+  Widget display() {
+    if (inUnconfirmedMoveState) {
+      return _displayMenu();
+    }
+    return _displayGrid();
+  }
+
+  Widget _displayMenu() {
+    return Stack(
+      children: <Widget>[
+        _displayGrid(),
+        Container(
+          color: Colors.blue,
+          child: GestureDetector(
+            onTapDown: (tapDownDetails) {
+              if (tapDownDetails.localPosition.dy < 65) {
+                print("fire");
+              } else {
+                hasSelectedUnit = false;
+                inUnconfirmedMoveState = false;
+                _clearMovableTiles();
+                print("wait");
+              }
+            },
+            child: Image.asset("resources/menu/firewait.png"),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _displayGrid() {
     return GridView.count(
       crossAxisCount: xDim,
       children: List.generate(
@@ -42,7 +75,7 @@ class WarMap {
   }
 
   //select and move a unit
-  void tileSelect(int x, int y) {
+  void tileSelect(int x, int y) async {
     //have a selected unit already
     if (hasSelectedUnit) {
       //selecting your self
@@ -58,16 +91,14 @@ class WarMap {
         //attack
         List<Unit> adjUnit = _getAdjacentUnits(x, y);
 
-
         //TO DO make popup
-        for (Unit unit in adjUnit) {
-          
-        }
+        for (Unit unit in adjUnit) {}
 
-        hasSelectedUnit = false;
-        _clearMovableTiles();
+        inUnconfirmedMoveState = true;
+
       }
-    } 
+    } else if (inUnconfirmedMoveState) {
+    }
     //no unit selected
     else {
       //selecting a unit
