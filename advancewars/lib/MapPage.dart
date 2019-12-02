@@ -1,25 +1,31 @@
+import 'package:advancewars/classes/GameDriver.dart';
 import 'package:advancewars/classes/StarterMap.dart';
 import 'package:advancewars/classes/WarMap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'databases/saving.dart';
 
+StarterMap currentMap = new StarterMap(16, 9);
+
 class MapPage extends StatefulWidget {
   MapPage({Key key, this.title}) : super(key: key);
 
   final String title;
-
   @override
   _MapPageState createState() => _MapPageState();
 }
 
-WarMap currentMap = new StarterMap(16, 9);
+GameDriver driver = GameDriver.twoPlayers(currentMap);
 bool savedMapExists = false;
 bool loaded = false;
 
 class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
+//     if (Saving().getLocalSavedMap() == null) {
+//       getSavedMap();
+//     }
+//     ;
     savedMap();
     if(savedMapExists && !loaded) {
       getSavedMap();
@@ -29,33 +35,47 @@ class _MapPageState extends State<MapPage> {
       DeviceOrientation.landscapeLeft,
     ]);
     return GestureDetector(
-        onLongPress: () {
-          print("longPress");
-          setState(() {
+      onLongPress: () {
+        print("longPress");
+        setState(() {
+          if (driver.activeMap.waitingToAttack) {
+            driver.activeMap.waitingToAttack = false;
+          } else {
             _menu(context);
-          });
-        },
-        onTapDown: (TapDownDetails details){
-          double x =details.localPosition.dx;
-          double y =details.localPosition.dy;
+          }
+        });
+      },
+      onTapDown: (TapDownDetails details) {
+        // do nothing if waiting for other gesture dector
+        if (!driver.activeMap.inUnconfirmedMoveState ||
+        (driver.activeMap.inUnconfirmedMoveState && driver.activeMap.waitingToAttack)) {
+          double x = details.localPosition.dx;
+          double y = details.localPosition.dy;
 
-          double xBucket = MediaQuery.of(context).size.width / currentMap.xDim;
-          double yBucket = MediaQuery.of(context).size.height / currentMap.yDim;
+          double xBucket =
+              MediaQuery.of(context).size.width / driver.activeMap.xDim;
+          double yBucket =
+              MediaQuery.of(context).size.height / driver.activeMap.yDim;
 
           // int g = tx ~/ xBucke;
           // int h = y ~/ yBucket;
           //print("changed $xBucket + $yBucket");
-          
-          currentMap.tileSelect(x ~/ xBucket, y ~/ yBucket,);
-          setState(() {});
-        },
-        child: currentMap.display());
+
+          driver.handleDownPress(
+            x ~/ xBucket,
+            y ~/ yBucket,
+          );
+        }
+        setState(() {});
+      },
+      child: driver.activeMap.display(),
+    );
   }
 
   Future<void> getSavedMap() async {
     WarMap map = await Saving().getLocalSavedMap();
     setState(() {
-      currentMap = map;
+      driver.activeMap = map;
       loaded = true; 
     });
   }
@@ -86,13 +106,14 @@ Future<void> _menu(BuildContext context) async {
           SimpleDialogOption(
             child: Text('Save'),
             onPressed: () {
-              Saving().saveMap(currentMap);
+              Saving().saveMap(driver.activeMap);
               Navigator.pop(context, MenuChoice.save);
             },
           ),
           SimpleDialogOption(
             child: Text('End'),
             onPressed: () {
+              driver.endTurn();
               Navigator.pop(context, MenuChoice.end);
             },
           ),
@@ -102,9 +123,4 @@ Future<void> _menu(BuildContext context) async {
   );
 }
 
-
-enum MenuChoice{
-  giveUp,
-  save,
-  end
-}
+enum MenuChoice { giveUp, save, end }
