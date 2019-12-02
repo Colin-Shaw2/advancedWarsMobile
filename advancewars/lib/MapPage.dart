@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'databases/saving.dart';
 
-
 StarterMap currentMap = new StarterMap(16, 9);
 
 class MapPage extends StatefulWidget {
@@ -16,11 +15,9 @@ class MapPage extends StatefulWidget {
   _MapPageState createState() => _MapPageState();
 }
 
-
 GameDriver driver = GameDriver.twoPlayers(currentMap);
+
 class _MapPageState extends State<MapPage> {
-  
-  
   @override
   Widget build(BuildContext context) {
     if (Saving().getLocalSavedMap() == null) {
@@ -35,17 +32,24 @@ class _MapPageState extends State<MapPage> {
       onLongPress: () {
         print("longPress");
         setState(() {
-          _menu(context);
+          if (driver.activeMap.waitingToAttack) {
+            driver.activeMap.waitingToAttack = false;
+          } else {
+            _menu(context);
+          }
         });
       },
       onTapDown: (TapDownDetails details) {
         // do nothing if waiting for other gesture dector
-        if (!currentMap.inUnconfirmedMoveState) {
+        if (!driver.activeMap.inUnconfirmedMoveState ||
+        (driver.activeMap.inUnconfirmedMoveState && driver.activeMap.waitingToAttack)) {
           double x = details.localPosition.dx;
           double y = details.localPosition.dy;
 
-          double xBucket = MediaQuery.of(context).size.width / currentMap.xDim;
-          double yBucket = MediaQuery.of(context).size.height / currentMap.yDim;
+          double xBucket =
+              MediaQuery.of(context).size.width / driver.activeMap.xDim;
+          double yBucket =
+              MediaQuery.of(context).size.height / driver.activeMap.yDim;
 
           // int g = tx ~/ xBucke;
           // int h = y ~/ yBucket;
@@ -55,10 +59,10 @@ class _MapPageState extends State<MapPage> {
             x ~/ xBucket,
             y ~/ yBucket,
           );
-          setState(() {});
         }
+        setState(() {});
       },
-      child: currentMap.display(),
+      child: driver.activeMap.display(),
     );
   }
 
@@ -66,7 +70,7 @@ class _MapPageState extends State<MapPage> {
     WarMap map = await Saving().getLocalSavedMap();
     print("Hello");
     setState(() {
-      currentMap = map;
+      driver.activeMap = map;
     });
   }
 }
@@ -88,7 +92,7 @@ Future<void> _menu(BuildContext context) async {
           SimpleDialogOption(
             child: Text('Save'),
             onPressed: () {
-              Saving().saveMap(currentMap);
+              Saving().saveMap(driver.activeMap);
               Navigator.pop(context, MenuChoice.save);
             },
           ),

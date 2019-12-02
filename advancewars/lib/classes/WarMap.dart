@@ -10,8 +10,10 @@ class WarMap {
   int xSelection;
   int ySelection;
   Unit selectedUnit;
+
   bool hasSelectedUnit = false;
   bool inUnconfirmedMoveState = false;
+  bool waitingToAttack = false;
   int newX, newY;
 
   WarMap(int x, int y) {
@@ -22,7 +24,8 @@ class WarMap {
 
   //returns a gridview with all the terain images.
   Widget display() {
-    if (inUnconfirmedMoveState) {
+    print("display");
+    if (inUnconfirmedMoveState && !waitingToAttack) {
       return _displayMenu();
     }
     return _displayGrid();
@@ -37,8 +40,12 @@ class WarMap {
           child: GestureDetector(
             onTapDown: (tapDownDetails) {
               if (tapDownDetails.localPosition.dy < 65) {
+                //TODO make snack bar appear
+                waitingToAttack = true;
+                //inUnconfirmedMoveState = false;
                 print("fire");
               }
+
               //cancel
               else if (tapDownDetails.localPosition.dy < 115) {
                 tileMap[newX][newY].clearUnit();
@@ -68,15 +75,39 @@ class WarMap {
         (int count) {
           int i = count % xDim;
           int j = (count ~/ xDim);
-          return Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  colorFilter: (tileMap[i][j].canMoveHere)
-                      ? ColorFilter.linearToSrgbGamma()
-                      : null,
-                  image: AssetImage(tileMap[i][j].getImagePath()),
-                  fit: BoxFit.fill),
-            ),
+          return Stack(
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      colorFilter: (tileMap[i][j].canMoveHere)
+                          ? ColorFilter.linearToSrgbGamma()
+                          : null,
+                      image: AssetImage(tileMap[i][j].getImagePath()),
+                      fit: BoxFit.fill),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(left:24, top:24),
+                width: 24,
+                height: 24,
+                decoration: (tileMap[i][j].getHealthImagePath() != null)?
+                BoxDecoration(
+                  image: DecorationImage(
+                    alignment: Alignment.bottomRight,
+                      colorFilter: (tileMap[i][j].canMoveHere)
+                          ? ColorFilter.linearToSrgbGamma()
+                          : null,
+                      image: AssetImage(tileMap[i][j].getHealthImagePath()),
+                      //(tileMap[i][j].unit.getHealthImagePath()== null)?null:AssetImage(tileMap[i][j].unit.getHealthImagePath()),
+                      fit: BoxFit.fill,
+                      ),
+                ):
+                BoxDecoration(
+                )
+                ,
+              ),
+            ],
           );
         },
       ),
@@ -85,10 +116,35 @@ class WarMap {
 
   //select and move a unit
   void tileSelect(int x, int y, int activePlayer) {
+    print(x);
+    print(y);
     //have a selected unit already
-    if (inUnconfirmedMoveState) {
-    }
-    else if (hasSelectedUnit) {
+    if (waitingToAttack) {
+      bool isAdj = false;
+      //determine if the selected tile is adj and an enemy
+      if (tileMap[x][y].hasEnemy(activePlayer)) {
+        print("has enemy");
+        if (x == newX) {
+          if ((y - newY).abs() == 1) {
+            isAdj = true;
+          }
+        } else if (y == newY) {
+          if ((x - newX).abs() == 1) {
+            isAdj = true;
+          }
+        }
+
+        if (isAdj) {
+          print("attacked");
+          selectedUnit.attack(tileMap[x][y].unit);
+          waitingToAttack = false;
+          inUnconfirmedMoveState = false;
+          hasSelectedUnit = false;
+          _clearMovableTiles();
+        }
+      }
+    } else if (inUnconfirmedMoveState) {
+    } else if (hasSelectedUnit) {
       //selecting your self
       if (x == xSelection && y == ySelection) {
         hasSelectedUnit = false;
@@ -96,43 +152,42 @@ class WarMap {
       }
       //moving unit to new tile
       else if (tileMap[x][y].canMoveHere) {
-        _moveUnit(x, y);
+        _moveUnit(x, y, activePlayer);
       }
-    } 
+    }
     //no unit selected
     else {
       //selecting a unit
-      if (tileMap[x][y].hasUnit ) {
-      if(tileMap[x][y].unit.teamId == activePlayer)//is it your own unit
-        _selectUnit(x, y);
+      if (tileMap[x][y].hasUnit) {
+        if (tileMap[x][y].unit.teamId == activePlayer) //is it your own unit
+          _selectUnit(x, y);
       }
     }
   }
 
-  void _selectUnit(int x, int y){
-        xSelection = x;
-        ySelection = y;
-        selectedUnit = tileMap[x][y].unit;
-        hasSelectedUnit = true;
-        _findMovableTiles(x, y);
-    
+  void _selectUnit(int x, int y) {
+    xSelection = x;
+    ySelection = y;
+    selectedUnit = tileMap[x][y].unit;
+    hasSelectedUnit = true;
+    _findMovableTiles(x, y);
   }
 
-  void _moveUnit(int x, int y){
-        newX = x;
-        newY = y;
-        tileMap[xSelection][ySelection].clearUnit();
-        tileMap[x][y].setUnit(selectedUnit);
-        //attack
-        List<Unit> adjUnit = _getAdjacentUnits(x, y);
+  void _moveUnit(int x, int y, int activePlayer) {
+    newX = x;
+    newY = y;
+    tileMap[xSelection][ySelection].clearUnit();
+    tileMap[x][y].setUnit(selectedUnit);
+    //attack
+    // List<Unit> adjUnit = _getAdjacentEnemyUnits(x, y, activePlayer);
 
-        //TO DO make popup
-        for (Unit unit in adjUnit) {}
+    // //TO DO make popup
+    // for (Unit unit in adjUnit) {
+    //   print(unit);
+    // }
 
-        inUnconfirmedMoveState = true;
-    
+    inUnconfirmedMoveState = true;
   }
-
 
   void _findMovableTiles(int xOrigin, int yOrigin) {
     int movementRange = selectedUnit.movement;
@@ -201,18 +256,18 @@ class WarMap {
     }
   }
 
-  List<Unit> _getAdjacentUnits(int x, int y) {
+  List<Unit> _getAdjacentEnemyUnits(int x, int y, int activePlayer) {
     List<Unit> adjUnits = List<Unit>();
-    if (tileMap[_bindIndexX(x + 1)][_bindIndexY(y)].hasUnit) {
+    if (tileMap[_bindIndexX(x + 1)][_bindIndexY(y)].hasEnemy(activePlayer)) {
       adjUnits.add(tileMap[_bindIndexX(x + 1)][_bindIndexY(y)].unit);
     }
-    if (tileMap[_bindIndexX(x - 1)][_bindIndexY(y)].hasUnit) {
+    if (tileMap[_bindIndexX(x - 1)][_bindIndexY(y)].hasEnemy(activePlayer)) {
       adjUnits.add(tileMap[_bindIndexX(x - 1)][_bindIndexY(y)].unit);
     }
-    if (tileMap[_bindIndexX(x)][_bindIndexY(y + 1)].hasUnit) {
+    if (tileMap[_bindIndexX(x)][_bindIndexY(y + 1)].hasEnemy(activePlayer)) {
       adjUnits.add(tileMap[_bindIndexX(x)][_bindIndexY(y + 1)].unit);
     }
-    if (tileMap[_bindIndexX(x)][_bindIndexY(y - 1)].hasUnit) {
+    if (tileMap[_bindIndexX(x)][_bindIndexY(y - 1)].hasEnemy(activePlayer)) {
       adjUnits.add(tileMap[_bindIndexX(x)][_bindIndexY(y - 1)].unit);
     }
     return adjUnits;

@@ -30,13 +30,26 @@ class Tile {
     return terrainType.imagePath;
   }
 
-  setUnit(Unit unit) {
+  void setUnit(Unit unit) {
     this.unit = unit;
     hasUnit = true;
   }
 
-  clearUnit(){
+  void clearUnit(){
     this.unit = null;
     hasUnit = false;
+  }
+
+  bool hasEnemy(int activePlayer){
+    if(hasUnit  && unit.teamId != activePlayer){
+      return true;
+    }
+    return false;
+  }
+  String getHealthImagePath(){
+   if(hasUnit){
+     return unit.getHealthImagePath();
+   } 
+   return null;
   }
 }

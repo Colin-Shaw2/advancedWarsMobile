@@ -19,6 +19,8 @@ class GameDriver{
   }
 
   handleDownPress(int x, int y){
+    print("handling down press");
+    print(activeMap.waitingToAttack);
     activeMap.tileSelect(x, y, activePlayer);
   }
 

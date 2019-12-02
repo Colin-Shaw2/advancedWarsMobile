@@ -73,8 +73,9 @@ class Infantry extends Unit {
   }
 
   @override
-  void attack() {
-    // TODO: implement attack
+  void attack( Unit defender) {
+    defender.health -= 50;
+    health -= 20;
   }
 
   
