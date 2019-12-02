@@ -13,6 +13,7 @@ abstract class Unit{
   num defencePower;
   int cost;
   String imagePath;
+  bool hasMoved = false;
 
 
   void attack( Unit defender);

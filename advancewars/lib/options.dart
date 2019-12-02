@@ -1,6 +1,7 @@
 // CSCI 4100U - 10a Maps
 
 import 'package:advancewars/ads/ad_carousel.dart';
+import 'package:advancewars/databases/location_chart.dart';
 import 'package:advancewars/databases/saving.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,13 @@ class OptionsPage extends StatefulWidget {
 
   @override
   _OptionsPageState createState() => _OptionsPageState();
+}
+
+class ChartRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FrequencyChart(title: 'Play Locations Chart');
+  }
 }
 
 class _OptionsPageState extends State<OptionsPage> {
@@ -78,6 +86,9 @@ class _OptionsPageState extends State<OptionsPage> {
       appBar: AppBar(
         title: Text(widget.title),
           actions: <Widget>[
+          IconButton(icon: Icon(Icons.assessment), 
+            onPressed: (() {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ChartRoute()));})),
           FlatButton(
             child: Text('EN'),
             onPressed: () {

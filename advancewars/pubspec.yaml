@@ -29,6 +29,7 @@ dependencies:
   carousel_slider:
   http:
   sqflite:
+  charts_flutter:
   # Add the dependencies for the Firebase products you want to use in your app
   # For example, to use Firebase Authentication and Cloud Firestore
   firebase_auth: ^0.14.0+5
