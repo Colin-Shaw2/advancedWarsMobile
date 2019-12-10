@@ -137,9 +137,9 @@ class WarMap {
           inUnconfirmedMoveState = false;
           hasSelectedUnit = false;
           _clearMovableTiles();
+          _clearAdjEnemies();
         }
       }
-      _clearAdjEnemies();
     } else if (inUnconfirmedMoveState) {
     } else if (hasSelectedUnit) {
       //selecting your self
