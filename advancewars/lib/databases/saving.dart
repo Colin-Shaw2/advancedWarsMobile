@@ -31,12 +31,22 @@ class Saving {
     };
   }
 
+  Future<List<LatLng>> loadLocations() async {
+    final db = await DBUtils.init();
+    List<Map<String, dynamic>> locations = await db.query('locations');
+    return locations.map((location) =>
+      LatLng(location['latitude'], location['longitude'])
+    ).toList();
+
+  }
+
   //Saving game
   Map<String, dynamic> tileToMap(Tile tile, int xIndex, int yIndex) {
     return {
       "x_index": xIndex,
       "y_index": yIndex,
       "terrain": tile.terrainType.name,
+      "team_id": tile.unit != null ? tile.unit.teamId : null,
       "unit_name": tile.unit != null ? tile.unit.name : null,
       "unit_health": tile.unit != null ? tile.unit.health : null
     };
@@ -97,7 +107,35 @@ class Saving {
         Unit unit;
         if(tiles[i]['unit_name'] != null)
         {
-          unit = Infantry.orange();
+          switch(tiles[i]['team_id']) {
+            case 0: { 
+                unit = Infantry.orange(); 
+            } 
+            break; 
+            
+            case 1: { 
+                unit = Infantry.blue(); 
+            } 
+            break; 
+            case 2: { 
+                unit = Infantry.yellow(); 
+            } 
+            break; 
+            
+            case 3: { 
+                unit = Infantry.green();
+            } 
+            break;
+            case 4: { 
+                unit = Infantry.black();
+            } 
+            break; 
+
+            default: { 
+                unit = Infantry.orange();  
+            }
+            break; 
+          }
           unit.health = tiles[i]['unit_health'];
         }
         tile = Tile.fromMap(terrain, unit);

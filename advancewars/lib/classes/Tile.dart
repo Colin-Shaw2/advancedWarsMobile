@@ -51,7 +51,7 @@ class Tile {
     return false;
   }
   String getHealthImagePath(){
-   if(hasUnit){
+   if(hasUnit && unit != null){
      return unit.getHealthImagePath();
    } 
    return null;
