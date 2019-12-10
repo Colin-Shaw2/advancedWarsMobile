@@ -75,37 +75,54 @@ class WarMap {
           int j = (count ~/ xDim);
           return Stack(
             children: <Widget>[
+              //terrain
               Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      colorFilter: (tileMap[i][j].canMoveHere || tileMap[i][j].canAttackHere)
+                      colorFilter: (tileMap[i][j].canMoveHere ||
+                              tileMap[i][j].canAttackHere)
                           ? ColorFilter.linearToSrgbGamma()
                           : null,
                       image: AssetImage(tileMap[i][j].getImagePath()),
                       fit: BoxFit.fill),
                 ),
               ),
+
+              //unit
               Container(
-                margin: EdgeInsets.only(left:24, top:24),
+                decoration: (tileMap[i][j].hasUnit)
+                    ? BoxDecoration(
+                        image: DecorationImage(
+                            colorFilter: (tileMap[i][j].canMoveHere ||
+                                    tileMap[i][j].canAttackHere)
+                                ? ColorFilter.linearToSrgbGamma()
+                                : null,
+                            image: AssetImage(tileMap[i][j].unit.imagePath),
+                            fit: BoxFit.fill),
+                      )
+                    : BoxDecoration(),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 24, top: 24),
                 width: 24,
                 height: 24,
-                decoration: 
-                //if no damage on this unit it does not display a number
-                (tileMap[i][j].getHealthImagePath() != null)?
-                BoxDecoration(
-                  image: DecorationImage(
-                    alignment: Alignment.bottomRight,
-                      colorFilter: (tileMap[i][j].canMoveHere || tileMap[i][j].canAttackHere)
-                          ? ColorFilter.linearToSrgbGamma()
-                          : null,
-                      image: AssetImage(tileMap[i][j].getHealthImagePath()),
-                      //(tileMap[i][j].unit.getHealthImagePath()== null)?null:AssetImage(tileMap[i][j].unit.getHealthImagePath()),
-                      fit: BoxFit.fill,
-                      ),
-                ):
-                BoxDecoration(
-                )
-                ,
+                decoration:
+                    //if no damage on this unit it does not display a number
+                    (tileMap[i][j].getHealthImagePath() != null)
+                        ? BoxDecoration(
+                            image: DecorationImage(
+                              alignment: Alignment.bottomRight,
+                              colorFilter: (tileMap[i][j].canMoveHere ||
+                                      tileMap[i][j].canAttackHere)
+                                  ? ColorFilter.linearToSrgbGamma()
+                                  : null,
+                              image: AssetImage(
+                                  tileMap[i][j].getHealthImagePath()),
+                              //(tileMap[i][j].unit.getHealthImagePath()== null)?null:AssetImage(tileMap[i][j].unit.getHealthImagePath()),
+                              fit: BoxFit.fill,
+                            ),
+                          )
+                        : BoxDecoration(),
               ),
             ],
           );
@@ -162,7 +179,7 @@ class WarMap {
     }
   }
 
-  void cancelAttack(){
+  void cancelAttack() {
     _clearAdjEnemies();
     waitingToAttack = false;
   }
@@ -276,7 +293,6 @@ class WarMap {
       u.canAttackHere = true;
     }
   }
-
 
   void _clearAdjEnemies() {
     for (List<Tile> tileRow in tileMap) {

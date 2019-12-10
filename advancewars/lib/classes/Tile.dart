@@ -28,9 +28,6 @@ class Tile {
   }
 
   String getImagePath() {
-    if (hasUnit) {
-      return "resources/terrainUnits/" + unit.teamColor + terrainType.name + unit.name + ".png";
-    }
     return terrainType.imagePath;
   }
 
