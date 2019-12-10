@@ -70,7 +70,6 @@ flutter:
     - music/music.mp3
     - resources/units/
     - resources/terrain/
-    - resources/terrainUnits/
     - resources/menu/
     - resources/numbers/
     - assets/en.json
