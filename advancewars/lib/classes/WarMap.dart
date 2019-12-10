@@ -23,14 +23,14 @@ class WarMap {
   }
 
   //returns a gridview with all the terain images.
-  Widget display() {
+  Widget display(int activePlayer) {
     if (inUnconfirmedMoveState && !waitingToAttack) {
-      return _displayMenu();
+      return _displayMenu(activePlayer);
     }
     return _displayGrid();
   }
 
-  Widget _displayMenu() {
+  Widget _displayMenu(int activePlayer) {
     return Stack(
       children: <Widget>[
         _displayGrid(),
@@ -41,8 +41,8 @@ class WarMap {
               if (tapDownDetails.localPosition.dy < 65) {
                 //TODO make snack bar appear
                 waitingToAttack = true;
-                //inUnconfirmedMoveState = false;
-                print("fire");
+                _clearMovableTiles();
+                _setAdjacentEnemyUnits(newX, newY, activePlayer);
               }
 
               //cancel
@@ -56,7 +56,6 @@ class WarMap {
                 hasSelectedUnit = false;
                 inUnconfirmedMoveState = false;
                 _clearMovableTiles();
-                print("wait");
               }
             },
             child: Image.asset("resources/menu/firecancelwait.png"),
@@ -79,7 +78,7 @@ class WarMap {
               Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      colorFilter: (tileMap[i][j].canMoveHere)
+                      colorFilter: (tileMap[i][j].canMoveHere || tileMap[i][j].canAttackHere)
                           ? ColorFilter.linearToSrgbGamma()
                           : null,
                       image: AssetImage(tileMap[i][j].getImagePath()),
@@ -96,7 +95,7 @@ class WarMap {
                 BoxDecoration(
                   image: DecorationImage(
                     alignment: Alignment.bottomRight,
-                      colorFilter: (tileMap[i][j].canMoveHere)
+                      colorFilter: (tileMap[i][j].canMoveHere || tileMap[i][j].canAttackHere)
                           ? ColorFilter.linearToSrgbGamma()
                           : null,
                       image: AssetImage(tileMap[i][j].getHealthImagePath()),
@@ -138,6 +137,7 @@ class WarMap {
           inUnconfirmedMoveState = false;
           hasSelectedUnit = false;
           _clearMovableTiles();
+          _clearAdjEnemies();
         }
       }
     } else if (inUnconfirmedMoveState) {
@@ -160,6 +160,11 @@ class WarMap {
           _selectUnit(x, y);
       }
     }
+  }
+
+  void cancelAttack(){
+    _clearAdjEnemies();
+    waitingToAttack = false;
   }
 
   void _selectUnit(int x, int y) {
@@ -253,20 +258,31 @@ class WarMap {
     }
   }
 
-  List<Unit> _getAdjacentEnemyUnits(int x, int y, int activePlayer) {
-    List<Unit> adjUnits = List<Unit>();
+  void _setAdjacentEnemyUnits(int x, int y, int activePlayer) {
+    List<Tile> adjUnits = List<Tile>();
     if (tileMap[_bindIndexX(x + 1)][_bindIndexY(y)].hasEnemy(activePlayer)) {
-      adjUnits.add(tileMap[_bindIndexX(x + 1)][_bindIndexY(y)].unit);
+      adjUnits.add(tileMap[_bindIndexX(x + 1)][_bindIndexY(y)]);
     }
     if (tileMap[_bindIndexX(x - 1)][_bindIndexY(y)].hasEnemy(activePlayer)) {
-      adjUnits.add(tileMap[_bindIndexX(x - 1)][_bindIndexY(y)].unit);
+      adjUnits.add(tileMap[_bindIndexX(x - 1)][_bindIndexY(y)]);
     }
     if (tileMap[_bindIndexX(x)][_bindIndexY(y + 1)].hasEnemy(activePlayer)) {
-      adjUnits.add(tileMap[_bindIndexX(x)][_bindIndexY(y + 1)].unit);
+      adjUnits.add(tileMap[_bindIndexX(x)][_bindIndexY(y + 1)]);
     }
     if (tileMap[_bindIndexX(x)][_bindIndexY(y - 1)].hasEnemy(activePlayer)) {
-      adjUnits.add(tileMap[_bindIndexX(x)][_bindIndexY(y - 1)].unit);
+      adjUnits.add(tileMap[_bindIndexX(x)][_bindIndexY(y - 1)]);
     }
-    return adjUnits;
+    for (Tile u in adjUnits) {
+      u.canAttackHere = true;
+    }
+  }
+
+
+  void _clearAdjEnemies() {
+    for (List<Tile> tileRow in tileMap) {
+      for (Tile tile in tileRow) {
+        tile.canAttackHere = false;
+      }
+    }
   }
 }

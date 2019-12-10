@@ -7,6 +7,7 @@ class Tile {
   Terrain terrainType;
   Unit unit;
   bool canMoveHere = false;
+  bool canAttackHere = false;
 
   Tile(Terrain t) {
     terrainType = t;

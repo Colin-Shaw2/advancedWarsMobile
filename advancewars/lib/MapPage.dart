@@ -42,7 +42,7 @@ class _MapPageState extends State<MapPage> {
         print("longPress");
         setState(() {
           if (driver.activeMap.waitingToAttack) {
-            driver.activeMap.waitingToAttack = false;
+            driver.activeMap.cancelAttack();
           } else {
             _menu(context);
           }
@@ -71,7 +71,7 @@ class _MapPageState extends State<MapPage> {
         }
         setState(() {});
       },
-      child: driver.activeMap.display(),
+      child: driver.activeMap.display(driver.activePlayer),
     );
   }
 
