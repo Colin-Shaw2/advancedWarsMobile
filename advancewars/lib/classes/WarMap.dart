@@ -24,7 +24,6 @@ class WarMap {
 
   //returns a gridview with all the terain images.
   Widget display(int activePlayer) {
-    print("display");
     if (inUnconfirmedMoveState && !waitingToAttack) {
       return _displayMenu(activePlayer);
     }
@@ -44,7 +43,6 @@ class WarMap {
                 waitingToAttack = true;
                 _clearMovableTiles();
                 _setAdjacentEnemyUnits(newX, newY, activePlayer);
-                print("fire");
               }
 
               //cancel
@@ -58,7 +56,6 @@ class WarMap {
                 hasSelectedUnit = false;
                 inUnconfirmedMoveState = false;
                 _clearMovableTiles();
-                print("wait");
               }
             },
             child: Image.asset("resources/menu/firecancelwait.png"),
@@ -119,14 +116,11 @@ class WarMap {
 
   //select and move a unit
   void tileSelect(int x, int y, int activePlayer) {
-    print(x);
-    print(y);
     //have a selected unit already
     if (waitingToAttack) {
       bool isAdj = false;
       //determine if the selected tile is adj and an enemy
       if (tileMap[x][y].hasEnemy(activePlayer)) {
-        print("has enemy");
         if (x == newX) {
           if ((y - newY).abs() == 1) {
             isAdj = true;
@@ -138,7 +132,6 @@ class WarMap {
         }
 
         if (isAdj) {
-          print("attacked");
           selectedUnit.attack(tileMap[x][y].unit);
           waitingToAttack = false;
           inUnconfirmedMoveState = false;
@@ -146,6 +139,7 @@ class WarMap {
           _clearMovableTiles();
         }
       }
+      _clearAdjEnemies();
     } else if (inUnconfirmedMoveState) {
     } else if (hasSelectedUnit) {
       //selecting your self
