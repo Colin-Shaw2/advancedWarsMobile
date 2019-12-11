@@ -23,6 +23,7 @@ class Infantry extends Unit {
     teamId = 0;
     teamColor = "orange";
     imagePath = "resources/units/" + teamColor + "Infantry.png";
+    name = "Infantry";
   }
   Infantry.blue() {
     health = 100;
@@ -35,6 +36,7 @@ class Infantry extends Unit {
     teamId = 1;
     teamColor = "blue";
     imagePath = "resources/units/" + teamColor + "Infantry.png";
+    name = "Infantry";
   }
   Infantry.yellow() {
     health = 100;

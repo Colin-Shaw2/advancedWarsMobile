@@ -1,3 +1,4 @@
+import 'package:advancewars/databases/saving.dart';
 import 'package:advancewars/options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -162,21 +163,9 @@ class SecondRoute extends StatelessWidget {
 class ThirdRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-        SystemChrome.setEnabledSystemUIOverlays([]);
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-    ]);
-    return Scaffold(
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text(FlutterI18n.translate(context, 'newPage')),
-        ),
-      ),
-    );
+    Saving().deleteCloudTiles();
+    Saving().deleteLocalTiles();
+    return MapPage();
   }
 }
 

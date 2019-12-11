@@ -23,6 +23,7 @@ class MTank extends Unit {
     teamId = 0;
     teamColor = "orange";
     imagePath = "resources/units/" + teamColor + "MTank.png";
+    name = "MTank";
   }
   MTank.blue() {
     health = 100;
@@ -35,6 +36,7 @@ class MTank extends Unit {
     teamId = 1;
     teamColor = "blue";
     imagePath = "resources/units/" + teamColor + "MTank.png";
+    name = "MTank";
   }
 
   @override
