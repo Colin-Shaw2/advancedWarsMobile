@@ -1,7 +1,8 @@
 import 'package:advancewars/classes/Tile.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'Unit.dart';
+import 'units/Unit.dart';
 
 class WarMap {
   int xDim;
@@ -136,6 +137,7 @@ class WarMap {
     //have a selected unit already
     if (waitingToAttack) {
       bool isAdj = false;
+
       //determine if the selected tile is adj and an enemy
       if (tileMap[x][y].hasEnemy(activePlayer)) {
         if (x == newX) {
@@ -158,15 +160,12 @@ class WarMap {
           _clearAdjEnemies();
         }
       }
-    } else if (inUnconfirmedMoveState) {
+    }
+    //menu is up so we don't want to be able to do anything
+    else if (inUnconfirmedMoveState) {
     } else if (hasSelectedUnit) {
-      //selecting your self
-      if (x == xSelection && y == ySelection) {
-        hasSelectedUnit = false;
-        _clearMovableTiles();
-      }
       //moving unit to new tile
-      else if (tileMap[x][y].canMoveHere) {
+      if (tileMap[x][y].canMoveHere) {
         _moveUnit(x, y, activePlayer);
       }
     }
@@ -180,9 +179,20 @@ class WarMap {
     }
   }
 
-  void cancelAttack() {
-    _clearAdjEnemies();
+  void cancelAll() {
     waitingToAttack = false;
+    inUnconfirmedMoveState = false;
+    hasSelectedUnit = false;
+    tileMap[newX][newY].clearUnit();
+    tileMap[xSelection][ySelection].setUnit(selectedUnit);
+    _clearAllDeadUnits();
+    _clearMovableTiles();
+    _clearAdjEnemies();
+    _clearMovableTiles();
+  }
+
+  bool inWaitingState() {
+    return (waitingToAttack || inUnconfirmedMoveState || hasSelectedUnit);
   }
 
   void _selectUnit(int x, int y) {
@@ -210,40 +220,104 @@ class WarMap {
   }
 
   void _findMovableTiles(int xOrigin, int yOrigin) {
-    int movementRange = selectedUnit.movement;
-    //owntile
-    //tileMap[xOrigin][yOrigin].canMoveHere = true;
+    _recusivePathSearch(xOrigin, yOrigin, selectedUnit.movement, -1, selectedUnit.movementType);
+  }
 
-    for (var j = 0; j < movementRange; j++) {
-      //straightDown
-      tileMap[xOrigin][_bindIndexY(yOrigin + j + 1)].canMoveHere =
-          !tileMap[xOrigin][_bindIndexY(yOrigin + j + 1)].hasUnit;
-      //straightUp
-      tileMap[xOrigin][_bindIndexY(yOrigin - j - 1)].canMoveHere =
-          !tileMap[xOrigin][_bindIndexY(yOrigin - j - 1)].hasUnit;
-      //right
-      for (var i = 1; i <= movementRange - j; i++) {
-        //down right
-        tileMap[_bindIndexX(xOrigin + i)][_bindIndexY(yOrigin + j)]
-            .canMoveHere = !tileMap[_bindIndexX(xOrigin + i)]
-                [_bindIndexY(yOrigin + j)]
-            .hasUnit;
-        //up right
-        tileMap[_bindIndexX(xOrigin + i)][_bindIndexY(yOrigin - j)]
-            .canMoveHere = !tileMap[_bindIndexX(xOrigin + i)]
-                [_bindIndexY(yOrigin - j)]
-            .hasUnit;
+  void _recusivePathSearch(int x, int y, int movementRemaining,
+      int prevDirection,  MovementType moveType) {
+    tileMap[x][y].canMoveHere = true;
+    //0 left 1 up  2 right 3 down -1 intial value
 
-        //down left
-        tileMap[_bindIndexX(xOrigin - i)][_bindIndexY(yOrigin + j)]
-            .canMoveHere = !tileMap[_bindIndexX(xOrigin - i)]
-                [_bindIndexY(yOrigin + j)]
-            .hasUnit;
-        //up left
-        tileMap[_bindIndexX(xOrigin - i)][_bindIndexY(yOrigin - j)]
-            .canMoveHere = !tileMap[_bindIndexX(xOrigin - i)]
-                [_bindIndexY(yOrigin - j)]
-            .hasUnit;
+    //if less than 0 we can't move there
+    if (movementRemaining <= 0) {
+      return;
+    }
+    int newX = x, newY = y;
+
+    if (prevDirection != 0) {
+      newX = x - 1;
+      //in bounds
+      if (newX < 0) {
+      }
+      //unit collision
+      else if (tileMap[newX][y].hasUnit) {
+      }
+      //enough movement
+      else if(movementRemaining -tileMap[newX][y].terrainType.getMoveCost(moveType) < 0){
+      }
+      else{
+      _recusivePathSearch(
+          newX,
+          y,
+          (movementRemaining -
+              tileMap[newX][y].terrainType.getMoveCost(moveType)),
+          prevDirection,
+          moveType);
+      }
+    }
+
+
+    if (prevDirection != 1) {
+      newY = y - 1;
+      //in bounds
+      if (newY < 0) {
+      }
+      //unit collision
+      else if (tileMap[x][newY].hasUnit) {
+      }
+      //enough movement
+      else if(movementRemaining -tileMap[x][newY].terrainType.getMoveCost(moveType) < 0){
+      }
+      else{
+      _recusivePathSearch(
+          x,
+          newY,
+          (movementRemaining -
+              tileMap[x][newY].terrainType.getMoveCost(moveType)),
+          prevDirection,
+          moveType);
+      }
+    }
+    if (prevDirection != 0) {
+      newX = x + 1;
+      //in bounds
+      if (newX < 0) {
+      }
+      //unit collision
+      else if (tileMap[newX][y].hasUnit) {
+      }
+      //enough movement
+      else if(movementRemaining -tileMap[newX][y].terrainType.getMoveCost(moveType) < 0){
+      }
+      else{
+      _recusivePathSearch(
+          newX,
+          y,
+          (movementRemaining -
+              tileMap[newX][y].terrainType.getMoveCost(moveType)),
+          prevDirection,
+          moveType);
+      }
+    }
+    if (prevDirection != 0) {
+      newY = y +1;
+      //in bounds
+      if (newY < 0) {
+      }
+      //unit collision
+      else if (tileMap[x][newY].hasUnit) {
+      }
+      //enough movement
+      else if(movementRemaining -tileMap[x][newY].terrainType.getMoveCost(moveType) < 0){
+      }
+      else{
+      _recusivePathSearch(
+          x,
+          newY,
+          (movementRemaining -
+              tileMap[x][newY].terrainType.getMoveCost(moveType)),
+          prevDirection,
+          moveType);
       }
     }
   }

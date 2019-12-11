@@ -1,4 +1,4 @@
-import 'package:advancewars/classes/Terrain.dart';
+import 'package:advancewars/classes/terrain/Terrain.dart';
 
 class Plain extends Terrain{
   Plain():super(){

@@ -39,10 +39,9 @@ class _MapPageState extends State<MapPage> {
     ]);
     return GestureDetector(
       onLongPress: () {
-        print("longPress");
         setState(() {
-          if (driver.activeMap.waitingToAttack) {
-            driver.activeMap.cancelAttack();
+          if (driver.activeMap.inWaitingState()) {
+            driver.activeMap.cancelAll();
           } else {
             _menu(context);
           }
