@@ -468,7 +468,6 @@ class WarMap {
     }
   }
 
-  void _checkLeft() {}
 
   int _bindIndexX(index) {
     if (index < 0) {
