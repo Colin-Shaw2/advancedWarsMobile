@@ -220,90 +220,105 @@ class WarMap {
   }
 
   void _findMovableTiles(int xOrigin, int yOrigin) {
-    int movementRange = selectedUnit.movement;
-    //owntile
-    tileMap[xOrigin][yOrigin].canMoveHere = true;
-
-    for (var j = 0; j < movementRange; j++) {
-      //straightDown
-      tileMap[xOrigin][_bindIndexY(yOrigin + j + 1)].canMoveHere =
-          !tileMap[xOrigin][_bindIndexY(yOrigin + j + 1)].hasUnit;
-      //straightUp
-      tileMap[xOrigin][_bindIndexY(yOrigin - j - 1)].canMoveHere =
-          !tileMap[xOrigin][_bindIndexY(yOrigin - j - 1)].hasUnit;
-      //right
-      for (var i = 1; i <= movementRange - j; i++) {
-        //down right
-        tileMap[_bindIndexX(xOrigin + i)][_bindIndexY(yOrigin + j)]
-            .canMoveHere = !tileMap[_bindIndexX(xOrigin + i)]
-                [_bindIndexY(yOrigin + j)]
-            .hasUnit;
-        //up right
-        tileMap[_bindIndexX(xOrigin + i)][_bindIndexY(yOrigin - j)]
-            .canMoveHere = !tileMap[_bindIndexX(xOrigin + i)]
-                [_bindIndexY(yOrigin - j)]
-            .hasUnit;
-
-        //down left
-        tileMap[_bindIndexX(xOrigin - i)][_bindIndexY(yOrigin + j)]
-            .canMoveHere = !tileMap[_bindIndexX(xOrigin - i)]
-                [_bindIndexY(yOrigin + j)]
-            .hasUnit;
-        //up left
-        tileMap[_bindIndexX(xOrigin - i)][_bindIndexY(yOrigin - j)]
-            .canMoveHere = !tileMap[_bindIndexX(xOrigin - i)]
-                [_bindIndexY(yOrigin - j)]
-            .hasUnit;
-      }
-    }
+    _recusivePathSearch(xOrigin, yOrigin, selectedUnit.movement, -1, selectedUnit.movementType);
   }
 
-  void _recusivePathSearch(
-      int x, int y, int movementRemaining, int prevDirection, int activePlayer, MovementType moveType) {
-    //0 left 1 up  2 right 3 down
+  void _recusivePathSearch(int x, int y, int movementRemaining,
+      int prevDirection,  MovementType moveType) {
+    tileMap[x][y].canMoveHere = true;
+    //0 left 1 up  2 right 3 down -1 intial value
+
+    //if less than 0 we can't move there
     if (movementRemaining <= 0) {
       return;
     }
+    int newX = x, newY = y;
 
     if (prevDirection != 0) {
-      if (x - 1 < 0) {
-        return;
+      newX = x - 1;
+      //in bounds
+      if (newX < 0) {
       }
-      if (tileMap[x-1][y].hasEnemy(activePlayer)) {
-        return;
+      //unit collision
+      else if (tileMap[newX][y].hasUnit) {
       }
-      _recusivePathSearch(x - 1, y, (movementRemaining-tileMap[x-1][y].terrainType.getMoveCost(moveType)), 
-      prevDirection, activePlayer, moveType);
+      //enough movement
+      else if(movementRemaining -tileMap[newX][y].terrainType.getMoveCost(moveType) < 0){
+      }
+      else{
+      _recusivePathSearch(
+          newX,
+          y,
+          (movementRemaining -
+              tileMap[newX][y].terrainType.getMoveCost(moveType)),
+          prevDirection,
+          moveType);
+      }
     }
+
+
     if (prevDirection != 1) {
-      if (y - 1 < 0) {
-        return;
+      newY = y - 1;
+      //in bounds
+      if (newY < 0) {
       }
-      if (tileMap[x][y-1].hasEnemy(activePlayer)) {
-        return;
+      //unit collision
+      else if (tileMap[x][newY].hasUnit) {
       }
-      _recusivePathSearch(x, y - 1, (movementRemaining-tileMap[x-1][y].terrainType.getMoveCost(moveType)), 
-      prevDirection, activePlayer, moveType);
+      //enough movement
+      else if(movementRemaining -tileMap[x][newY].terrainType.getMoveCost(moveType) < 0){
+      }
+      else{
+      _recusivePathSearch(
+          x,
+          newY,
+          (movementRemaining -
+              tileMap[x][newY].terrainType.getMoveCost(moveType)),
+          prevDirection,
+          moveType);
+      }
     }
-    if (prevDirection != 2) {
-      if (x + 1 >= xDim) {
-        return;
+    if (prevDirection != 0) {
+      newX = x + 1;
+      //in bounds
+      if (newX < 0) {
       }
-      if (tileMap[x+1][y].hasEnemy(activePlayer)) {
-        return;
+      //unit collision
+      else if (tileMap[newX][y].hasUnit) {
       }
-      _recusivePathSearch(x + 1, y, (movementRemaining-tileMap[x-1][y].terrainType.getMoveCost(moveType)), 
-      prevDirection, activePlayer, moveType);
+      //enough movement
+      else if(movementRemaining -tileMap[newX][y].terrainType.getMoveCost(moveType) < 0){
+      }
+      else{
+      _recusivePathSearch(
+          newX,
+          y,
+          (movementRemaining -
+              tileMap[newX][y].terrainType.getMoveCost(moveType)),
+          prevDirection,
+          moveType);
+      }
     }
-    if (prevDirection != 3) {
-      if (y + 1 >= yDim) {
-        return;
+    if (prevDirection != 0) {
+      newY = y +1;
+      //in bounds
+      if (newY < 0) {
       }
-      if (tileMap[x][y + 1].hasEnemy(activePlayer)) {
-        return;
+      //unit collision
+      else if (tileMap[x][newY].hasUnit) {
       }
-      _recusivePathSearch(x, y + 1, (movementRemaining-tileMap[x-1][y].terrainType.getMoveCost(moveType)), 
-      prevDirection, activePlayer, moveType);
+      //enough movement
+      else if(movementRemaining -tileMap[x][newY].terrainType.getMoveCost(moveType) < 0){
+      }
+      else{
+      _recusivePathSearch(
+          x,
+          newY,
+          (movementRemaining -
+              tileMap[x][newY].terrainType.getMoveCost(moveType)),
+          prevDirection,
+          moveType);
+      }
     }
   }
 
