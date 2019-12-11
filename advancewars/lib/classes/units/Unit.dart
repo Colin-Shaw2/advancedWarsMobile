@@ -19,6 +19,7 @@ abstract class Unit{
 
 
   void attack(Unit defender) {
+    hasMoved = true;
     if(strongAgainst.contains(defender.unitType)) {
       defender.health -= ((this.attackPower*10*(this.health/100))*1.5 - (defender.defencePower*10*(defender.health/100))).round();
     }

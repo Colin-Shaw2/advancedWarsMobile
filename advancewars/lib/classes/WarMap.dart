@@ -75,6 +75,7 @@ class WarMap {
                     left: MediaQuery.of(context).size.width - 162),
             child: GestureDetector(
               onTapDown: (tapDownDetails) {
+                //fire
                 if (tapDownDetails.localPosition.dy < 65) {
                   waitingToAttack = true;
                   _clearMovableTiles();
