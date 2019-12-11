@@ -136,6 +136,7 @@ class WarMap {
     //have a selected unit already
     if (waitingToAttack) {
       bool isAdj = false;
+
       //determine if the selected tile is adj and an enemy
       if (tileMap[x][y].hasEnemy(activePlayer)) {
         if (x == newX) {
@@ -160,13 +161,8 @@ class WarMap {
       }
     } else if (inUnconfirmedMoveState) {
     } else if (hasSelectedUnit) {
-      //selecting your self
-      if (x == xSelection && y == ySelection) {
-        hasSelectedUnit = false;
-        _clearMovableTiles();
-      }
       //moving unit to new tile
-      else if (tileMap[x][y].canMoveHere) {
+      if (tileMap[x][y].canMoveHere) {
         _moveUnit(x, y, activePlayer);
       }
     }
@@ -180,9 +176,25 @@ class WarMap {
     }
   }
 
-  void cancelAttack() {
-    _clearAdjEnemies();
+  // void cancelAttack() {
+  //   _clearAdjEnemies();
+  //   waitingToAttack = false;
+  // }
+
+  void cancelAll() {
     waitingToAttack = false;
+    inUnconfirmedMoveState = false;
+    hasSelectedUnit = false;
+    tileMap[newX][newY].clearUnit();
+    tileMap[xSelection][ySelection].setUnit(selectedUnit);
+    _clearAllDeadUnits();
+    _clearMovableTiles();
+    _clearAdjEnemies();
+    _clearMovableTiles();
+  }
+
+  bool inWaitingState() {
+    return (waitingToAttack || inUnconfirmedMoveState || hasSelectedUnit);
   }
 
   void _selectUnit(int x, int y) {
@@ -212,7 +224,7 @@ class WarMap {
   void _findMovableTiles(int xOrigin, int yOrigin) {
     int movementRange = selectedUnit.movement;
     //owntile
-    //tileMap[xOrigin][yOrigin].canMoveHere = true;
+    tileMap[xOrigin][yOrigin].canMoveHere = true;
 
     for (var j = 0; j < movementRange; j++) {
       //straightDown
