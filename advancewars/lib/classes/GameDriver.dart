@@ -1,5 +1,7 @@
 import 'package:advancewars/classes/WarMap.dart';
 
+import 'Tile.dart';
+
 class GameDriver{
   WarMap activeMap;
   int numPlayers;
@@ -28,6 +30,12 @@ class GameDriver{
       activeMap.day += 1;
     }
     this.activeMap.turnEnded = true;
+    for (List<Tile> row in activeMap.tileMap) {
+      for (Tile tile in row){
+        tile.unit.hasMoved = true;
+      }
+    }
+
     startNewTurn();
 
   }

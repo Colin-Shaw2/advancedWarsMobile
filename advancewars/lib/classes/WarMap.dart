@@ -5,6 +5,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'units/Unit.dart';
 
+const ColorFilter greyscale = ColorFilter.matrix(<double>[
+  0.2126,
+  0.7152,
+  0.0722,
+  0,
+  0,
+  0.2126,
+  0.7152,
+  0.0722,
+  0,
+  0,
+  0.2126,
+  0.7152,
+  0.0722,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+]);
+
 class WarMap {
   int xDim;
   int yDim;
@@ -39,8 +62,8 @@ class WarMap {
     //has adjacent enemies
     if (tileMap[_bindIndexX(newX + 1)][newY].hasEnemy(activePlayer) ||
         tileMap[_bindIndexX(newX - 1)][newY].hasEnemy(activePlayer) ||
-        tileMap[newX][_bindIndexX(newY + 1)].hasEnemy(activePlayer) ||
-        tileMap[newX][_bindIndexX(newY - 1)].hasEnemy(activePlayer)) {
+        tileMap[newX][_bindIndexY(newY + 1)].hasEnemy(activePlayer) ||
+        tileMap[newX][_bindIndexY(newY - 1)].hasEnemy(activePlayer)) {
       return Stack(
         children: <Widget>[
           _displayGrid(),
@@ -71,6 +94,7 @@ class WarMap {
                   inUnconfirmedMoveState = false;
                   _clearMovableTiles();
                 } else {
+                  tileMap[newX][newY].unit.hasMoved = true;
                   hasSelectedUnit = false;
                   inUnconfirmedMoveState = false;
                   _clearMovableTiles();
@@ -103,6 +127,7 @@ class WarMap {
                   inUnconfirmedMoveState = false;
                   _clearMovableTiles();
                 } else {
+                  tileMap[newX][newY].unit.hasMoved = true;
                   hasSelectedUnit = false;
                   inUnconfirmedMoveState = false;
                   _clearMovableTiles();
@@ -147,7 +172,9 @@ class WarMap {
                             colorFilter: (tileMap[i][j].canMoveHere ||
                                     tileMap[i][j].canAttackHere)
                                 ? ColorFilter.linearToSrgbGamma()
-                                : null,
+                                : (tileMap[i][j].unit.hasMoved)
+                                    ? ColorFilter.srgbToLinearGamma()
+                                    : null,
                             image: AssetImage(tileMap[i][j].unit.imagePath),
                             fit: BoxFit.fill),
                       )
@@ -165,7 +192,7 @@ class WarMap {
                               alignment: Alignment.bottomRight,
                               colorFilter: (tileMap[i][j].canMoveHere ||
                                       tileMap[i][j].canAttackHere)
-                                  ? ColorFilter.linearToSrgbGamma()
+                                  ? greyscale
                                   : null,
                               image: AssetImage(
                                   tileMap[i][j].getHealthImagePath()),
@@ -198,8 +225,8 @@ class WarMap {
 
   //select and move a unit
   void tileSelect(int x, int y, int activePlayer) {
-      //which side of screen was pressed
-      (x < xDim / 2) ? pressedLeftHalf = true : pressedLeftHalf = false;
+    //which side of screen was pressed
+    (x < xDim / 2) ? pressedLeftHalf = true : pressedLeftHalf = false;
 
     //have a selected unit already
     if (waitingToAttack) {
@@ -230,7 +257,7 @@ class WarMap {
     }
     //menu is up so we don't want to be able to do anything
     else if (inUnconfirmedMoveState) {
-    } else if (hasSelectedUnit) {      
+    } else if (hasSelectedUnit) {
       //moving unit to new tile
       if (tileMap[x][y].canMoveHere) {
         _moveUnit(x, y, activePlayer);
@@ -239,7 +266,7 @@ class WarMap {
     //no unit selected
     else {
       //selecting a unit
-      if (tileMap[x][y].hasUnit) {
+      if (tileMap[x][y].hasUnit && !tileMap[x][y].unit.hasMoved) {
         if (tileMap[x][y].unit.teamId == activePlayer) //is it your own unit
           _selectUnit(x, y);
       }
