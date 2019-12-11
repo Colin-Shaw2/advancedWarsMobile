@@ -1,5 +1,7 @@
 import 'package:advancewars/classes/DayAnimation.dart';
 import 'package:advancewars/classes/Tile.dart';
+import 'package:advancewars/classes/VictoryAnimation.dart';
+import 'package:advancewars/main.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -37,6 +39,9 @@ class WarMap {
   Unit selectedUnit;
 
   bool turnEnded = false;
+  bool gameOver = false;
+  bool blueVictory = false;
+  bool orangeVictory = false;
   bool hasSelectedUnit = false;
   bool inUnconfirmedMoveState = false;
   bool waitingToAttack = false;
@@ -50,8 +55,9 @@ class WarMap {
     tileMap = new List.generate(xDim, (_) => List(yDim));
   }
 
-  //returns a gridview with all the terain images.
+    //returns a gridview with all the terain images.
   Widget display(int activePlayer, BuildContext context) {
+
     if (inUnconfirmedMoveState && !waitingToAttack) {
       return _displayMenu(activePlayer, context);
     }
@@ -212,7 +218,14 @@ class WarMap {
   List<Widget> _showMapItems() {
     if (this.turnEnded) {
       return [_displayGrid(), _runDayAnimation()];
-    } else {
+    } 
+    else if(this.blueVictory) {
+      return [_displayGrid(), _runBlueVictoryAnimation()];
+    }
+    else if(this.orangeVictory) {
+      return [_displayGrid(), _runOrangeVictoryAnimation()];
+    }
+    else {
       return [_displayGrid()];
     }
   }
@@ -221,6 +234,19 @@ class WarMap {
     if (this.turnEnded) {
       return DayAnimation(day: this.day, warmap: this);
     }
+  }
+   Widget _runBlueVictoryAnimation() {
+      _endGame();
+      return VictoryAnimation(warmap: this, colour: "Blue");
+  }
+   Widget _runOrangeVictoryAnimation() {
+      _endGame();
+      return VictoryAnimation(warmap: this, colour: "Orange");
+  }
+
+  Future<void> _endGame() async {
+    await new Future.delayed(Duration(seconds: 8));
+    gameOver = true;
   }
 
   //select and move a unit
@@ -289,14 +315,11 @@ class WarMap {
         }
       }
     }
-    if(blueUnits == 0 && orangeUnits == 0) {
-      print("DRAW");
-    }
-    else if(blueUnits == 0) {
-      print("ORANGE VICTORY");
+    if(blueUnits == 0) {
+      orangeVictory = true;
     }
     else if(orangeUnits == 0) {
-      print("BLUE VICTORY");
+      blueVictory = true;
     }
   }
 

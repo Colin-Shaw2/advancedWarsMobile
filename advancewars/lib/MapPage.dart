@@ -2,6 +2,7 @@ import 'package:advancewars/classes/GameDriver.dart';
 import 'package:advancewars/classes/StarterMap.dart';
 import 'package:advancewars/classes/WarMap.dart';
 import 'package:advancewars/classes/woodsMap.dart';
+import 'package:advancewars/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'databases/saving.dart';
@@ -23,10 +24,13 @@ class MapPage extends StatefulWidget {
 GameDriver driver = GameDriver.twoPlayers(currentMap);
 bool savedMapExists = false;
 bool loaded = false;
-
+bool navigated = false;
 class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
+    if(driver.activeMap.gameOver && !navigated) {
+      _backToHome(context);
+    }
 //     if (Saving().getLocalSavedMap() == null) {
 //       getSavedMap();
 //     }
@@ -95,7 +99,21 @@ class _MapPageState extends State<MapPage> {
       });
     }
   }
+
+  Future<void> _backToHome(context) async {
+    driver.activeMap.gameOver = false;
+    driver.activeMap.blueVictory = false;
+    driver.activeMap.orangeVictory = false;
+    await Future.delayed(Duration.zero, () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
+      });
+    setState(() {
+      navigated = true;
+      loaded = false;
+    });
+    }
 }
+
 
 Future<void> _menu(BuildContext context) async {
   var choice = await showDialog<MenuChoice>(
@@ -108,6 +126,12 @@ Future<void> _menu(BuildContext context) async {
           SimpleDialogOption(
             child: Text(FlutterI18n.translate(context, 'giveUp')),
             onPressed: () {
+              if(driver.activePlayer == 0) {
+                driver.activeMap.blueVictory = true;
+              }
+              else {
+                driver.activeMap.orangeVictory = true;
+              }
               Navigator.pop(context, MenuChoice.giveUp);
             },
           ),

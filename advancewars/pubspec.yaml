@@ -73,6 +73,7 @@ flutter:
     - resources/terrain/
     - resources/menu/
     - resources/numbers/
+    - resources/victory/
     - assets/en.json
     - assets/fr.json
     
