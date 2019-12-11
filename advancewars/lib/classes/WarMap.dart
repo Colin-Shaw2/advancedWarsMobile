@@ -5,27 +5,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'units/Unit.dart';
 
-const ColorFilter greyscale = ColorFilter.matrix(<double>[
-  0.2126,
-  0.7152,
-  0.0722,
-  0,
-  0,
-  0.2126,
-  0.7152,
-  0.0722,
-  0,
-  0,
-  0.2126,
-  0.7152,
-  0.0722,
-  0,
-  0,
-  0,
-  0,
-  0,
+const ColorFilter darken = ColorFilter.matrix(<double>[
+  0.9126,
+  0.9152,
+  0.9722,
+  0.9,
+  0.9,
+
+  0.9126,
+  0.9152,
+  0.9722,
+  0.9,
+  0.9,
+
+  0.9126,
+  0.9152,
+  0.9722,
+  0.9,
+  0.9,
+
+  0.9,
+  0.9,
+  0.9,
   1,
-  0,
+  0.9,
 ]);
 
 class WarMap {
@@ -193,7 +196,7 @@ class WarMap {
                               alignment: Alignment.bottomRight,
                               colorFilter: (tileMap[i][j].canMoveHere ||
                                       tileMap[i][j].canAttackHere)
-                                  ? greyscale
+                                  ? darken
                                   : null,
                               image: AssetImage(
                                   tileMap[i][j].getHealthImagePath()),
