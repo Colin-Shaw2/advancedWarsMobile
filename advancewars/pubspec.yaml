@@ -67,7 +67,10 @@ flutter:
     - images/bg0.jpeg
     - images/bg1.jpeg
     - images/bg2.jpeg
-    - music/music.mp3
+    - images/map01.png
+    - images/map02.png
+    - images/map03.png
+    - assets/music.mp3
     - resources/days/
     - resources/units/
     - resources/terrain/

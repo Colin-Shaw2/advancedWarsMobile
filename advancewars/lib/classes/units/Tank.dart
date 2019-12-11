@@ -11,6 +11,7 @@ class Tank extends Unit {
     cost = 1000;
     imagePath = "resources/units/Tank.png";
     name = "Tank";
+    strongAgainst = ["Infantry", "Recon", "Tank", "Mech"];
   }
   Tank.orange() {
     health = 100;
@@ -24,6 +25,7 @@ class Tank extends Unit {
     teamColor = "orange";
     imagePath = "resources/units/" + teamColor + "Tank.png";
     name = "Tank";
+    strongAgainst = ["Infantry", "Recon", "Tank", "Mech"];
   }
   Tank.blue() {
     health = 100;
@@ -37,5 +39,6 @@ class Tank extends Unit {
     teamColor = "blue";
     imagePath = "resources/units/" + teamColor + "Tank.png";
     name = "Tank";
+    strongAgainst = ["Infantry", "Recon", "Tank", "Mech"];
   }
 }

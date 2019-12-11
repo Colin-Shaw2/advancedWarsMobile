@@ -11,6 +11,7 @@ class Recon extends Unit {
     cost = 1000;
     imagePath = "resources/units/Recon.png";
     name = "Recon";
+    strongAgainst = ["Infantry", "Mech"];
   }
   Recon.orange() {
     health = 100;
@@ -24,6 +25,7 @@ class Recon extends Unit {
     teamColor = "orange";
     imagePath = "resources/units/" + teamColor + "Recon.png";
     name = "Recon";
+    strongAgainst = ["Infantry", "Mech"];
   }
   Recon.blue() {
     health = 100;
@@ -37,14 +39,7 @@ class Recon extends Unit {
     teamColor = "blue";
     imagePath = "resources/units/" + teamColor + "Recon.png";
     name = "Recon";
+    strongAgainst = ["Infantry", "Mech"];
   }
 
-  @override
-  void attack(Unit defender) {
-    defender.health -= 40;
-    if(defender.health<=0){
-      return;
-    }
-    health -= 20;
-  }
 }

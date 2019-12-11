@@ -11,6 +11,7 @@ class Mech extends Unit {
     cost = 1000;
     imagePath = "resources/units/Mech.png";
     name = "Mech";
+    strongAgainst = ["Infantry", "Recon", "Tank", "Mech"];
   }
   Mech.orange() {
     health = 100;
@@ -24,6 +25,7 @@ class Mech extends Unit {
     teamColor = "orange";
     imagePath = "resources/units/" + teamColor + "Mech.png";
     name = "Mech";
+    strongAgainst = ["Infantry", "Recon", "Tank", "Mech"];
   }
   Mech.blue() {
     health = 100;
@@ -37,14 +39,7 @@ class Mech extends Unit {
     teamColor = "blue";
     imagePath = "resources/units/" + teamColor + "Mech.png";
     name = "Mech";
+    strongAgainst = ["Infantry", "Recon", "Tank", "Mech"];
   }
 
-  @override
-  void attack(Unit defender) {
-    defender.health -= 40;
-    if(defender.health<=0){
-      return;
-    }
-    health -= 20;
-  }
 }

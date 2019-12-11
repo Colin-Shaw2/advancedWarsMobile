@@ -11,6 +11,7 @@ class Infantry extends Unit {
     cost = 1000;
     imagePath = "resources/units/Infantry.png";
     name = "Infantry";
+    strongAgainst = ["Infantry", "Mech"];
   }
   Infantry.orange() {
     health = 100;
@@ -24,6 +25,7 @@ class Infantry extends Unit {
     teamColor = "orange";
     imagePath = "resources/units/" + teamColor + "Infantry.png";
     name = "Infantry";
+    strongAgainst = ["Infantry", "Mech"];
   }
   Infantry.blue() {
     health = 100;
@@ -37,6 +39,7 @@ class Infantry extends Unit {
     teamColor = "blue";
     imagePath = "resources/units/" + teamColor + "Infantry.png";
     name = "Infantry";
+    strongAgainst = ["Infantry", "Mech"];
   }
   Infantry.yellow() {
     health = 100;
@@ -49,6 +52,8 @@ class Infantry extends Unit {
     teamId = 2;
     teamColor = "yellow";
     imagePath = "resources/units/" + teamColor + "Infantry.png";
+    name = "Infantry";
+    strongAgainst = ["Infantry", "Mech"];
   }
   Infantry.green() {
     health = 100;
@@ -61,6 +66,8 @@ class Infantry extends Unit {
     teamId = 3;
     teamColor = "green";
     imagePath = "resources/units/" + teamColor + "Infantry.png";
+    name = "Infantry";
+    strongAgainst = ["Infantry", "Mech"];
   }
   Infantry.black() {
     health = 100;
@@ -73,5 +80,7 @@ class Infantry extends Unit {
     teamId = 4;
     teamColor = "black";
     imagePath = "resources/units/" + teamColor + "Infantry.png";
+    name = "Infantry";
+    strongAgainst = ["Infantry", "Mech"];
   }
 }

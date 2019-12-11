@@ -5,18 +5,18 @@ import 'package:advancewars/classes/woodsMap.dart';
 import 'package:advancewars/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'classes/mountainMap.dart';
 import 'databases/saving.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'classes/terrain/Mountain.dart';
 
-//StarterMap currentMap = StarterMap(16, 9);
-WoodsMap currentMap = WoodsMap();
+WarMap currentMap = StarterMap();
 
 class MapPage extends StatefulWidget {
-  MapPage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  MapPage(String s, {Key key, this.selectedMap}) : super(key: key);
+  String selectedMap;
   @override
   _MapPageState createState() => _MapPageState();
 }
@@ -28,9 +28,18 @@ bool navigated = false;
 class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
+
     if(driver.activeMap.gameOver && !navigated) {
       _backToHome(context);
     }
+    if(widget.selectedMap == 'starterMap') {
+      driver.activeMap = StarterMap();
+    } else if (widget.selectedMap == 'mountainMap') {
+      driver.activeMap = MountainMap();
+    } else if (widget.selectedMap == 'woodsMap'){
+      driver.activeMap = WoodsMap();
+    }
+
 //     if (Saving().getLocalSavedMap() == null) {
 //       getSavedMap();
 //     }
@@ -46,16 +55,18 @@ class _MapPageState extends State<MapPage> {
     return GestureDetector(
       onLongPress: () {
         setState(() {
-          if (driver.activeMap.inWaitingState()) {
-            driver.activeMap.cancelAll();
+          if (driver.activeMap.inWaitingState() || driver.activeMap.turnEnded) {
           } else {
             _menu(context);
           }
         });
       },
       onTapDown: (TapDownDetails details) {
-        // do nothing if waiting for other gesture dector
-        if (!driver.activeMap.inUnconfirmedMoveState ||
+        //if the animation is still playing you are locked out
+        if (driver.activeMap.turnEnded) {
+        }
+        // do nothing if waiting for other gesture detector
+        else if (!driver.activeMap.inUnconfirmedMoveState ||
             (driver.activeMap.inUnconfirmedMoveState &&
                 driver.activeMap.waitingToAttack)) {
           double x = details.localPosition.dx;

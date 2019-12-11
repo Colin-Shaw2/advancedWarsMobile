@@ -3,12 +3,25 @@ import 'package:advancewars/options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:http/http.dart';
 import 'notification/notification.dart' as notifications;
 import 'package:advancewars/classes/StarterMap.dart';
 import 'MapPage.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flame/flame.dart';
+import 'package:flutter/widgets.dart';
+import 'package:audioplayers/audio_cache.dart';
+
+import 'dart:async';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
+import 'package:flutter/services.dart';
+
 
 
 void main() => runApp(MyApp());
@@ -18,6 +31,7 @@ class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'title',
         theme: new ThemeData(
           primarySwatch: Colors.blue,
@@ -46,14 +60,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreen extends State<HomeScreen> {
   var scheduleNotification = notifications.Notification();
+    final AudioCache audioPlayer = AudioCache();
+    bool isPlaying = false;
 
   @override
   Widget build(BuildContext context) {
-    //Code for music not working currently
-    // Flame.bgm.initialize();
-    // Bgm audio = Bgm();
-    // audio.play('music/music.mp3');
-    // Flame.audio.clear('music/music.mp3');
+    
+    if(!isPlaying){
+      startAudio();
+    }
     scheduleNotification.init();
     scheduleNotification.sendNotificationWeekly();
     scheduleNotification.sendAbsentNotification('payload');
@@ -113,7 +128,7 @@ class _HomeScreen extends State<HomeScreen> {
             onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ThirdRoute())),
+                    builder: (context) => ChooseMap())),
           ),
           GestureDetector(
             child: Stack(
@@ -140,6 +155,10 @@ class _HomeScreen extends State<HomeScreen> {
       // },
     );
   }
+  Future <void> startAudio() async {
+   audioPlayer.loop("music.mp3");
+   isPlaying = true;
+  }
 }
 
 void _popupDialog(BuildContext context) {
@@ -156,7 +175,7 @@ class FirstRoute extends StatelessWidget {
 class SecondRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MapPage();
+    return MapPage('');
   }
 }
 
@@ -165,39 +184,114 @@ class ThirdRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     Saving().deleteCloudTiles();
     Saving().deleteLocalTiles();
-    return MapPage();
+    return MapPage('woodsMap');
   }
 }
 
-// Future<void> _options(BuildContext context) async {
-//   showDialog<MenuChoice>(
-//     context: context,
-//     builder: (BuildContext context) {
-//       return SimpleDialog(
-//         title: Text(FlutterI18n.translate(context, 'optioTitle')),
-//           children: <Widget>[
-//             SimpleDialogOption(
-//               child: Text(
-//                 FlutterI18n.translate(context, 'lanOne'),
-//               ),
-//               onPressed: () {
-//                 Locale newLocale = Locale('en');
-//                 FlutterI18n.refresh(context, newLocale);
-//                 Navigator.pop(context);
-//               },
-//             ),
-//             SimpleDialogOption(
-//               child: Text(
-//                 FlutterI18n.translate(context, 'lanTwo'),
-//               ),
-//               onPressed: () {
-//                 Locale newLocale = Locale('fr');
-//                 FlutterI18n.refresh(context, newLocale);
-//                 Navigator.pop(context);
-//               },
-//             ),
-//           ],
-//       );
-//     },
-//   );
-// }
+class FourthRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Saving().deleteCloudTiles();
+    Saving().deleteLocalTiles();
+    return MapPage('starterMap');
+  }
+}
+class FifthRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Saving().deleteCloudTiles();
+    Saving().deleteLocalTiles();
+    return MapPage('mountainMap');
+  }
+}
+
+
+class ChooseMap extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([]);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+    return new Scaffold(
+      body: new Swiper.children(
+        scrollDirection: Axis.vertical,
+        viewportFraction: 0.75,
+        scale: 0.9,
+        children: <Widget>[
+          GestureDetector(
+            child: Stack(
+            children: <Widget> [
+              Container(             
+                child: Image.asset(
+                "images/map01.png",width: MediaQuery.of(context).size.width,
+                fit: BoxFit.fill,),
+            ),
+            Container(
+              child: Center(
+                child: new Text(
+                  FlutterI18n.translate(context, 'STARTER'),
+                  textScaleFactor: 5.0,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontFamily: 'VT323'),
+                  ),
+            ))]
+            ), 
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => FourthRoute())),
+          ),
+          GestureDetector(
+            child: Stack(
+            children: <Widget> [
+              Container(             
+                child: Image.asset(
+                "images/map02.png",width: MediaQuery.of(context).size.width,
+                fit: BoxFit.fill,),
+            ),
+            Container(
+              child: Center(
+                child: new Text(
+                  FlutterI18n.translate(context, 'WOODS'),
+                  textScaleFactor: 5.0,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontFamily: 'VT323'),
+                  ),
+            ))]
+            ), 
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ThirdRoute())),
+          ),
+          GestureDetector(
+            child: Stack(
+            children: <Widget> [
+              Container(             
+                child: Image.asset(
+                "images/map03.png",width: MediaQuery.of(context).size.width,
+                fit: BoxFit.fill,),
+            ),
+            Container(
+              child: Center(
+                child: new Text(
+                  FlutterI18n.translate(context, 'MOUNTAIN'),
+                  textScaleFactor: 5.0,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontFamily: 'VT323'),
+                  ),
+            ))]
+            ), 
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => FifthRoute())),
+          ),
+        ],
+      ),
+      // },
+    );
+  }
+}
