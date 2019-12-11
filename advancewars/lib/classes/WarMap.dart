@@ -256,6 +256,7 @@ class WarMap {
           _clearAllDeadUnits();
           _clearMovableTiles();
           _clearAdjEnemies();
+          _isEndOfGame();
         }
       }
     }
@@ -276,6 +277,33 @@ class WarMap {
       }
     }
   }
+
+    void _isEndOfGame() {
+    int orangeUnits = 0;
+    int blueUnits = 0;
+    for(var x = 0; x < this.xDim; x+=1) {
+      for(var y = 0; y < this.yDim; y+=1) {
+        if(this.tileMap[x][y].hasUnit) {
+          if(this.tileMap[x][y].unit.teamColor == "orange") {
+            orangeUnits += 1;
+          }
+          else {
+            blueUnits += 1;
+          }
+        }
+      }
+    }
+    if(blueUnits == 0 && orangeUnits == 0) {
+      print("DRAW");
+    }
+    else if(blueUnits == 0) {
+      print("ORANGE VICTORY");
+    }
+    else if(orangeUnits == 0) {
+      print("BLUE VICTORY");
+    }
+  }
+
 
   void cancelAll() {
     waitingToAttack = false;
