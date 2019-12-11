@@ -11,6 +11,7 @@ class MTank extends Unit {
     cost = 1000;
     imagePath = "resources/units/MTank.png";
     name = "MTank";
+    strongAgainst = ["Infantry", "Recon", "Tank", "Mech", "MTank"];
   }
   MTank.orange() {
     health = 100;
@@ -24,6 +25,7 @@ class MTank extends Unit {
     teamColor = "orange";
     imagePath = "resources/units/" + teamColor + "MTank.png";
     name = "MTank";
+    strongAgainst = ["Infantry", "Recon", "Tank", "Mech"];
   }
   MTank.blue() {
     health = 100;
@@ -37,6 +39,7 @@ class MTank extends Unit {
     teamColor = "blue";
     imagePath = "resources/units/" + teamColor + "MTank.png";
     name = "MTank";
+    strongAgainst = ["Infantry", "Recon", "Tank", "Mech"];
   }
 
 }

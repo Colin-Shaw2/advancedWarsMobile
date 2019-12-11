@@ -12,8 +12,8 @@ abstract class Unit{
   num attackPower;
   num defencePower;
   int cost;
-  List<UnitType> strongAgainst = [];
-  List<UnitType> weakAgainst = [];
+  List<String> strongAgainst = [];
+  List<String> weakAgainst = [];
   String imagePath;
   bool hasMoved = false;
 
