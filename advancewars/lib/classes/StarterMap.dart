@@ -2,7 +2,7 @@ import 'package:advancewars/classes/terrain/Wood.dart';
 import 'package:advancewars/classes/units/Infantry.dart';
 import 'package:advancewars/classes/units/Tank.dart';
 
-import 'Plain.dart';
+import 'terrain/Plain.dart';
 import 'Tile.dart';
 import 'WarMap.dart';
 

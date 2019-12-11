@@ -1,7 +1,8 @@
 import 'package:advancewars/classes/Tile.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'Unit.dart';
+import 'units/Unit.dart';
 
 class WarMap {
   int xDim;
@@ -159,11 +160,10 @@ class WarMap {
           _clearAdjEnemies();
         }
       }
-    } 
+    }
     //menu is up so we don't want to be able to do anything
     else if (inUnconfirmedMoveState) {
-    } 
-    else if (hasSelectedUnit) {
+    } else if (hasSelectedUnit) {
       //moving unit to new tile
       if (tileMap[x][y].canMoveHere) {
         _moveUnit(x, y, activePlayer);
@@ -255,6 +255,55 @@ class WarMap {
                 [_bindIndexY(yOrigin - j)]
             .hasUnit;
       }
+    }
+  }
+
+  void _recusivePathSearch(
+      int x, int y, int movementRemaining, int prevDirection, int activePlayer, MovementType moveType) {
+    //0 left 1 up  2 right 3 down
+    if (movementRemaining <= 0) {
+      return;
+    }
+
+    if (prevDirection != 0) {
+      if (x - 1 < 0) {
+        return;
+      }
+      if (tileMap[x-1][y].hasEnemy(activePlayer)) {
+        return;
+      }
+      _recusivePathSearch(x - 1, y, (movementRemaining-tileMap[x-1][y].terrainType.getMoveCost(moveType)), 
+      prevDirection, activePlayer, moveType);
+    }
+    if (prevDirection != 1) {
+      if (y - 1 < 0) {
+        return;
+      }
+      if (tileMap[x][y-1].hasEnemy(activePlayer)) {
+        return;
+      }
+      _recusivePathSearch(x, y - 1, (movementRemaining-tileMap[x-1][y].terrainType.getMoveCost(moveType)), 
+      prevDirection, activePlayer, moveType);
+    }
+    if (prevDirection != 2) {
+      if (x + 1 >= xDim) {
+        return;
+      }
+      if (tileMap[x+1][y].hasEnemy(activePlayer)) {
+        return;
+      }
+      _recusivePathSearch(x + 1, y, (movementRemaining-tileMap[x-1][y].terrainType.getMoveCost(moveType)), 
+      prevDirection, activePlayer, moveType);
+    }
+    if (prevDirection != 3) {
+      if (y + 1 >= yDim) {
+        return;
+      }
+      if (tileMap[x][y + 1].hasEnemy(activePlayer)) {
+        return;
+      }
+      _recusivePathSearch(x, y + 1, (movementRemaining-tileMap[x-1][y].terrainType.getMoveCost(moveType)), 
+      prevDirection, activePlayer, moveType);
     }
   }
 

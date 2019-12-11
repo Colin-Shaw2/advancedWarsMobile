@@ -1,6 +1,6 @@
-import 'package:advancewars/classes/Terrain.dart';
+import 'package:advancewars/classes/terrain/Terrain.dart';
 
-import 'Unit.dart';
+import 'units/Unit.dart';
 
 class Tile {
   bool hasUnit = false;

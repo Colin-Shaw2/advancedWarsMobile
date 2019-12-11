@@ -1,4 +1,4 @@
-import 'package:advancewars/classes/Unit.dart';
+import 'package:advancewars/classes/units/Unit.dart';
 
 class Infantry extends Unit {
   Infantry() {

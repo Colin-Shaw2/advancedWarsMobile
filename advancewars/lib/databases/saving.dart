@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:advancewars/classes/Infantry.dart';
-import 'package:advancewars/classes/Plain.dart';
-import 'package:advancewars/classes/Terrain.dart';
-import 'package:advancewars/classes/Unit.dart';
+import 'package:advancewars/classes/units/Infantry.dart';
+import 'package:advancewars/classes/terrain/Plain.dart';
+import 'package:advancewars/classes/terrain/Terrain.dart';
+import 'package:advancewars/classes/units/Unit.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:latlong/latlong.dart';
