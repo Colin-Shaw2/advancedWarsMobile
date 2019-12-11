@@ -55,6 +55,7 @@ abstract class Unit{
     if(this.health < 0) {
       this.health = 0;
     }
+    this.hasMoved = true;
   }
 
 

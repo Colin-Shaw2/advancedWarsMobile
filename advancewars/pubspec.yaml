@@ -67,12 +67,16 @@ flutter:
     - images/bg0.jpeg
     - images/bg1.jpeg
     - images/bg2.jpeg
+    - images/map01.png
+    - images/map02.png
+    - images/map03.png
     - assets/music.mp3
     - resources/days/
     - resources/units/
     - resources/terrain/
     - resources/menu/
     - resources/numbers/
+    - resources/victory/
     - assets/en.json
     - assets/fr.json
     
