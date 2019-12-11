@@ -1,4 +1,3 @@
-
 import 'package:advancewars/classes/DayAnimation.dart';
 import 'package:advancewars/classes/Tile.dart';
 import 'package:flutter/foundation.dart';
@@ -13,7 +12,7 @@ class WarMap {
   int xSelection;
   int ySelection;
   Unit selectedUnit;
-  
+
   bool turnEnded = false;
   bool hasSelectedUnit = false;
   bool inUnconfirmedMoveState = false;
@@ -32,41 +31,75 @@ class WarMap {
     if (inUnconfirmedMoveState && !waitingToAttack) {
       return _displayMenu(activePlayer);
     }
-      return Stack(children: _showMapItems());
+    return Stack(children: _showMapItems());
   }
-  Widget _displayMenu(int activePlayer) {
-    return Stack(
-      children: <Widget>[
-        _displayGrid(),
-        Container(
-          color: Colors.blue,
-          child: GestureDetector(
-            onTapDown: (tapDownDetails) {
-              if (tapDownDetails.localPosition.dy < 65) {
-                //TODO make snack bar appear
-                waitingToAttack = true;
-                _clearMovableTiles();
-                _setAdjacentEnemyUnits(newX, newY, activePlayer);
-              }
 
-              //cancel
-              else if (tapDownDetails.localPosition.dy < 115) {
-                tileMap[newX][newY].clearUnit();
-                tileMap[xSelection][ySelection].setUnit(selectedUnit);
-                hasSelectedUnit = false;
-                inUnconfirmedMoveState = false;
-                _clearMovableTiles();
-              } else {
-                hasSelectedUnit = false;
-                inUnconfirmedMoveState = false;
-                _clearMovableTiles();
-              }
-            },
-            child: Image.asset("resources/menu/firecancelwait.png"),
+  Widget _displayMenu(int activePlayer) {
+    if (tileMap[_bindIndexX(newX + 1)][newY].hasEnemy(activePlayer) ||
+        tileMap[_bindIndexX(newX - 1)][newY].hasEnemy(activePlayer) ||
+        tileMap[newX][_bindIndexX(newY + 1)].hasEnemy(activePlayer) ||
+        tileMap[newX][_bindIndexX(newY - 1)].hasEnemy(activePlayer)) {
+      return Stack(
+        children: <Widget>[
+          _displayGrid(),
+          Container(
+            color: Colors.blue,
+            child: GestureDetector(
+              onTapDown: (tapDownDetails) {
+                if (tapDownDetails.localPosition.dy < 65) {
+                  //TODO make snack bar appear
+                  waitingToAttack = true;
+                  _clearMovableTiles();
+                  _setAdjacentEnemyUnits(newX, newY, activePlayer);
+                }
+
+                //cancel
+                else if (tapDownDetails.localPosition.dy < 115) {
+                  tileMap[newX][newY].clearUnit();
+                  tileMap[xSelection][ySelection].setUnit(selectedUnit);
+                  hasSelectedUnit = false;
+                  inUnconfirmedMoveState = false;
+                  _clearMovableTiles();
+                } else {
+                  hasSelectedUnit = false;
+                  inUnconfirmedMoveState = false;
+                  _clearMovableTiles();
+                }
+              },
+              child: Image.asset("resources/menu/firecancelwait.png"),
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    } 
+    //no adjacent enemies
+    else {
+      return Stack(
+        children: <Widget>[
+          _displayGrid(),
+          Container(
+            color: Colors.blue,
+            child: GestureDetector(
+              onTapDown: (tapDownDetails) {
+                //cancel
+                if (tapDownDetails.localPosition.dy < 65) {
+                  tileMap[newX][newY].clearUnit();
+                  tileMap[xSelection][ySelection].setUnit(selectedUnit);
+                  hasSelectedUnit = false;
+                  inUnconfirmedMoveState = false;
+                  _clearMovableTiles();
+                } else {
+                  hasSelectedUnit = false;
+                  inUnconfirmedMoveState = false;
+                  _clearMovableTiles();
+                }
+              },
+              child: Image.asset("resources/menu/cancelwait.png"),
+            ),
+          ),
+        ],
+      );
+    }
   }
 
   Widget _displayGrid() {
@@ -136,19 +169,17 @@ class WarMap {
   }
 
   List<Widget> _showMapItems() {
-    if(this.turnEnded) {
+    if (this.turnEnded) {
       return [_displayGrid(), _runDayAnimation()];
-    }
-    else {
+    } else {
       return [_displayGrid()];
     }
   }
 
   Widget _runDayAnimation() {
-    if(this.turnEnded) {
+    if (this.turnEnded) {
       return DayAnimation(day: this.day, warmap: this);
-    }   
-
+    }
   }
 
   //select and move a unit
@@ -204,6 +235,7 @@ class WarMap {
     hasSelectedUnit = false;
     tileMap[newX][newY].clearUnit();
     tileMap[xSelection][ySelection].setUnit(selectedUnit);
+    selectedUnit = null;
     _clearAllDeadUnits();
     _clearMovableTiles();
     _clearAdjEnemies();
@@ -239,11 +271,12 @@ class WarMap {
   }
 
   void _findMovableTiles(int xOrigin, int yOrigin) {
-    _recusivePathSearch(xOrigin, yOrigin, selectedUnit.movement, -1, selectedUnit.movementType);
+    _recursivePathSearch(
+        xOrigin, yOrigin, selectedUnit.movement, -1, selectedUnit.movementType);
   }
 
-  void _recusivePathSearch(int x, int y, int movementRemaining,
-      int prevDirection,  MovementType moveType) {
+  void _recursivePathSearch(int x, int y, int movementRemaining,
+      int prevDirection, MovementType moveType) {
     tileMap[x][y].canMoveHere = true;
     //0 left 1 up  2 right 3 down -1 intial value
 
@@ -262,19 +295,22 @@ class WarMap {
       else if (tileMap[newX][y].hasUnit) {
       }
       //enough movement
-      else if(movementRemaining -tileMap[newX][y].terrainType.getMoveCost(moveType) < 0){
+      else if (movementRemaining -
+              tileMap[newX][y].terrainType.getMoveCost(moveType) <
+          0) {
       }
-      else{
-      _recusivePathSearch(
-          newX,
-          y,
-          (movementRemaining -
-              tileMap[newX][y].terrainType.getMoveCost(moveType)),
-          prevDirection,
-          moveType);
+      //can your movement type move here
+      else if (tileMap[newX][y].terrainType.getMoveCost(moveType) < 0) {
+      } else {
+        _recursivePathSearch(
+            newX,
+            y,
+            (movementRemaining -
+                tileMap[newX][y].terrainType.getMoveCost(moveType)),
+            prevDirection,
+            moveType);
       }
     }
-
 
     if (prevDirection != 1) {
       newY = y - 1;
@@ -285,61 +321,75 @@ class WarMap {
       else if (tileMap[x][newY].hasUnit) {
       }
       //enough movement
-      else if(movementRemaining -tileMap[x][newY].terrainType.getMoveCost(moveType) < 0){
+      else if (movementRemaining -
+              tileMap[x][newY].terrainType.getMoveCost(moveType) <
+          0) {
       }
-      else{
-      _recusivePathSearch(
-          x,
-          newY,
-          (movementRemaining -
-              tileMap[x][newY].terrainType.getMoveCost(moveType)),
-          prevDirection,
-          moveType);
+      //can your movement type move here
+      else if (tileMap[x][newY].terrainType.getMoveCost(moveType) < 0) {
+      } else {
+        _recursivePathSearch(
+            x,
+            newY,
+            (movementRemaining -
+                tileMap[x][newY].terrainType.getMoveCost(moveType)),
+            prevDirection,
+            moveType);
       }
     }
     if (prevDirection != 0) {
       newX = x + 1;
       //in bounds
-      if (newX < 0) {
+      if (newX >= xDim) {
       }
       //unit collision
       else if (tileMap[newX][y].hasUnit) {
       }
       //enough movement
-      else if(movementRemaining -tileMap[newX][y].terrainType.getMoveCost(moveType) < 0){
+      else if (movementRemaining -
+              tileMap[newX][y].terrainType.getMoveCost(moveType) <
+          0) {
       }
-      else{
-      _recusivePathSearch(
-          newX,
-          y,
-          (movementRemaining -
-              tileMap[newX][y].terrainType.getMoveCost(moveType)),
-          prevDirection,
-          moveType);
+      //can your movement type move here
+      else if (tileMap[newX][y].terrainType.getMoveCost(moveType) < 0) {
+      } else {
+        _recursivePathSearch(
+            newX,
+            y,
+            (movementRemaining -
+                tileMap[newX][y].terrainType.getMoveCost(moveType)),
+            prevDirection,
+            moveType);
       }
     }
     if (prevDirection != 0) {
-      newY = y +1;
+      newY = y + 1;
       //in bounds
-      if (newY < 0) {
+      if (newY >= yDim) {
       }
       //unit collision
       else if (tileMap[x][newY].hasUnit) {
       }
       //enough movement
-      else if(movementRemaining -tileMap[x][newY].terrainType.getMoveCost(moveType) < 0){
+      else if (movementRemaining -
+              tileMap[x][newY].terrainType.getMoveCost(moveType) <
+          0) {
       }
-      else{
-      _recusivePathSearch(
-          x,
-          newY,
-          (movementRemaining -
-              tileMap[x][newY].terrainType.getMoveCost(moveType)),
-          prevDirection,
-          moveType);
+      //can your movement type move here
+      else if (tileMap[x][newY].terrainType.getMoveCost(moveType) < 0) {
+      } else {
+        _recursivePathSearch(
+            x,
+            newY,
+            (movementRemaining -
+                tileMap[x][newY].terrainType.getMoveCost(moveType)),
+            prevDirection,
+            moveType);
       }
     }
   }
+
+  void _checkLeft() {}
 
   int _bindIndexX(index) {
     if (index < 0) {

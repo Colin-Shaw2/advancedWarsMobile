@@ -1,18 +1,18 @@
 import 'package:advancewars/classes/terrain/Terrain.dart';
 
-class Plain extends Terrain{
-  Plain():super(){
+class Road extends Terrain{
+  Road():super(){
     
-  wheelsCost = 2;
+  wheelsCost = 1;
   infCost = 1;
   mechCost = 1;
   treadCost= 1;
   airCost = 1;
   landerCost = -1;
   boatCost = -1;
-  defenceBonus = 1;
-  imagePath ="resources/terrain/Plain.png";
-  name = "Plain";
+  defenceBonus = 0;
+  imagePath ="resources/terrain/Road.png";
+  name = "Road";
   }
 
 }

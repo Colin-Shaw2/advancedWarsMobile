@@ -1,20 +1,20 @@
 import 'package:advancewars/classes/units/Unit.dart';
 
-class Tank extends Unit {
-  Tank() {
+class MTank extends Unit {
+  MTank() {
     health = 100;
-    movement = 6;
+    movement = 5;
     movementType = MovementType.tread;
     unitType = UnitType.land;
     attackPower = 3.0;
     defencePower = 1.5;
     cost = 1000;
-    imagePath = "resources/units/Tank.png";
-    name = "Tank";
+    imagePath = "resources/units/MTank.png";
+    name = "MTank";
   }
-  Tank.orange() {
+  MTank.orange() {
     health = 100;
-    movement = 6;
+    movement = 5;
     movementType = MovementType.tread;
     unitType = UnitType.land;
     attackPower = 3.0;
@@ -22,12 +22,11 @@ class Tank extends Unit {
     cost = 1000;
     teamId = 0;
     teamColor = "orange";
-    imagePath = "resources/units/" + teamColor + "Tank.png";
-    name = "Tank";
+    imagePath = "resources/units/" + teamColor + "MTank.png";
   }
-  Tank.blue() {
+  MTank.blue() {
     health = 100;
-    movement = 6;
+    movement = 5;
     movementType = MovementType.tread;
     unitType = UnitType.land;
     attackPower = 3.0;
@@ -35,8 +34,7 @@ class Tank extends Unit {
     cost = 1000;
     teamId = 1;
     teamColor = "blue";
-    imagePath = "resources/units/" + teamColor + "Tank.png";
-    name = "Tank";
+    imagePath = "resources/units/" + teamColor + "MTank.png";
   }
 
   @override

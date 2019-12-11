@@ -6,8 +6,8 @@ import 'terrain/Plain.dart';
 import 'Tile.dart';
 import 'WarMap.dart';
 
-class StarterMap extends WarMap {
-  StarterMap(x, y) : super(x, y) {
+class WoodsMap extends WarMap {
+  WoodsMap(x, y) : super(x, y) {
     //terrain
     for (var i = 0; i < xDim; i++) {
       for (var j = 0; j < yDim; j++) {
@@ -22,6 +22,5 @@ class StarterMap extends WarMap {
     tileMap[3][3] = new Tile.unit(tileMap[3][3].terrainType, Infantry.blue());
     tileMap[1][3] = new Tile.unit(tileMap[1][3].terrainType, Tank.orange());
     tileMap[4][3] = new Tile.unit(tileMap[4][3].terrainType, Tank.blue());
-
   }
 }

@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 class Terrain{
   String name;
   int wheelsCost;
-  int walkCost;
+  int infCost;
+  int mechCost;
   int treadCost;
   int airCost = 1;
   int landerCost;
@@ -32,14 +33,18 @@ class Terrain{
       return landerCost;
     }
     
+    if(moveType == MovementType.mech){
+      return mechCost;
+    }
+
+    if(moveType == MovementType.inf){
+      return infCost;
+    }
+
     if(moveType == MovementType.tread){
       return treadCost;
     }
     
-    if(moveType == MovementType.walk){
-      return walkCost;
-    }
-
     if(moveType == MovementType.wheels){
       return wheelsCost;
     }

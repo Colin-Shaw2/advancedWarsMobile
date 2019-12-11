@@ -59,10 +59,6 @@ class _MapPageState extends State<MapPage> {
           double yBucket =
               MediaQuery.of(context).size.height / driver.activeMap.yDim;
 
-          // int g = tx ~/ xBucke;
-          // int h = y ~/ yBucket;
-          //print("changed $xBucket + $yBucket");
-
           driver.handleDownPress(
             x ~/ xBucket,
             y ~/ yBucket,
