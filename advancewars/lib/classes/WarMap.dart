@@ -1,3 +1,5 @@
+
+import 'package:advancewars/classes/DayAnimation.dart';
 import 'package:advancewars/classes/Tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,11 +12,13 @@ class WarMap {
   int xSelection;
   int ySelection;
   Unit selectedUnit;
-
+  
+  bool turnEnded = false;
   bool hasSelectedUnit = false;
   bool inUnconfirmedMoveState = false;
   bool waitingToAttack = false;
   int newX, newY;
+  int day = 1;
 
   WarMap(int x, int y) {
     xDim = x;
@@ -27,9 +31,8 @@ class WarMap {
     if (inUnconfirmedMoveState && !waitingToAttack) {
       return _displayMenu(activePlayer);
     }
-    return _displayGrid();
+      return Stack(children: _showMapItems());
   }
-
   Widget _displayMenu(int activePlayer) {
     return Stack(
       children: <Widget>[
@@ -129,6 +132,22 @@ class WarMap {
         },
       ),
     );
+  }
+
+  List<Widget> _showMapItems() {
+    if(this.turnEnded) {
+      return [_displayGrid(), _runDayAnimation()];
+    }
+    else {
+      return [_displayGrid()];
+    }
+  }
+
+  Widget _runDayAnimation() {
+    if(this.turnEnded) {
+      return DayAnimation(day: this.day, warmap: this);
+    }   
+
   }
 
   //select and move a unit

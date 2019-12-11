@@ -24,6 +24,17 @@ class GameDriver{
 
   endTurn(){
     activePlayer = (activePlayer + 1)%numPlayers;
+    if(activePlayer == 0) {
+      activeMap.day += 1;
+    }
+    this.activeMap.turnEnded = true;
+    startNewTurn();
+
+  }
+
+  Future<void> startNewTurn() async {
+    await new Future.delayed(Duration(seconds: 8));
+    this.activeMap.turnEnded = false;
   }
 
 

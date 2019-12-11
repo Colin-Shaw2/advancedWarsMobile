@@ -68,9 +68,9 @@ flutter:
     - images/bg1.jpeg
     - images/bg2.jpeg
     - music/music.mp3
+    - resources/days/
     - resources/units/
     - resources/terrain/
-    - resources/terrainUnits/
     - resources/menu/
     - resources/numbers/
     - assets/en.json
