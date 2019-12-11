@@ -23,6 +23,7 @@ class Recon extends Unit {
     teamId = 0;
     teamColor = "orange";
     imagePath = "resources/units/" + teamColor + "Recon.png";
+    name = "Recon";
   }
   Recon.blue() {
     health = 100;
@@ -35,6 +36,7 @@ class Recon extends Unit {
     teamId = 1;
     teamColor = "blue";
     imagePath = "resources/units/" + teamColor + "Recon.png";
+    name = "Recon";
   }
 
   @override

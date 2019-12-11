@@ -78,16 +78,16 @@ class _MapPageState extends State<MapPage> {
   }
 
   Future<void> getSavedMap() async {
-    WarMap map = await Saving().getLocalSavedMap();
+    GameDriver loadedDriver = await Saving().getLocalSavedMap();
     setState(() {
-      driver.activeMap = map;
+      driver = loadedDriver;
       loaded = true;
     });
   }
 
   Future<void> savedMap() async {
-    WarMap map = await Saving().getLocalSavedMap();
-    if (map != null) {
+    GameDriver loadDriver = await Saving().getLocalSavedMap();
+    if (loadDriver != null) {
       setState(() {
         savedMapExists = true;
       });
@@ -112,7 +112,7 @@ Future<void> _menu(BuildContext context) async {
           SimpleDialogOption(
             child: Text(FlutterI18n.translate(context, 'save')),
             onPressed: () {
-              Saving().saveMap(driver.activeMap);
+              Saving().saveMap(driver.activeMap, driver.activePlayer);
               Navigator.pop(context, MenuChoice.save);
             },
           ),
