@@ -199,7 +199,7 @@ class WarMap {
                               alignment: Alignment.bottomRight,
                               colorFilter: (tileMap[i][j].canMoveHere ||
                                       tileMap[i][j].canAttackHere)
-                                  ? darken
+                                  ? null
                                   : null,
                               image: AssetImage(
                                   tileMap[i][j].getHealthImagePath()),
@@ -252,7 +252,7 @@ class WarMap {
         }
 
         if (isAdj) {
-          selectedUnit.attack(tileMap[x][y].unit);
+          selectedUnit.attack(tileMap[x][y].unit, tileMap[xSelection][ySelection], tileMap[x][y]);
           waitingToAttack = false;
           inUnconfirmedMoveState = false;
           hasSelectedUnit = false;

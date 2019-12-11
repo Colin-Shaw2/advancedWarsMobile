@@ -18,8 +18,8 @@ class Recon extends Unit {
     movement = 8;
     movementType = MovementType.wheels;
     unitType = UnitType.land;
-    attackPower = 3.0;
-    defencePower = 1.5;
+    attackPower = 4.5;
+    defencePower = .5;
     cost = 1000;
     teamId = 0;
     teamColor = "orange";
@@ -32,8 +32,8 @@ class Recon extends Unit {
     movement = 8;
     movementType = MovementType.wheels;
     unitType = UnitType.land;
-    attackPower = 3.0;
-    defencePower = 1.5;
+    attackPower = 4.5;
+    defencePower = .5;
     cost = 1000;
     teamId = 1;
     teamColor = "blue";

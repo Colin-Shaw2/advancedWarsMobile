@@ -18,8 +18,8 @@ class MTank extends Unit {
     movement = 5;
     movementType = MovementType.tread;
     unitType = UnitType.land;
-    attackPower = 3.0;
-    defencePower = 1.5;
+    attackPower = 6.5;
+    defencePower = 2;
     cost = 1000;
     teamId = 0;
     teamColor = "orange";
@@ -32,8 +32,8 @@ class MTank extends Unit {
     movement = 5;
     movementType = MovementType.tread;
     unitType = UnitType.land;
-    attackPower = 3.0;
-    defencePower = 1.5;
+    attackPower = 6.5;
+    defencePower = 2;
     cost = 1000;
     teamId = 1;
     teamColor = "blue";

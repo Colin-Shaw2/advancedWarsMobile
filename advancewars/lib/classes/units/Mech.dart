@@ -18,8 +18,8 @@ class Mech extends Unit {
     movement = 2;
     movementType = MovementType.mech;
     unitType = UnitType.land;
-    attackPower = 3.0;
-    defencePower = 1.5;
+    attackPower = 4;
+    defencePower = 0;
     cost = 1000;
     teamId = 0;
     teamColor = "orange";
@@ -32,8 +32,8 @@ class Mech extends Unit {
     movement = 2;
     movementType = MovementType.mech;
     unitType = UnitType.land;
-    attackPower = 3.0;
-    defencePower = 1.5;
+    attackPower = 4;
+    defencePower = 0;
     cost = 1000;
     teamId = 1;
     teamColor = "blue";
