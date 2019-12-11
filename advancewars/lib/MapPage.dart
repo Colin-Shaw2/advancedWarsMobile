@@ -4,13 +4,15 @@ import 'package:advancewars/classes/WarMap.dart';
 import 'package:advancewars/classes/woodsMap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'classes/mountainMap.dart';
 import 'databases/saving.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'classes/terrain/Mountain.dart';
 
-//StarterMap currentMap = StarterMap(16, 9);
-WoodsMap currentMap = WoodsMap();
+// StarterMap currentMap = StarterMap(16, 9);
+WarMap currentMap = StarterMap();
 
 class MapPage extends StatefulWidget {
   MapPage({Key key, this.title}) : super(key: key);
