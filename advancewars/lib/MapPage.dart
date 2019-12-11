@@ -43,7 +43,6 @@ class _MapPageState extends State<MapPage> {
       onLongPress: () {
         setState(() {
           if (driver.activeMap.inWaitingState()) {
-            driver.activeMap.cancelAll();
           } else {
             _menu(context);
           }

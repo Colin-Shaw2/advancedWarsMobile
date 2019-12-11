@@ -97,6 +97,7 @@ class WarMap {
                   hasSelectedUnit = false;
                   inUnconfirmedMoveState = false;
                   _clearMovableTiles();
+                  //selectedUnit = null;
                 } else {
                   tileMap[newX][newY].unit.hasMoved = true;
                   hasSelectedUnit = false;
@@ -123,6 +124,7 @@ class WarMap {
                     left: MediaQuery.of(context).size.width - 162),
             child: GestureDetector(
               onTapDown: (tapDownDetails) {
+                
                 //cancel
                 if (tapDownDetails.localPosition.dy < 65) {
                   tileMap[newX][newY].clearUnit();
@@ -130,6 +132,7 @@ class WarMap {
                   hasSelectedUnit = false;
                   inUnconfirmedMoveState = false;
                   _clearMovableTiles();
+                  //selectedUnit = null;
                 } else {
                   tileMap[newX][newY].unit.hasMoved = true;
                   hasSelectedUnit = false;
@@ -176,7 +179,7 @@ class WarMap {
                             colorFilter: (tileMap[i][j].canMoveHere ||
                                     tileMap[i][j].canAttackHere)
                                 ? ColorFilter.linearToSrgbGamma()
-                                : (tileMap[i][j].unit.hasMoved)
+                                : (tileMap[i][j].hasUnit && tileMap[i][j].unit.hasMoved)
                                     ? ColorFilter.srgbToLinearGamma()
                                     : null,
                             image: AssetImage(tileMap[i][j].unit.imagePath),
@@ -311,7 +314,7 @@ class WarMap {
     hasSelectedUnit = false;
     tileMap[newX][newY].clearUnit();
     tileMap[xSelection][ySelection].setUnit(selectedUnit);
-    selectedUnit = null;
+    //selectedUnit = null;
     _clearAllDeadUnits();
     _clearMovableTiles();
     _clearAdjEnemies();
