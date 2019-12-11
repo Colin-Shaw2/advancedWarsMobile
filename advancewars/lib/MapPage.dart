@@ -44,16 +44,18 @@ class _MapPageState extends State<MapPage> {
     return GestureDetector(
       onLongPress: () {
         setState(() {
-          if (driver.activeMap.inWaitingState()) {
-            driver.activeMap.cancelAll();
+          if (driver.activeMap.inWaitingState() || driver.activeMap.turnEnded) {
           } else {
             _menu(context);
           }
         });
       },
       onTapDown: (TapDownDetails details) {
-        // do nothing if waiting for other gesture dector
-        if (!driver.activeMap.inUnconfirmedMoveState ||
+        //if the animation is still playing you are locked out
+        if (driver.activeMap.turnEnded) {
+        }
+        // do nothing if waiting for other gesture detector
+        else if (!driver.activeMap.inUnconfirmedMoveState ||
             (driver.activeMap.inUnconfirmedMoveState &&
                 driver.activeMap.waitingToAttack)) {
           double x = details.localPosition.dx;
