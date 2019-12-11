@@ -38,13 +38,4 @@ class Tank extends Unit {
     imagePath = "resources/units/" + teamColor + "Tank.png";
     name = "Tank";
   }
-
-  @override
-  void attack(Unit defender) {
-    defender.health -= 40;
-    if(defender.health<=0){
-      return;
-    }
-    health -= 20;
-  }
 }
