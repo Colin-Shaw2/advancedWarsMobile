@@ -1,4 +1,5 @@
-import 'package:advancewars/classes/Infantry.dart';
+import 'package:advancewars/classes/units/Infantry.dart';
+import 'package:advancewars/classes/units/Tank.dart';
 
 import 'Plain.dart';
 import 'Tile.dart';
@@ -16,6 +17,8 @@ class StarterMap extends WarMap {
     //units
     tileMap[0][3] = new Tile.unit(Plain(), Infantry.orange());
     tileMap[3][3] = new Tile.unit(Plain(), Infantry.blue());
+    tileMap[1][3] = new Tile.unit(Plain(), Tank.orange());
+    tileMap[4][3] = new Tile.unit(Plain(), Tank.blue());
 
   }
 }
