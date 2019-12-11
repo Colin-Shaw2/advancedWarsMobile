@@ -17,6 +17,7 @@ class WarMap {
   bool hasSelectedUnit = false;
   bool inUnconfirmedMoveState = false;
   bool waitingToAttack = false;
+  bool pressedLeftHalf = false;
   int newX, newY;
   int day = 1;
 
@@ -27,14 +28,15 @@ class WarMap {
   }
 
   //returns a gridview with all the terain images.
-  Widget display(int activePlayer) {
+  Widget display(int activePlayer, BuildContext context) {
     if (inUnconfirmedMoveState && !waitingToAttack) {
-      return _displayMenu(activePlayer);
+      return _displayMenu(activePlayer, context);
     }
     return Stack(children: _showMapItems());
   }
 
-  Widget _displayMenu(int activePlayer) {
+  Widget _displayMenu(int activePlayer, BuildContext context) {
+    //has adjacent enemies
     if (tileMap[_bindIndexX(newX + 1)][newY].hasEnemy(activePlayer) ||
         tileMap[_bindIndexX(newX - 1)][newY].hasEnemy(activePlayer) ||
         tileMap[newX][_bindIndexX(newY + 1)].hasEnemy(activePlayer) ||
@@ -43,14 +45,22 @@ class WarMap {
         children: <Widget>[
           _displayGrid(),
           Container(
-            color: Colors.blue,
+            //place menu on opposite side of screen from the pressed location
+            padding: (!pressedLeftHalf)
+                ? EdgeInsets.all(0)
+                : EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width - 162),
             child: GestureDetector(
               onTapDown: (tapDownDetails) {
                 if (tapDownDetails.localPosition.dy < 65) {
-                  //TODO make snack bar appear
                   waitingToAttack = true;
                   _clearMovableTiles();
                   _setAdjacentEnemyUnits(newX, newY, activePlayer);
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Select Unit To Attack"),
+                    ),
+                  );
                 }
 
                 //cancel
@@ -71,14 +81,18 @@ class WarMap {
           ),
         ],
       );
-    } 
+    }
     //no adjacent enemies
     else {
       return Stack(
         children: <Widget>[
           _displayGrid(),
           Container(
-            color: Colors.blue,
+            //place menu on opposite side of screen from the pressed location
+            padding: (!pressedLeftHalf)
+                ? EdgeInsets.all(0)
+                : EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width - 162),
             child: GestureDetector(
               onTapDown: (tapDownDetails) {
                 //cancel
@@ -184,6 +198,9 @@ class WarMap {
 
   //select and move a unit
   void tileSelect(int x, int y, int activePlayer) {
+      //which side of screen was pressed
+      (x < xDim / 2) ? pressedLeftHalf = true : pressedLeftHalf = false;
+
     //have a selected unit already
     if (waitingToAttack) {
       bool isAdj = false;
@@ -213,7 +230,7 @@ class WarMap {
     }
     //menu is up so we don't want to be able to do anything
     else if (inUnconfirmedMoveState) {
-    } else if (hasSelectedUnit) {
+    } else if (hasSelectedUnit) {      
       //moving unit to new tile
       if (tileMap[x][y].canMoveHere) {
         _moveUnit(x, y, activePlayer);
