@@ -4,6 +4,7 @@ import 'package:advancewars/options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:http/http.dart';
 import 'notification/notification.dart' as notifications;
 import 'package:advancewars/classes/StarterMap.dart';
 import 'MapPage.dart';
@@ -13,6 +14,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/widgets.dart';
+import 'package:audioplayers/audio_cache.dart';
+
+import 'dart:async';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
+import 'package:flutter/services.dart';
+
 
 
 void main() => runApp(MyApp());
@@ -50,15 +60,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreen extends State<HomeScreen> {
   var scheduleNotification = notifications.Notification();
+    final AudioCache audioPlayer = AudioCache();
+    bool isPlaying = false;
 
   @override
   Widget build(BuildContext context) {
-    Bgm().play("music.mp3");
-    //Code for music not working currently
-    // Flame.bgm.initialize();
-    // Bgm audio = Bgm();
-    // audio.play('music/music.mp3');
-    // Flame.audio.clear('music/music.mp3');
+    
+    if(!isPlaying){
+      startAudio();
+    }
     scheduleNotification.init();
     scheduleNotification.sendNotificationWeekly();
     scheduleNotification.sendAbsentNotification('payload');
@@ -145,6 +155,10 @@ class _HomeScreen extends State<HomeScreen> {
       // },
     );
   }
+  Future <void> startAudio() async {
+   audioPlayer.loop("music.mp3");
+   isPlaying = true;
+  }
 }
 
 void _popupDialog(BuildContext context) {
@@ -185,122 +199,3 @@ class ThirdRoute extends StatelessWidget {
     );
   }
 }
-
-class Bgm extends WidgetsBindingObserver {
-  bool _isRegistered = false;
-  AudioPlayer audioPlayer;
-  bool isPlaying = false;
-
-  /// Registers a [WidgetsBinding] observer.
-  ///
-  /// This must be called for auto-pause and resume to work properly.
-  void initialize() {
-    if (_isRegistered) {
-      return;
-    }
-    _isRegistered = true;
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  /// Dispose the [WidgetsBinding] observer.
-  void dispose() {
-    if (!_isRegistered) {
-      return;
-    }
-    WidgetsBinding.instance.removeObserver(this);
-    _isRegistered = false;
-  }
-
-  /// Plays and loops a background music file specified by [filename].
-  ///
-  /// The volume can be specified in the optional named parameter [volume]
-  /// where `0` means off and `1` means max.
-  ///
-  /// It is safe to call this function even when a current BGM track is
-  /// playing.
-  void play(String filename, {double volume}) async {
-    volume ??= 1;
-
-    if (audioPlayer != null && audioPlayer.state != AudioPlayerState.STOPPED) {
-      audioPlayer.stop();
-    }
-
-    isPlaying = true;
-    audioPlayer = await Flame.audio.loopLongAudio(
-      filename,
-      volume: volume,
-    );
-  }
-
-  /// Prefetch an audio and store it in the cache.
-  ///
-  /// Alias of `FlameAudio.load();`.
-  Future<File> load(String file) => Flame.audio.load(file);
-
-  /// Prefetch a list of audios and store them in the cache.
-  ///
-  /// Alias of `FlameAudio.loadAll();`.
-  Future<List<File>> loadAll(List<String> files) => Flame.audio.loadAll(files);
-
-  /// Clears the file in the cache.
-  ///
-  /// Alias of `FlameAudio.clear();`.
-  void clear(String file) => Flame.audio.clear(file);
-
-  /// Clears all the audios in the cache.
-  /// Alias of `FlameAudio.clearAll();`.
-  ///
-  void clearAll() => Flame.audio.clearAll();
-
-  /// Handler for AppLifecycleState changes.
-  ///
-  /// This function handles the automatic pause and resume when the app
-  /// lifecycle state changes. There is NO NEED to call this function directly
-  /// directly.
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      if (isPlaying &&
-          audioPlayer != null &&
-          audioPlayer.state == AudioPlayerState.PAUSED) {
-        audioPlayer.resume();
-      }
-    } else {
-      audioPlayer.pause();
-    }
-  }
-}
-
-
-// Future<void> _options(BuildContext context) async {
-//   showDialog<MenuChoice>(
-//     context: context,
-//     builder: (BuildContext context) {
-//       return SimpleDialog(
-//         title: Text(FlutterI18n.translate(context, 'optioTitle')),
-//           children: <Widget>[
-//             SimpleDialogOption(
-//               child: Text(
-//                 FlutterI18n.translate(context, 'lanOne'),
-//               ),
-//               onPressed: () {
-//                 Locale newLocale = Locale('en');
-//                 FlutterI18n.refresh(context, newLocale);
-//                 Navigator.pop(context);
-//               },
-//             ),
-//             SimpleDialogOption(
-//               child: Text(
-//                 FlutterI18n.translate(context, 'lanTwo'),
-//               ),
-//               onPressed: () {
-//                 Locale newLocale = Locale('fr');
-//                 FlutterI18n.refresh(context, newLocale);
-//                 Navigator.pop(context);
-//               },
-//             ),
-//           ],
-//       );
-//     },
-//   );
-// }
