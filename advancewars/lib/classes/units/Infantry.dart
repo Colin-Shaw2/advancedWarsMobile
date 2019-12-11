@@ -17,8 +17,8 @@ class Infantry extends Unit {
     movement = 3;
     movementType = MovementType.inf;
     unitType = UnitType.land;
-    attackPower = 1.5;
-    defencePower = 0.5;
+    attackPower = 4;
+    defencePower = 0.0;
     cost = 1000;
     teamId = 0;
     teamColor = "orange";
@@ -29,8 +29,8 @@ class Infantry extends Unit {
     movement = 3;
     movementType = MovementType.inf;
     unitType = UnitType.land;
-    attackPower = 1.5;
-    defencePower = 0.5;
+    attackPower = 4;
+    defencePower = 0.0;
     cost = 1000;
     teamId = 1;
     teamColor = "blue";
@@ -71,15 +71,5 @@ class Infantry extends Unit {
     teamId = 4;
     teamColor = "black";
     imagePath = "resources/units/" + teamColor + "Infantry.png";
-  }
-
-  
-  @override
-  void attack(Unit defender) {
-    defender.health -= 40;
-    if(defender.health<=0){
-      return;
-    }
-    health -= 20;
   }
 }

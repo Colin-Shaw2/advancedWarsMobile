@@ -12,11 +12,41 @@ abstract class Unit{
   num attackPower;
   num defencePower;
   int cost;
+  List<UnitType> strongAgainst = [];
+  List<UnitType> weakAgainst = [];
   String imagePath;
   bool hasMoved = false;
 
 
-  void attack( Unit defender);
+  void attack(Unit defender) {
+    if(strongAgainst.contains(defender.unitType)) {
+      defender.health -= ((this.attackPower*10*(this.health/100))*1.5 - (defender.defencePower*10*(defender.health/100))).round();
+    }
+    else if(weakAgainst.contains(defender.unitType)) {
+      defender.health -= ((this.attackPower*10*(this.health/100))*0.75 - (defender.defencePower*10*(defender.health/100))).round();
+    }
+    else {
+      defender.health -= (this.attackPower*10*(this.health/100) - defender.defencePower*10*(defender.health/100)).round();
+    }
+    if(defender.health > 0)
+    {
+      if(defender.strongAgainst.contains(this.unitType)) {
+        this.health -= ( (defender.attackPower*10*(defender.health/100))*1.5 - this.defencePower*10*(this.health/100)).round();
+      }
+      else if(weakAgainst.contains(defender.unitType)) {
+        this.health -= ((defender.attackPower*10*(defender.health/100))*0.75 - this.defencePower*10*(this.health/100)).round();
+      }
+      else {
+        this.health -= (defender.attackPower*10*(defender.health/100) - this.defencePower*10*(this.health/100)).round();
+      }
+    }
+    if(defender.health < 0) {
+      defender.health = 0;
+    }
+    if(this.health < 0) {
+      this.health = 0;
+    }
+  }
 
 
   //null if near full health
@@ -29,10 +59,10 @@ abstract class Unit{
       myPath += "nine.png";
     }
     else if(health> 70){
-      myPath += "seven.png";
+      myPath += "eight.png";
     }
     else if(health> 60){
-      myPath += "eight.png";
+      myPath += "seven.png";
     }
     else if(health> 50){
       myPath += "six.png";
