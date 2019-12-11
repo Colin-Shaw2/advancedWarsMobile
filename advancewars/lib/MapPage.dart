@@ -11,13 +11,11 @@ import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'classes/terrain/Mountain.dart';
 
-// StarterMap currentMap = StarterMap(16, 9);
 WarMap currentMap = StarterMap();
 
 class MapPage extends StatefulWidget {
-  MapPage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  MapPage(String s, {Key key, this.selectedMap}) : super(key: key);
+  String selectedMap;
   @override
   _MapPageState createState() => _MapPageState();
 }
@@ -29,6 +27,13 @@ bool loaded = false;
 class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
+    if(widget.selectedMap == 'starterMap') {
+      driver.activeMap = StarterMap();
+    } else if (widget.selectedMap == 'mountainMap') {
+      driver.activeMap = MountainMap();
+    } else if (widget.selectedMap == 'woodsMap'){
+      driver.activeMap = WoodsMap();
+    }
 //     if (Saving().getLocalSavedMap() == null) {
 //       getSavedMap();
 //     }

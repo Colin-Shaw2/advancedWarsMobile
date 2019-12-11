@@ -128,7 +128,7 @@ class _HomeScreen extends State<HomeScreen> {
             onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => ThirdRoute())),
+                    builder: (context) => ChooseMap())),
           ),
           GestureDetector(
             child: Stack(
@@ -175,7 +175,7 @@ class FirstRoute extends StatelessWidget {
 class SecondRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MapPage();
+    return MapPage('');
   }
 }
 
@@ -184,6 +184,114 @@ class ThirdRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     Saving().deleteCloudTiles();
     Saving().deleteLocalTiles();
-    return MapPage();
+    return MapPage('woodsMap');
+  }
+}
+
+class FourthRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Saving().deleteCloudTiles();
+    Saving().deleteLocalTiles();
+    return MapPage('starterMap');
+  }
+}
+class FifthRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Saving().deleteCloudTiles();
+    Saving().deleteLocalTiles();
+    return MapPage('mountainMap');
+  }
+}
+
+
+class ChooseMap extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([]);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+    return new Scaffold(
+      body: new Swiper.children(
+        scrollDirection: Axis.vertical,
+        viewportFraction: 0.75,
+        scale: 0.9,
+        children: <Widget>[
+          GestureDetector(
+            child: Stack(
+            children: <Widget> [
+              Container(             
+                child: Image.asset(
+                "images/map01.png",width: MediaQuery.of(context).size.width,
+                fit: BoxFit.fill,),
+            ),
+            Container(
+              child: Center(
+                child: new Text(
+                  FlutterI18n.translate(context, 'STARTER'),
+                  textScaleFactor: 5.0,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontFamily: 'VT323'),
+                  ),
+            ))]
+            ), 
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => FourthRoute())),
+          ),
+          GestureDetector(
+            child: Stack(
+            children: <Widget> [
+              Container(             
+                child: Image.asset(
+                "images/map02.png",width: MediaQuery.of(context).size.width,
+                fit: BoxFit.fill,),
+            ),
+            Container(
+              child: Center(
+                child: new Text(
+                  FlutterI18n.translate(context, 'WOODS'),
+                  textScaleFactor: 5.0,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontFamily: 'VT323'),
+                  ),
+            ))]
+            ), 
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ThirdRoute())),
+          ),
+          GestureDetector(
+            child: Stack(
+            children: <Widget> [
+              Container(             
+                child: Image.asset(
+                "images/map03.png",width: MediaQuery.of(context).size.width,
+                fit: BoxFit.fill,),
+            ),
+            Container(
+              child: Center(
+                child: new Text(
+                  FlutterI18n.translate(context, 'MOUNTAIN'),
+                  textScaleFactor: 5.0,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontFamily: 'VT323'),
+                  ),
+            ))]
+            ), 
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => FifthRoute())),
+          ),
+        ],
+      ),
+      // },
+    );
   }
 }
