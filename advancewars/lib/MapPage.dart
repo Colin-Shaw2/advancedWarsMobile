@@ -30,7 +30,7 @@ class _MapPageState extends State<MapPage> {
 //     }
 //     ;
     savedMap();
-    if(savedMapExists && !loaded) {
+    if (savedMapExists && !loaded) {
       getSavedMap();
     }
     SystemChrome.setPreferredOrientations([
@@ -50,7 +50,8 @@ class _MapPageState extends State<MapPage> {
       onTapDown: (TapDownDetails details) {
         // do nothing if waiting for other gesture dector
         if (!driver.activeMap.inUnconfirmedMoveState ||
-        (driver.activeMap.inUnconfirmedMoveState && driver.activeMap.waitingToAttack)) {
+            (driver.activeMap.inUnconfirmedMoveState &&
+                driver.activeMap.waitingToAttack)) {
           double x = details.localPosition.dx;
           double y = details.localPosition.dy;
 
@@ -59,10 +60,6 @@ class _MapPageState extends State<MapPage> {
           double yBucket =
               MediaQuery.of(context).size.height / driver.activeMap.yDim;
 
-          // int g = tx ~/ xBucke;
-          // int h = y ~/ yBucket;
-          //print("changed $xBucket + $yBucket");
-
           driver.handleDownPress(
             x ~/ xBucket,
             y ~/ yBucket,
@@ -70,7 +67,13 @@ class _MapPageState extends State<MapPage> {
         }
         setState(() {});
       },
-      child: driver.activeMap.display(driver.activePlayer),
+      child: Scaffold(
+        body: Builder(
+          builder: (BuildContext scaffContext) {
+            return driver.activeMap.display(driver.activePlayer, scaffContext);
+          },
+        ),
+      ),
     );
   }
 
@@ -78,9 +81,10 @@ class _MapPageState extends State<MapPage> {
     WarMap map = await Saving().getLocalSavedMap();
     setState(() {
       driver.activeMap = map;
-      loaded = true; 
+      loaded = true;
     });
   }
+
   Future<void> savedMap() async {
     WarMap map = await Saving().getLocalSavedMap();
     if (map != null) {

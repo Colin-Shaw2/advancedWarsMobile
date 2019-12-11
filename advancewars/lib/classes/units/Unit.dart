@@ -62,7 +62,8 @@ abstract class Unit{
 
 enum MovementType{
   wheels,
-  walk,
+  inf,
+  mech,
   tread,
   air,
   lander,

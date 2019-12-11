@@ -4,7 +4,8 @@ class Wood extends Terrain{
   Wood():super(){
     
   wheelsCost = 3;
-  walkCost = 1;
+  infCost = 1;
+  mechCost = 1;
   treadCost= 2;
   airCost = 1;
   landerCost = -1;
