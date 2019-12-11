@@ -32,7 +32,9 @@ class GameDriver{
     this.activeMap.turnEnded = true;
     for (List<Tile> row in activeMap.tileMap) {
       for (Tile tile in row){
-        tile.unit.hasMoved = true;
+        if(tile.hasUnit) {
+          tile.unit.hasMoved = false;
+        }
       }
     }
 
