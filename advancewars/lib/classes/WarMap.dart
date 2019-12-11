@@ -159,8 +159,11 @@ class WarMap {
           _clearAdjEnemies();
         }
       }
-    } else if (inUnconfirmedMoveState) {
-    } else if (hasSelectedUnit) {
+    } 
+    //menu is up so we don't want to be able to do anything
+    else if (inUnconfirmedMoveState) {
+    } 
+    else if (hasSelectedUnit) {
       //moving unit to new tile
       if (tileMap[x][y].canMoveHere) {
         _moveUnit(x, y, activePlayer);
@@ -175,11 +178,6 @@ class WarMap {
       }
     }
   }
-
-  // void cancelAttack() {
-  //   _clearAdjEnemies();
-  //   waitingToAttack = false;
-  // }
 
   void cancelAll() {
     waitingToAttack = false;
