@@ -80,7 +80,10 @@ class Infantry extends Unit {
 
   @override
   void attack(Unit defender) {
-    defender.health -= 50;
+    defender.health -= 40;
+    if(defender.health<=0){
+      return;
+    }
     health -= 20;
   }
 }

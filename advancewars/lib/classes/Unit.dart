@@ -18,6 +18,7 @@ abstract class Unit{
 
   void attack( Unit defender);
 
+
   //null if near full health
   String getHealthImagePath(){
     String myPath = "resources/numbers/";
@@ -50,6 +51,8 @@ abstract class Unit{
     }
     else if(health> 0){
       myPath += "one.png";
+    }else{
+      myPath = null;
     }
     
     return myPath;

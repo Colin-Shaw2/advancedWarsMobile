@@ -153,6 +153,7 @@ class WarMap {
           waitingToAttack = false;
           inUnconfirmedMoveState = false;
           hasSelectedUnit = false;
+          _clearAllDeadUnits();
           _clearMovableTiles();
           _clearAdjEnemies();
         }
@@ -298,6 +299,18 @@ class WarMap {
     for (List<Tile> tileRow in tileMap) {
       for (Tile tile in tileRow) {
         tile.canAttackHere = false;
+      }
+    }
+  }
+
+  void _clearAllDeadUnits() {
+    for (List<Tile> tileRow in tileMap) {
+      for (Tile tile in tileRow) {
+        if (tile.hasUnit) {
+          if (tile.unit.health <= 0) {
+            tile.clearUnit();
+          }
+        }
       }
     }
   }
