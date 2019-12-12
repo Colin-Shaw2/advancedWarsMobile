@@ -13,6 +13,7 @@ Instructions
 
 Known Bugs
   - Music throws errors that don't break
-  - Menu sometimes appears on opposite sides of gesture detector
+  - Gesture detector sometimes appears on opposite sides of menu
   - On certain screens, hitting the back button on your phone can cause app to crash
-  - Attack highlighting and day turn animation does not get updated with setstate() every time
+  - Attack highlighting and day turn animation does not get updated with setstate() sometimes
+  
