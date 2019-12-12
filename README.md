@@ -16,3 +16,4 @@ Known Bugs
   - Gesture detector sometimes appears on opposite sides of menu (Just tap where it would be on the the opposite top corner of the screen)
   - On certain screens, hitting the back button on your phone can cause app to crash (Not an app back button but the phone one)
   - Attack highlighting and day turn animation does not get updated with setstate() sometimes (to fix this just tap anywhere on the screen and it will update the state correctly)
+  - Slight delay after victory animation before redirect. This is to prevent memory leaks
