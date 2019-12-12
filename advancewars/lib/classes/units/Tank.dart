@@ -25,7 +25,7 @@ class Tank extends Unit {
     teamColor = "orange";
     imagePath = "resources/units/" + teamColor + "Tank.png";
     name = "Tank";
-    strongAgainst = ["Infantry", "Recon", "Tank", "Mech"];
+    strongAgainst = ["Infantry", "Recon", "Tank"];
   }
   Tank.blue() {
     health = 100;

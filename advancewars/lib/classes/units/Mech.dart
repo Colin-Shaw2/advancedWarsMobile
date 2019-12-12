@@ -18,7 +18,7 @@ class Mech extends Unit {
     movement = 2;
     movementType = MovementType.mech;
     unitType = UnitType.land;
-    attackPower = 4;
+    attackPower = 4.5;
     defencePower = 0;
     cost = 1000;
     teamId = 0;
@@ -32,7 +32,7 @@ class Mech extends Unit {
     movement = 2;
     movementType = MovementType.mech;
     unitType = UnitType.land;
-    attackPower = 4;
+    attackPower = 4.5;
     defencePower = 0;
     cost = 1000;
     teamId = 1;
