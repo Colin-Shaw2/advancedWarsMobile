@@ -12,32 +12,42 @@ import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'classes/terrain/Mountain.dart';
 
-WarMap currentMap = StarterMap();
 
 class MapPage extends StatefulWidget {
-  MapPage(String s, {Key key, this.selectedMap}) : super(key: key);
+  MapPage({Key key, this.selectedMap}) : super(key: key);
   String selectedMap;
   @override
   _MapPageState createState() => _MapPageState();
 }
-
+WarMap currentMap = StarterMap();
 GameDriver driver = GameDriver.twoPlayers(currentMap);
 bool savedMapExists = false;
 bool loaded = false;
 bool navigated = false;
+bool setSelectedMap = false;
 class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
-
     if(driver.activeMap.gameOver && !navigated) {
       _backToHome(context);
     }
-    if(widget.selectedMap == 'starterMap') {
-      driver.activeMap = StarterMap();
-    } else if (widget.selectedMap == 'mountainMap') {
-      driver.activeMap = MountainMap();
-    } else if (widget.selectedMap == 'woodsMap'){
-      driver.activeMap = WoodsMap();
+    if(!setSelectedMap) {
+      if(widget.selectedMap == 'starterMap') {
+        setState(() {
+          driver.activeMap = StarterMap();
+          setSelectedMap = true;
+        });
+      } else if (widget.selectedMap == 'mountainMap') {
+        setState(() {
+          driver.activeMap = MountainMap();
+          setSelectedMap = true;
+        });
+      } else if (widget.selectedMap == 'woodsMap'){
+        setState(() {
+          driver.activeMap = WoodsMap();
+          setSelectedMap = true;
+        });
+      }
     }
 
 //     if (Saving().getLocalSavedMap() == null) {
